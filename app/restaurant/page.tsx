@@ -251,9 +251,12 @@ export default function RestaurantPage() {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="rounded-none px-10 py-6">
-                  <a href="tel:+212524383881">
-                    <Phone className="h-4 w-4 mr-2" />
-                    +212 524 38 38 81
+                  <a 
+                    href="https://wa.me/212524383881?text=Bonjour, je souhaiterais réserver une table au restaurant."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Réserver une table
                   </a>
                 </Button>
                 <Button 
@@ -263,7 +266,7 @@ export default function RestaurantPage() {
                   className="rounded-none px-10 py-6"
                 >
                   <Link href="/#booking">
-                    Réserver une chambre
+                    Réserver en direct
                   </Link>
                 </Button>
               </div>

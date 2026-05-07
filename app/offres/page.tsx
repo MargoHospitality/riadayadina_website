@@ -141,72 +141,75 @@ export default function OffresPage() {
           </div>
         </section>
 
-        {/* Offers Cards */}
+        {/* Offers Cards - Editorial Style */}
         <section className="pb-24">
           <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
               {offers.map((offer, index) => (
                 <div 
                   key={index}
                   className={`relative overflow-hidden transition-all duration-300 ${
                     offer.featured 
-                      ? "bg-primary text-primary-foreground ring-4 ring-accent" 
-                      : "bg-card border border-border"
+                      ? "bg-primary text-primary-foreground" 
+                      : "bg-card border border-border/50 hover:border-accent/30"
                   }`}
                 >
                   {/* Featured badge */}
                   {offer.featured && (
-                    <div className="absolute top-0 right-0 bg-accent text-accent-foreground px-4 py-1 text-xs font-medium uppercase tracking-wider">
+                    <div className="absolute top-4 right-4 bg-accent text-accent-foreground px-3 py-1 text-xs uppercase tracking-wider">
                       Recommandé
                     </div>
                   )}
                   
                   {/* Header */}
-                  <div className={`p-8 pb-6 ${offer.featured ? "border-b border-white/20" : "border-b border-border"}`}>
-                    <p className={`text-sm uppercase tracking-wider mb-2 ${offer.featured ? "text-white/70" : "text-muted-foreground"}`}>
-                      {offer.subtitle}
-                    </p>
-                    <h3 className="font-serif text-3xl mb-2">{offer.title}</h3>
-                    <p className={`text-sm ${offer.featured ? "text-white/80" : "text-muted-foreground"}`}>
+                  <div className="p-6 md:p-8">
+                    <div className="flex items-baseline justify-between mb-6">
+                      <div>
+                        <p className={`text-xs uppercase tracking-wider mb-1 ${offer.featured ? "text-white/60" : "text-muted-foreground"}`}>
+                          {offer.subtitle}
+                        </p>
+                        <h3 className="font-serif text-2xl md:text-3xl">{offer.title}</h3>
+                      </div>
+                      <span className={`font-serif text-4xl ${offer.featured ? "text-accent" : "text-accent/60"}`}>
+                        {offer.nights}
+                      </span>
+                    </div>
+                    
+                    <p className={`text-sm mb-6 ${offer.featured ? "text-white/80" : "text-muted-foreground"}`}>
                       {offer.description}
                     </p>
-                  </div>
                   
-                  {/* Benefits */}
-                  <div className="p-8 pt-6">
-                    <ul className="space-y-4">
+                    {/* Benefits - Cleaner dots */}
+                    <div className="space-y-3 mb-8">
                       {offer.benefits.map((benefit, benefitIndex) => (
-                        <li key={benefitIndex} className="flex items-start gap-3">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                        <div key={benefitIndex} className="flex items-center gap-3">
+                          <span className={`w-1.5 h-1.5 rounded-full ${
                             offer.featured 
-                              ? benefit.highlight ? "bg-accent text-accent-foreground" : "bg-white/10"
-                              : benefit.highlight ? "bg-primary/10 text-primary" : "bg-muted"
-                          }`}>
-                            <benefit.icon className="h-4 w-4" />
-                          </div>
-                          <span className={`text-sm pt-1.5 ${
+                              ? benefit.highlight ? "bg-accent" : "bg-white/40"
+                              : benefit.highlight ? "bg-accent" : "bg-accent/40"
+                          }`} />
+                          <span className={`text-sm ${
                             benefit.highlight 
-                              ? offer.featured ? "font-medium" : "font-medium text-primary"
-                              : ""
+                              ? "font-medium" 
+                              : offer.featured ? "text-white/80" : ""
                           }`}>
                             {benefit.text}
                           </span>
-                        </li>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                     
                     <Button
                       asChild
-                      size="lg"
-                      className={`w-full mt-8 rounded-none py-6 ${
+                      className={`w-full rounded-none py-5 ${
                         offer.featured 
                           ? "bg-white text-primary hover:bg-white/90" 
-                          : ""
+                          : "border-foreground/15 hover:bg-foreground/5 hover:border-accent/40"
                       }`}
+                      variant={offer.featured ? "default" : "outline"}
                     >
                       <Link href="#booking">
-                        Réserver maintenant
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        Réserver en direct
                       </Link>
                     </Button>
                   </div>

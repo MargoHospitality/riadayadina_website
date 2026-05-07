@@ -12,48 +12,51 @@ import { cn } from "@/lib/utils"
 const galleryCategories = [
   {
     id: "riad",
-    name: "Le Riad",
+    name: "Patio & Riad",
     images: [
-      { src: "/images/patio-arbore.jpg", alt: "Patio arboré" },
+      { src: "/images/patio-arbore.jpg", alt: "Patio arboré aux orangers" },
+      { src: "/images/hero-patio.jpg", alt: "Patio principal" },
       { src: "/images/acces-voiture.jpg", alt: "Entrée du riad" },
-      { src: "/images/hero-riad.jpg", alt: "Vue du riad" },
+      { src: "/images/hero-riad.jpg", alt: "Architecture traditionnelle" },
     ],
   },
   {
-    id: "piscine",
-    name: "Piscine & Terrasse",
+    id: "rooftop",
+    name: "Rooftop & Piscine",
     images: [
-      { src: "/images/piscine-rooftop.jpg", alt: "Piscine sur le toit" },
-      { src: "/images/rooftop-terrace.jpg", alt: "Terrasse rooftop" },
+      { src: "/images/piscine-rooftop.jpg", alt: "Piscine chauffée vue Atlas" },
+      { src: "/images/rooftop-terrace.jpg", alt: "Terrasse solarium" },
     ],
   },
   {
     id: "chambres",
-    name: "Chambres & Suites",
+    name: "Chambres",
     images: [
-      { src: "/images/chambre-alicia.jpg", alt: "Chambre Double Supérieure" },
-      { src: "/images/chambre-aida.jpg", alt: "Chambre Double Supérieure" },
-      { src: "/images/suite-antinea.jpg", alt: "Suite Junior" },
-      { src: "/images/suite-antigua.jpg", alt: "Suite Junior" },
+      { src: "/images/suite-amour.jpg", alt: "Chambre Double Supérieure" },
+      { src: "/images/suite-sultane.jpg", alt: "Suite Junior" },
+      { src: "/images/chambre-alicia.jpg", alt: "Chambre Alicia" },
+      { src: "/images/chambre-aida.jpg", alt: "Chambre Aida" },
+      { src: "/images/suite-antinea.jpg", alt: "Suite Antinea" },
+      { src: "/images/suite-antigua.jpg", alt: "Suite Antigua" },
       { src: "/images/salle-de-bain.jpg", alt: "Salle de bain" },
     ],
   },
   {
     id: "spa",
-    name: "Spa & Bien-être",
+    name: "Spa",
     images: [
       { src: "/images/hammam-spa.jpg", alt: "Hammam traditionnel" },
-      { src: "/images/spa-hammam.jpg", alt: "Espace détente" },
-      { src: "/images/spa-massage.jpg", alt: "Salle de massage" },
+      { src: "/images/spa-hammam.jpg", alt: "Espace détente spa" },
+      { src: "/images/spa-massage.jpg", alt: "Soin et massage" },
     ],
   },
   {
     id: "restaurant",
-    name: "Restaurant & Bar",
+    name: "Restaurant",
     images: [
-      { src: "/images/restaurant-terrasse.jpg", alt: "Restaurant terrasse" },
-      { src: "/images/bar-lounge.jpg", alt: "Bar lounge" },
-      { src: "/images/plat-tajine.jpg", alt: "Cuisine marocaine" },
+      { src: "/images/restaurant-terrasse.jpg", alt: "Dîner sur la terrasse" },
+      { src: "/images/bar-lounge.jpg", alt: "Bar & cocktails" },
+      { src: "/images/plat-tajine.jpg", alt: "Tajine traditionnel" },
       { src: "/images/breakfast-moroccan.jpg", alt: "Petit-déjeuner marocain" },
     ],
   },
@@ -243,10 +246,10 @@ export default function GaleriePage() {
                 Venez découvrir Ayadina par vous-même.
               </p>
               <a 
-                href="/chambres-suites"
+                href="/#booking"
                 className="inline-flex items-center justify-center px-8 py-4 bg-white text-primary font-medium hover:bg-white/90 transition-colors"
               >
-                Réserver votre séjour
+                Réserver en direct
               </a>
             </AnimateOnScroll>
           </div>

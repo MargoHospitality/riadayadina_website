@@ -10,7 +10,7 @@ export function BookingWidget() {
   const [guests, setGuests] = useState("2")
 
   return (
-    <section id="booking" className="py-20 md:py-32 bg-secondary">
+    <section id="booking" className="py-14 md:py-24 bg-secondary">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
@@ -106,7 +106,7 @@ export function BookingWidget() {
                 size="lg"
                 className="w-full rounded-none py-7 text-base tracking-wide"
               >
-                Vérifier les disponibilités
+                Réserver en direct
               </Button>
             </form>
 
