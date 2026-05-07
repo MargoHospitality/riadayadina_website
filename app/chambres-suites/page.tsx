@@ -2,7 +2,8 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { RoomsHero } from "@/components/rooms/rooms-hero"
 import { RoomCategory } from "@/components/rooms/room-category"
-import { RoomsBookingCta } from "@/components/rooms/rooms-booking-cta"
+import { BookingWidget } from "@/components/booking-widget"
+import { TestimonialsSection } from "@/components/testimonials-section"
 
 const chambresDoubles = {
   title: "Chambres Doubles Supérieures",
@@ -76,7 +77,8 @@ export default function ChambresEtSuitesPage() {
           variant="dark"
         />
         
-        <RoomsBookingCta />
+        <BookingWidget />
+        <TestimonialsSection />
       </main>
       <Footer />
     </>
