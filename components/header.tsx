@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, X, Phone } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -89,18 +89,8 @@ export function Header() {
             ))}
           </nav>
 
-          {/* CTA & Contact */}
-          <div className="hidden lg:flex items-center gap-4">
-            <a 
-              href="tel:+212524383881" 
-              className={cn(
-                "flex items-center gap-2 text-sm transition-colors duration-300",
-                isScrolled ? "text-muted-foreground" : "text-white/80"
-              )}
-            >
-              <Phone className="h-4 w-4" />
-              <span>+212 524 38 38 81</span>
-            </a>
+          {/* CTA */}
+          <div className="hidden lg:flex items-center">
             <Button 
               asChild
               className={cn(
@@ -148,17 +138,11 @@ export function Header() {
               {item.name}
             </Link>
           ))}
-          <div className="flex flex-col items-center gap-4 mt-8">
-            <a href="tel:+212524383881" className="flex items-center gap-2 text-muted-foreground">
-              <Phone className="h-4 w-4" />
-              <span>+212 524 38 38 81</span>
-            </a>
-            <Button asChild className="rounded-none px-8 py-6 text-base">
-              <Link href="#booking" onClick={() => setIsMobileMenuOpen(false)}>
-                Réserver maintenant
-              </Link>
-            </Button>
-          </div>
+          <Button asChild className="rounded-none px-8 py-6 text-base mt-8">
+            <Link href="#booking" onClick={() => setIsMobileMenuOpen(false)}>
+              Réserver maintenant
+            </Link>
+          </Button>
         </nav>
       </div>
     </header>
