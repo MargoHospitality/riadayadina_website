@@ -37,10 +37,6 @@ export default function RestaurantPage() {
           </div>
           
           <div className="relative z-10 container mx-auto px-4 text-center">
-            <div className="inline-flex items-center gap-2 bg-accent/90 text-accent-foreground px-4 py-2 mb-6">
-              <Wine className="h-4 w-4" />
-              <span className="text-sm font-medium uppercase tracking-wider">Licence Alcool - Rare en Médina</span>
-            </div>
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-4">
               Restaurant & Bar
             </h1>
