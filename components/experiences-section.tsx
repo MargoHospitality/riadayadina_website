@@ -6,6 +6,14 @@ import { Button } from "@/components/ui/button"
 
 const experiences = [
   {
+    title: "Piscine & Terrasse Solarium",
+    subtitle: "Vue panoramique sur l'Atlas",
+    description: "Sur le toit du riad, une piscine chauffée de 7m x 3m avec jet de massage vous attend. Transats, parasols et vue imprenable sur les montagnes de l'Atlas. Petit-déjeuner, déjeuner léger et cocktails servis au bord de l'eau.",
+    image: "/images/piscine-rooftop.jpg",
+    highlight: "Piscine chauffée",
+    link: "/le-riad",
+  },
+  {
     title: "Les Bains d'Ayadina",
     subtitle: "Spa & Bien-être",
     description: "250m² dédiés à votre bien-être : hammam traditionnel, sauna, jacuzzi et deux salles de massage. Soins du corps, gommages au savon noir, massages relaxants à l'huile d'argan et soins esthétiques.",
