@@ -38,11 +38,11 @@ export function Footer() {
   return (
     <footer id="contact" className="bg-black text-white">
       {/* Main Footer */}
-      <div className="container mx-auto px-4 py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-block mb-6">
+            <Link href="/" className="inline-block">
               <Image
                 src="/images/logo-ayadina-outline.png"
                 alt="Riad Ayadina & Spa"
@@ -51,10 +51,10 @@ export function Footer() {
                 className="h-20 md:h-24 lg:h-28 w-auto"
               />
             </Link>
-            <p className="text-white/70 text-sm leading-relaxed mb-6">
+            <p className="text-white/70 text-sm leading-relaxed mt-6">
               1200m² de sérénité au cœur de la médina. Spa, piscine chauffée, restaurant avec licence alcool. Un havre de paix d&apos;exception.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 mt-6">
               <a
                 href="https://www.instagram.com/riadayadina/"
                 target="_blank"
