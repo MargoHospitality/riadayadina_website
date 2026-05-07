@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { AnimateOnScroll } from "@/components/animate-on-scroll"
 
 export function AboutSection() {
   return (
@@ -10,7 +11,7 @@ export function AboutSection() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Image Grid */}
-          <div className="relative grid grid-cols-2 gap-4">
+          <AnimateOnScroll animation="fade-right" className="relative grid grid-cols-2 gap-4">
             <div className="space-y-4">
               <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
@@ -53,10 +54,10 @@ export function AboutSection() {
             </div>
             {/* Decorative element */}
             <div className="absolute -bottom-6 -right-6 w-32 h-32 border border-primary/30 -z-10" />
-          </div>
+          </AnimateOnScroll>
 
           {/* Content */}
-          <div className="lg:pl-8">
+          <AnimateOnScroll animation="fade-left" className="lg:pl-8">
             <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">
               Bienvenue au Riad Ayadina
             </p>
@@ -96,7 +97,7 @@ export function AboutSection() {
                 </Link>
               </Button>
             </div>
-          </div>
+          </AnimateOnScroll>
         </div>
       </div>
     </section>

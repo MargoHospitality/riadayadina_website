@@ -5,6 +5,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { BookingWidget } from "@/components/booking-widget"
+import { TestimonialsSection } from "@/components/testimonials-section"
 import { 
   Check, 
   Gift, 
@@ -243,6 +245,9 @@ export default function OffresPage() {
             </div>
           </div>
         </section>
+
+        <BookingWidget />
+        <TestimonialsSection />
 
         {/* Fine print */}
         <section className="py-12 border-t border-border">

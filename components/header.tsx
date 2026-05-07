@@ -8,10 +8,12 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 const navigation = [
+  { name: "Accueil", href: "/" },
   { name: "Le Riad", href: "/le-riad" },
   { name: "Chambres & Suites", href: "/chambres-suites" },
   { name: "Restaurant", href: "/restaurant" },
   { name: "Spa", href: "/spa" },
+  { name: "Galerie", href: "/galerie" },
   { name: "Nos Offres", href: "/offres" },
   { name: "Contact", href: "/contact" },
 ]

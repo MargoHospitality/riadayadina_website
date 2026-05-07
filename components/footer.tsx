@@ -10,6 +10,7 @@ const footerLinks = {
     { name: "Chambres & Suites", href: "/chambres-suites" },
     { name: "Restaurant", href: "/restaurant" },
     { name: "Spa", href: "/spa" },
+    { name: "Galerie", href: "/galerie" },
     { name: "Nos Offres", href: "/offres" },
   ],
   partenaires: [

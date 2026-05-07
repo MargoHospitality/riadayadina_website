@@ -4,6 +4,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { BookingWidget } from "@/components/booking-widget"
+import { TestimonialsSection } from "@/components/testimonials-section"
 import { Button } from "@/components/ui/button"
 import { 
   Waves, 
@@ -311,39 +313,8 @@ export default function LeRiadPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-20 md:py-28">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
-              Prêt à découvrir Ayadina ?
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
-              Réservez en direct pour bénéficier du meilleur tarif garanti, 
-              du petit-déjeuner inclus et d&apos;un accueil personnalisé.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button
-                asChild
-                size="lg"
-                className="rounded-none px-10 py-7"
-              >
-                <Link href="/chambres-suites">
-                  Découvrir nos chambres
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="rounded-none px-10 py-7"
-              >
-                <Link href="/#booking">
-                  Réserver maintenant
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <BookingWidget />
+        <TestimonialsSection />
       </main>
       <Footer />
     </>
