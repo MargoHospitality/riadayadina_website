@@ -36,7 +36,7 @@ function TripadvisorIcon({ className }: { className?: string }) {
 
 export function Footer() {
   return (
-    <footer id="contact" className="bg-foreground text-background">
+    <footer id="contact" className="bg-black text-white">
       {/* Main Footer */}
       <div className="container mx-auto px-4 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -44,14 +44,14 @@ export function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block mb-6">
               <Image
-                src="/images/logo-ayadina.png"
+                src="/images/logo-ayadina-outline.png"
                 alt="Riad Ayadina & Spa"
-                width={180}
-                height={60}
-                className="h-16 w-auto"
+                width={280}
+                height={80}
+                className="h-20 md:h-24 lg:h-28 w-auto"
               />
             </Link>
-            <p className="text-background/70 text-sm leading-relaxed mb-6">
+            <p className="text-white/70 text-sm leading-relaxed mb-6">
               1200m² de sérénité au cœur de la médina. Spa, piscine chauffée, restaurant avec licence alcool. Un havre de paix d&apos;exception.
             </p>
             <div className="flex gap-3">
@@ -59,7 +59,7 @@ export function Footer() {
                 href="https://www.instagram.com/riadayadina/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center border border-background/20 hover:bg-background/10 transition-colors"
+                className="w-10 h-10 flex items-center justify-center border border-white/20 hover:bg-white/10 transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
@@ -68,7 +68,7 @@ export function Footer() {
                 href="https://www.facebook.com/RiadAyadina.Spa"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center border border-background/20 hover:bg-background/10 transition-colors"
+                className="w-10 h-10 flex items-center justify-center border border-white/20 hover:bg-white/10 transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
@@ -77,7 +77,7 @@ export function Footer() {
                 href="https://www.tripadvisor.com/Hotel_Review-g293734-d585332-Reviews-Riad_Ayadina_et_SPa-Marrakech_Marrakech_Safi.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center border border-background/20 hover:bg-background/10 transition-colors"
+                className="w-10 h-10 flex items-center justify-center border border-white/20 hover:bg-white/10 transition-colors"
                 aria-label="Tripadvisor"
               >
                 <TripadvisorIcon className="h-5 w-5" />
@@ -93,7 +93,7 @@ export function Footer() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-background/70 hover:text-background transition-colors text-sm"
+                    className="text-white/70 hover:text-white transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -112,7 +112,7 @@ export function Footer() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-background/70 hover:text-background transition-colors text-sm"
+                    className="text-white/70 hover:text-white transition-colors text-sm"
                   >
                     {link.name}
                   </a>
@@ -130,7 +130,7 @@ export function Footer() {
                   href="https://maps.google.com/?q=35+Zaouia+El+Abassia+Marrakech"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start gap-3 text-background/70 hover:text-background transition-colors text-sm"
+                  className="flex items-start gap-3 text-white/70 hover:text-white transition-colors text-sm"
                 >
                   <MapPin className="h-5 w-5 flex-shrink-0 mt-0.5" />
                   <span>
@@ -143,7 +143,7 @@ export function Footer() {
               <li>
                 <a
                   href="tel:+212524383881"
-                  className="flex items-center gap-3 text-background/70 hover:text-background transition-colors text-sm"
+                  className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm"
                 >
                   <Phone className="h-5 w-5 flex-shrink-0" />
                   <span>+212 524 38 38 81</span>
@@ -152,7 +152,7 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:contact@riadayadina.com"
-                  className="flex items-center gap-3 text-background/70 hover:text-background transition-colors text-sm"
+                  className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm"
                 >
                   <Mail className="h-5 w-5 flex-shrink-0" />
                   <span>contact@riadayadina.com</span>
@@ -163,10 +163,10 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar - Blue background */}
-      <div className="bg-primary">
+      {/* Bottom Bar */}
+      <div className="border-t border-white/10">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-center gap-3 text-sm text-primary-foreground">
+          <div className="flex items-center justify-center gap-3 text-sm text-white">
             <Image
               src="/images/margo-hospitality-white.png"
               alt="Margo Hospitality"
@@ -174,7 +174,7 @@ export function Footer() {
               height={30}
               className="h-6 w-auto"
             />
-            <p className="text-primary-foreground/80">
+            <p className="text-white/70">
               Riad Ayadina est membre de Margo Hospitality - Réseau de Boutique Hôtels et Riads au Maroc
             </p>
           </div>
