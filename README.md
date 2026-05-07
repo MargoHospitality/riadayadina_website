@@ -1,3 +1,3 @@
 # Riad Ayadina Website
 
-Initial repository for the Riad Ayadina website project.
+Website project generated with v0 and deployed on Vercel.
