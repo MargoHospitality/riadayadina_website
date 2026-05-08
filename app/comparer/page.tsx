@@ -52,7 +52,7 @@ export default function ComparePage() {
       <Header />
 
       {/* Hero Banner */}
-      <section className="relative pt-20 pb-8 bg-primary overflow-hidden">
+      <section className="relative pt-28 md:pt-32 pb-8 bg-primary overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <Image
             src="/images/patio-fontaine.jpg"
