@@ -50,7 +50,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
   const perks = getDirectPerks(nights)
 
   return (
-    <main className="min-h-screen bg-[#FAF8F5]">
+    <main className="min-h-screen bg-background">
       <Header />
 
       <section className="pt-24 pb-8 md:pt-28 md:pb-12 min-h-[calc(100vh-80px)] flex items-center">
@@ -72,10 +72,10 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
             <div className="bg-white shadow-xl overflow-hidden">
               
               {/* Header Strip */}
-              <div className="bg-[#1a1a2e] text-white px-6 py-4 flex items-center justify-between">
+              <div className="bg-primary text-primary-foreground px-6 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                    <Check className="h-4 w-4 text-emerald-400" />
+                    <Check className="h-4 w-4 text-accent" />
                   </div>
                   <div>
                     <p className="text-xs text-white/60 uppercase tracking-wider">Vérification Google Hotels</p>
@@ -121,16 +121,16 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
                 {directOffer && referenceOffer ? (
                   <div className="grid md:grid-cols-2 gap-4 mb-6">
                     {/* Direct Price - Highlighted */}
-                    <div className="bg-[#1a1a2e] text-white p-5 relative overflow-hidden">
-                      <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] uppercase tracking-wider px-3 py-1">
+                    <div className="bg-primary text-primary-foreground p-5 relative overflow-hidden">
+                      <div className="absolute top-0 right-0 bg-accent text-accent-foreground text-[10px] uppercase tracking-wider px-3 py-1">
                         Recommandé
                       </div>
-                      <p className="text-white/60 text-xs uppercase tracking-wider mb-2">Riad Ayadina · Direct</p>
+                      <p className="text-primary-foreground/60 text-xs uppercase tracking-wider mb-2">Riad Ayadina · Direct</p>
                       <div className="flex items-baseline gap-2">
                         <span className="font-serif text-3xl md:text-4xl">{formatMoney(directOffer.price, directOffer.currency)}</span>
-                        <span className="text-white/50 text-sm">/ nuit</span>
+                        <span className="text-primary-foreground/50 text-sm">/ nuit</span>
                       </div>
-                      <p className="text-emerald-400 text-sm mt-2 flex items-center gap-1.5">
+                      <p className="text-accent text-sm mt-2 flex items-center gap-1.5">
                         <Shield className="h-3.5 w-3.5" />
                         Flexible · Sans prépaiement
                       </p>
@@ -156,22 +156,22 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
 
                 {/* Savings Badge */}
                 {totalSavings > 0 ? (
-                  <div className="bg-emerald-50 border border-emerald-200 p-4 mb-6 text-center">
-                    <p className="text-emerald-800 font-medium">
-                      Économie estimée : <span className="font-serif text-lg">{formatMoney(totalSavings, directOffer?.currency || "EUR")}</span>
-                      <span className="text-emerald-600/70 font-normal"> sur {nights} nuit{nights > 1 ? "s" : ""}</span>
+                  <div className="bg-accent/10 border border-accent/30 p-4 mb-6 text-center">
+                    <p className="text-foreground font-medium">
+                      Économie estimée : <span className="font-serif text-lg text-accent">{formatMoney(totalSavings, directOffer?.currency || "EUR")}</span>
+                      <span className="text-muted-foreground font-normal"> sur {nights} nuit{nights > 1 ? "s" : ""}</span>
                     </p>
                   </div>
                 ) : directOffer && referenceOffer ? (
-                  <div className="bg-amber-50 border border-amber-200 p-4 mb-6 text-center">
-                    <p className="text-amber-800">
+                  <div className="bg-secondary border border-border p-4 mb-6 text-center">
+                    <p className="text-foreground">
                       Prix équivalent — <span className="font-medium">conditions directes plus flexibles</span>
                     </p>
                   </div>
                 ) : null}
 
                 {/* Perks Grid */}
-                <div className="bg-[#FAF8F5] p-5 mb-6">
+                <div className="bg-secondary p-5 mb-6">
                   <div className="flex items-center gap-2 mb-4">
                     <Sparkles className="h-4 w-4 text-accent" />
                     <p className="text-xs uppercase tracking-wider text-muted-foreground">Inclus avec la réservation directe</p>
@@ -189,7 +189,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
                 </div>
 
                 {/* CTA */}
-                <Button asChild size="lg" className="w-full rounded-none py-7 text-base tracking-wide bg-[#1a1a2e] hover:bg-[#2a2a3e]">
+                <Button asChild size="lg" className="w-full rounded-none py-7 text-base tracking-wide">
                   <a href={bookingUrl} target="_blank" rel="noreferrer">
                     Continuer vers la réservation officielle
                     <ExternalLink className="ml-2 h-4 w-4" />
@@ -222,7 +222,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
 function PerkItem({ children }: { children: ReactNode }) {
   return (
     <div className="flex items-center gap-2 text-sm">
-      <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+      <Check className="h-4 w-4 text-accent shrink-0" />
       <span className="text-foreground">{children}</span>
     </div>
   )
