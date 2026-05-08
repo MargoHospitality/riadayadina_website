@@ -27,12 +27,11 @@ export default function RestaurantPage() {
         <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              src="/images/ayadina/patio-fontaine-nuit-01.jpg"
-              alt="Restaurant et patio du Riad Ayadina de nuit"
+              src="/images/restaurant-terrasse.jpg"
+              alt="Restaurant terrasse Riad Ayadina"
               fill
               className="object-cover"
               priority
-              style={{ objectPosition: "50% 55%" }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
           </div>

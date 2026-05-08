@@ -43,7 +43,7 @@ export function HeroSection() {
           
           {/* Main title - clean & impactful */}
           <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white mb-6 leading-[1.05]">
-            Ayadina
+            Riad Ayadina
           </h1>
           
           {/* Subtle descriptor */}

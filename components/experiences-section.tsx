@@ -24,15 +24,6 @@ const experiences = [
     link: "/spa",
   },
   {
-    title: "Petit-déjeuner marocain",
-    subtitle: "Inclus avec votre séjour",
-    description: "Commencez la journée par un festin de saveurs authentiques : msemen, beghrir, crêpes mille trous, confitures maison, huile d'argan, miel, fruits frais et thé à la menthe.",
-    image: "/images/ayadina-home/petitdejeuner-terrasse-02.jpg",
-    objectPosition: "45% 60%",
-    highlight: "Inclus",
-    link: null,
-  },
-  {
     title: "Restaurant & Bar",
     subtitle: "Licence alcool",
     description: "Une expérience gastronomique unique en médina avec notre licence alcool. Cuisine marocaine et française raffinée, carte des vins, cocktails signature et espace cigares. Service sur la terrasse rooftop avec vue panoramique.",
@@ -40,6 +31,15 @@ const experiences = [
     objectPosition: "55% 50%",
     highlight: "Licence alcool",
     link: "/restaurant",
+  },
+  {
+    title: "Petit-déjeuner marocain",
+    subtitle: "Inclus avec votre séjour",
+    description: "Commencez la journée par un festin de saveurs authentiques : msemen, beghrir, crêpes mille trous, confitures maison, huile d'argan, miel, fruits frais et thé à la menthe.",
+    image: "/images/ayadina-home/petitdejeuner-terrasse-02.jpg",
+    objectPosition: "45% 60%",
+    highlight: "Inclus",
+    link: null,
   },
 ]
 

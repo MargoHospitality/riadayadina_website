@@ -72,13 +72,12 @@ export default function SpaPage() {
         <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
           <div className="absolute inset-0">
             <Image
-              src="/images/ayadina/gallery-hammam-riad-102.jpg"
-              alt="Hammam traditionnel du Spa Ayadina"
+              src="/images/spa-massage.jpg"
+              alt="Massage relaxant au Spa Ayadina"
               fill
               className="object-cover"
               priority
               sizes="100vw"
-              style={{ objectPosition: "50% 52%" }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
           </div>
