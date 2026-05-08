@@ -21,7 +21,11 @@ export interface RateComparison {
 export async function getRateComparison(search: BookingSearch): Promise<RateComparison> {
   // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 100))
+  return getRateComparisonSync(search)
+}
 
+// Synchronous version for client components
+export function getRateComparisonSync(_search: BookingSearch): RateComparison {
   // Mock prices based on dates (in production, fetch from Google Hotels)
   const basePrice = 120 // Base price per night in EUR
 
