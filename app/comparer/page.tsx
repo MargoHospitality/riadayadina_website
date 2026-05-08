@@ -104,29 +104,32 @@ export default function ComparePage() {
               {/* Direct Offer - Takes 3 columns */}
               <div className="lg:col-span-3 bg-card border-2 border-accent shadow-lg relative overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-accent" />
-                <div className="absolute top-4 right-4 bg-accent text-accent-foreground text-xs uppercase tracking-wider px-3 py-1.5 font-medium">
-                  Meilleur choix
-                </div>
                 
                 <div className="p-6 md:p-8">
-                  <div className="flex items-start gap-4 mb-6">
-                    <div className="w-16 h-16 relative rounded-sm overflow-hidden flex-shrink-0">
-                      <Image
-                        src="/images/logo-ayadina.png"
-                        alt="Riad Ayadina"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Site officiel</p>
-                      <h2 className="font-serif text-2xl text-foreground">Riad Ayadina & Spa</h2>
-                      <div className="flex items-center gap-1 mt-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="h-3 w-3 fill-accent text-accent" />
-                        ))}
-                        <span className="text-xs text-muted-foreground ml-1">Réservation directe</span>
+                  {/* Header with badge on separate row on mobile */}
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-14 h-14 md:w-16 md:h-16 relative rounded-sm overflow-hidden flex-shrink-0">
+                        <Image
+                          src="/images/logo-ayadina.png"
+                          alt="Riad Ayadina"
+                          fill
+                          className="object-contain"
+                        />
                       </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Site officiel</p>
+                        <h2 className="font-serif text-xl md:text-2xl text-foreground">Riad Ayadina & Spa</h2>
+                        <div className="flex items-center gap-1 mt-1">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="h-3 w-3 fill-accent text-accent" />
+                          ))}
+                          <span className="text-xs text-muted-foreground ml-1">Réservation directe</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-accent text-accent-foreground text-xs uppercase tracking-wider px-3 py-1.5 font-medium self-start">
+                      Meilleur choix
                     </div>
                   </div>
 
