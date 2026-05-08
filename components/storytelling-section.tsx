@@ -13,7 +13,7 @@ export function StorytellingSection() {
             <div className="relative">
               <div className="aspect-[4/5] relative overflow-hidden">
                 <Image
-                  src="/images/patio-arbore.jpg"
+                  src="/images/ayadina-home/patio-jour-02.jpg"
                   alt="Patio arboré du Riad Ayadina"
                   fill
                   className="object-cover"

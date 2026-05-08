@@ -18,7 +18,7 @@ export function HeroSection() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/hero-patio.jpg"
+          src="/images/ayadina-home/patio-jour-02.jpg"
           alt="Patio principal du Riad Ayadina"
           fill
           className="object-cover"
