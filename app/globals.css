@@ -3,34 +3,38 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Riad Ayadina & Spa - Royal Blue & Gold Palette */
+/* Riad Ayadina & Spa - Royal Blue & Gold Palette with Boutique Warmth */
 :root {
-  /* Warm cream/off-white background */
-  --background: oklch(0.98 0.005 90);
-  --foreground: oklch(0.20 0.02 260);
+  /* Warm sand/cream background */
+  --background: oklch(0.97 0.01 85);
+  --foreground: oklch(0.18 0.02 50);
   
-  /* Card - pure white */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.20 0.02 260);
+  /* Card - warm off-white */
+  --card: oklch(0.99 0.005 85);
+  --card-foreground: oklch(0.18 0.02 50);
   
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.20 0.02 260);
+  --popover: oklch(0.99 0.005 85);
+  --popover-foreground: oklch(0.18 0.02 50);
   
   /* Primary - Royal Blue (from logo) */
-  --primary: oklch(0.40 0.18 260);
-  --primary-foreground: oklch(0.98 0.005 90);
+  --primary: oklch(0.38 0.16 260);
+  --primary-foreground: oklch(0.98 0.005 85);
   
-  /* Secondary - Light blue tint */
-  --secondary: oklch(0.95 0.02 260);
-  --secondary-foreground: oklch(0.25 0.10 260);
+  /* Secondary - Warm sand tint */
+  --secondary: oklch(0.94 0.02 85);
+  --secondary-foreground: oklch(0.25 0.05 50);
   
-  /* Muted - Light warm gray */
-  --muted: oklch(0.96 0.005 90);
-  --muted-foreground: oklch(0.45 0.02 260);
+  /* Muted - Soft clay/argile */
+  --muted: oklch(0.93 0.015 60);
+  --muted-foreground: oklch(0.42 0.03 50);
   
-  /* Accent - Moroccan Gold (from logo) */
-  --accent: oklch(0.75 0.14 85);
-  --accent-foreground: oklch(0.20 0.02 260);
+  /* Accent - Moroccan Gold/Laiton doux */
+  --accent: oklch(0.72 0.12 80);
+  --accent-foreground: oklch(0.18 0.02 50);
+  
+  /* Patio green for accents */
+  --patio: oklch(0.45 0.08 160);
+  --patio-foreground: oklch(0.98 0.005 85);
   
   --destructive: oklch(0.55 0.22 25);
   --destructive-foreground: oklch(0.98 0.005 90);

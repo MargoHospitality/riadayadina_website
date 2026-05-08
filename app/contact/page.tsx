@@ -71,50 +71,65 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Contact Cards - Floating above */}
-        <section className="relative z-10 -mt-20 pb-20">
+        {/* WhatsApp CTA - Principal */}
+        <section className="relative z-10 -mt-16 pb-16">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="max-w-2xl mx-auto">
+              <a 
+                href="https://wa.me/212524383881?text=Bonjour, je souhaiterais des informations sur le Riad Ayadina."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between bg-[#25D366] text-white p-6 md:p-8 shadow-2xl hover:bg-[#22c55e] transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-white/20 flex items-center justify-center">
+                    <MessageCircle className="h-7 w-7" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif text-xl mb-1">Nous contacter sur WhatsApp</h3>
+                    <p className="text-white/80 text-sm">Réponse rapide garantie</p>
+                  </div>
+                </div>
+                <div className="hidden md:block text-white/60 group-hover:translate-x-1 transition-transform">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Methods */}
+        <section className="pb-16">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
               {/* Phone */}
               <a 
                 href="tel:+212524383881"
-                className="bg-card p-8 shadow-xl hover:shadow-2xl transition-shadow text-center group"
+                className="bg-card p-6 border border-border/50 hover:border-accent/30 transition-all text-center group"
               >
-                <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <Phone className="h-7 w-7 text-primary" />
-                </div>
-                <h3 className="font-serif text-xl text-foreground mb-2">Téléphone</h3>
-                <p className="text-primary font-medium">+212 524 38 38 81</p>
-                <p className="text-sm text-muted-foreground mt-2">Tous les jours 8h-22h</p>
-              </a>
-
-              {/* WhatsApp */}
-              <a 
-                href="https://wa.me/212524383881"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-card p-8 shadow-xl hover:shadow-2xl transition-shadow text-center group"
-              >
-                <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <MessageCircle className="h-7 w-7 text-primary" />
-                </div>
-                <h3 className="font-serif text-xl text-foreground mb-2">WhatsApp</h3>
-                <p className="text-primary font-medium">Réponse rapide</p>
-                <p className="text-sm text-muted-foreground mt-2">Message instantané</p>
+                <Phone className="h-6 w-6 text-primary mx-auto mb-3" />
+                <h3 className="font-medium text-foreground mb-1">Téléphone</h3>
+                <p className="text-primary text-sm">+212 524 38 38 81</p>
               </a>
 
               {/* Email */}
               <a 
                 href="mailto:contact@riadayadina.com"
-                className="bg-card p-8 shadow-xl hover:shadow-2xl transition-shadow text-center group"
+                className="bg-card p-6 border border-border/50 hover:border-accent/30 transition-all text-center group"
               >
-                <div className="w-16 h-16 bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <Mail className="h-7 w-7 text-primary" />
-                </div>
-                <h3 className="font-serif text-xl text-foreground mb-2">Email</h3>
-                <p className="text-primary font-medium">contact@riadayadina.com</p>
-                <p className="text-sm text-muted-foreground mt-2">Réponse sous 24h</p>
+                <Mail className="h-6 w-6 text-primary mx-auto mb-3" />
+                <h3 className="font-medium text-foreground mb-1">Email</h3>
+                <p className="text-primary text-sm">contact@riadayadina.com</p>
               </a>
+
+              {/* Hours */}
+              <div className="bg-card p-6 border border-border/50 text-center">
+                <Clock className="h-6 w-6 text-primary mx-auto mb-3" />
+                <h3 className="font-medium text-foreground mb-1">Horaires</h3>
+                <p className="text-muted-foreground text-sm">Tous les jours 8h-22h</p>
+              </div>
             </div>
           </div>
         </section>
@@ -329,34 +344,32 @@ export default function ContactPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-primary text-primary-foreground">
+        <section className="py-16 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 text-center">
             <h2 className="font-serif text-3xl md:text-4xl mb-4">
-              Prêt à vivre l&apos;expérience Ayadina ?
+              Réservez en direct, profitez pleinement
             </h2>
-            <p className="text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-              Réservez directement et bénéficiez des meilleures conditions : 
-              tarif garanti, petit-déjeuner inclus, transfert offert.
+            <p className="text-primary-foreground/70 mb-8 max-w-xl mx-auto text-sm">
+              Meilleur tarif garanti, transfert aéroport offert dès 2 nuitées, -10% sur le spa.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 asChild
                 size="lg"
-                className="rounded-none px-10 py-7 bg-white text-primary hover:bg-white/90"
+                className="rounded-none px-10 py-6 bg-white text-primary hover:bg-white/90"
               >
-                <Link href="/offres">
-                  Voir nos offres exclusives
+                <Link href="/#booking">
+                  Réserver en direct
                 </Link>
               </Button>
               <Button
                 asChild
                 size="lg"
-                className="rounded-none px-10 py-7 border-2 border-white text-white bg-transparent hover:bg-white/10"
+                className="rounded-none px-10 py-6 border border-white/30 text-white bg-transparent hover:bg-white/10"
               >
-                <a href="tel:+212524383881">
-                  <Phone className="h-5 w-5 mr-2" />
-                  Appeler maintenant
-                </a>
+                <Link href="/offres">
+                  Voir nos offres
+                </Link>
               </Button>
             </div>
           </div>

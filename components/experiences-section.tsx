@@ -41,7 +41,7 @@ const experiences = [
 
 export function ExperiencesSection() {
   return (
-    <section id="experiences" className="py-20 md:py-32 bg-background">
+    <section id="experiences" className="py-14 md:py-24 bg-background">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -94,10 +94,10 @@ export function ExperiencesSection() {
                   <Button
                     asChild
                     variant="outline"
-                    className="rounded-none px-8 py-5 border-foreground/20 hover:bg-foreground/5"
+                    className="rounded-none px-6 py-4 border-foreground/20 hover:bg-foreground/5 hover:border-accent/40 transition-all"
                   >
                     <Link href={experience.link}>
-                      En savoir plus
+                      {experience.link === "/spa" ? "Réserver un soin" : experience.link === "/restaurant" ? "Réserver une table" : "Découvrir"}
                     </Link>
                   </Button>
                 )}

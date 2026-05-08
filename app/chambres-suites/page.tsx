@@ -9,6 +9,7 @@ const chambresDoubles = {
   title: "Chambres Doubles Supérieures",
   subtitle: "L'élégance marocaine dans un écrin de confort",
   description: "Trois chambres de caractère, chacune avec sa personnalité unique. Un cocon de 17 à 22m² où l'artisanat marocain traditionnel rencontre le raffinement contemporain. L'endroit idéal pour un séjour en couple ou en solo.",
+  forWho: "Idéal pour : couples en escapade romantique, voyageurs solo",
   roomCount: 3,
   surfaceRange: "17-22m²",
   features: [
@@ -35,6 +36,7 @@ const suitesJunior = {
   title: "Suites Junior",
   subtitle: "L'espace et le luxe pour un séjour d'exception",
   description: "Six suites spacieuses de 24 à 36m² avec salon privatif. Des espaces généreux pensés pour les voyageurs exigeants, où chaque détail invite à la contemplation et au repos absolu.",
+  forWho: "Idéal pour : séjours spa, couples, familles, longs séjours",
   roomCount: 6,
   surfaceRange: "24-36m²",
   features: [

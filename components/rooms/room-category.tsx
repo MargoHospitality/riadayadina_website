@@ -11,6 +11,7 @@ interface RoomCategoryProps {
   title: string
   subtitle: string
   description: string
+  forWho?: string
   roomCount: number
   surfaceRange: string
   features: string[]
@@ -22,6 +23,7 @@ export function RoomCategory({
   title,
   subtitle,
   description,
+  forWho,
   roomCount,
   surfaceRange,
   features,
@@ -70,11 +72,20 @@ export function RoomCategory({
               </p>
 
               <p className={cn(
-                "text-base leading-relaxed mb-8",
+                "text-base leading-relaxed mb-4",
                 isDark ? "text-primary-foreground/70" : "text-muted-foreground"
               )}>
                 {description}
               </p>
+
+              {forWho && (
+                <p className={cn(
+                  "text-sm italic mb-8 pb-6 border-b",
+                  isDark ? "text-accent border-white/10" : "text-accent border-border/50"
+                )}>
+                  {forWho}
+                </p>
+              )}
 
               {/* Features */}
               <div className="mb-8">
@@ -118,8 +129,8 @@ export function RoomCategory({
                     : "bg-primary text-primary-foreground hover:bg-primary/90"
                 )}
               >
-                <a href="#reservation">
-                  Vérifier les disponibilités
+                <a href="#booking">
+                  Réserver en direct
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </a>
               </Button>

@@ -25,7 +25,7 @@ export function HeroSection() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50" />
       </div>
 
       {/* Content - Minimal & Elegant */}
@@ -50,7 +50,7 @@ export function HeroSection() {
             1200m² de sérénité au cœur de la médina
           </p>
 
-          {/* Single elegant CTA */}
+          {/* CTA premium */}
           <div
             className={`transition-all duration-1000 delay-500 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -62,29 +62,31 @@ export function HeroSection() {
               className="rounded-none px-12 py-7 text-base tracking-widest uppercase bg-white text-foreground hover:bg-white/90"
             >
               <Link href="#booking">
-                Réserver
+                Réserver en direct
               </Link>
             </Button>
+            
+            {/* Reassurance line */}
+            <p className="text-white/60 text-sm mt-6 tracking-wide">
+              Meilleur tarif garanti · Confirmation rapide · Transfert offert dès 2 nuitées
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Bottom bar - subtle info */}
+      {/* Bottom bar - subtle amenities */}
       <div 
-        className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent pt-20 pb-8 transition-all duration-1000 delay-700 ${
+        className={`absolute bottom-0 left-0 right-0 py-6 transition-all duration-1000 delay-700 ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/60 text-sm tracking-wide">
-            Transfert aéroport offert dès 2 nuitées en direct
-          </p>
-          <div className="flex items-center gap-8 text-white/60 text-sm">
+        <div className="container mx-auto px-6">
+          <div className="flex items-center justify-center gap-6 md:gap-12 text-white/50 text-xs md:text-sm tracking-wider uppercase">
             <span>Spa 250m²</span>
-            <span className="hidden md:inline">•</span>
-            <span className="hidden md:inline">Piscine chauffée</span>
-            <span className="hidden md:inline">•</span>
-            <span className="hidden md:inline">Licence alcool</span>
+            <span className="w-1 h-1 rounded-full bg-white/30" />
+            <span>Piscine chauffée</span>
+            <span className="hidden md:block w-1 h-1 rounded-full bg-white/30" />
+            <span className="hidden md:inline">Restaurant & Bar</span>
           </div>
         </div>
       </div>

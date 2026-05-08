@@ -330,9 +330,12 @@ export default function SpaPage() {
               {/* Contact */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button asChild className="rounded-none px-8 py-6 text-base">
-                  <a href="tel:+212524383881">
-                    <Phone className="h-4 w-4 mr-2" />
-                    +212 524 38 38 81
+                  <a 
+                    href="https://wa.me/212524383881?text=Bonjour, je souhaiterais réserver un soin au spa."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Réserver un soin
                   </a>
                 </Button>
                 <Button 
@@ -340,12 +343,9 @@ export default function SpaPage() {
                   variant="outline" 
                   className="rounded-none px-8 py-6 text-base border-primary/20"
                 >
-                  <a 
-                    href="https://wa.me/212524383881?text=Bonjour, je souhaiterais réserver un soin au spa."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Réserver via WhatsApp
+                  <a href="tel:+212524383881">
+                    <Phone className="h-4 w-4 mr-2" />
+                    Nous appeler
                   </a>
                 </Button>
               </div>

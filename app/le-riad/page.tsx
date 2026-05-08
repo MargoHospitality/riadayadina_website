@@ -176,18 +176,19 @@ export default function LeRiadPage() {
                   </p>
                 </div>
                 <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
-                  Trois patios, trois ambiances
+                  Trois patios, trois atmosphères
                 </h2>
                 <div className="space-y-4 text-muted-foreground mb-8">
                   <p>
-                    Le riad s&apos;organise autour de trois patios luxuriants, véritables poumons 
-                    verts au cœur de la demeure. Orangers, bougainvilliers et jasmin embaument 
-                    l&apos;air et créent une atmosphère de jardin secret.
+                    Le riad s&apos;articule autour de trois patios luxuriants. L&apos;eau murmure dans 
+                    les fontaines, le soleil joue sur les zelliges centenaires, les orangers 
+                    embaument l&apos;air de leur parfum délicat. Ici, le temps suspend son vol.
                   </p>
                   <p>
-                    Chaque patio a sa personnalité : l&apos;un invite à la lecture à l&apos;ombre 
-                    des arbres, l&apos;autre accueille vos petits-déjeuners au soleil, 
-                    le troisième offre un coin de fraîcheur pour le thé de l&apos;après-midi.
+                    Le premier patio vous accueille sous les bougainvilliers pour un 
+                    petit-déjeuner ensoleillé. Le second, plus intime, invite à la lecture 
+                    à l&apos;ombre des jasmins. Le troisième, rafraîchissant, devient le refuge 
+                    idéal pour le thé de l&apos;après-midi.
                   </p>
                 </div>
 
