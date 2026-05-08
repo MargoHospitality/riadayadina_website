@@ -1,13 +1,22 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Calendar, Users, ShieldCheck, Plane, Percent } from "lucide-react"
 
 export function BookingWidget() {
+  const router = useRouter()
   const [checkIn, setCheckIn] = useState("")
   const [checkOut, setCheckOut] = useState("")
   const [guests, setGuests] = useState("2")
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (checkIn && checkOut) {
+      router.push(`/comparer?checkIn=${checkIn}&checkOut=${checkOut}&adults=${guests}`)
+    }
+  }
 
   return (
     <section id="booking" className="py-14 md:py-24 bg-secondary">
@@ -45,7 +54,7 @@ export function BookingWidget() {
             </div>
 
             {/* Form */}
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Check-in */}
                 <div>
