@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { X, Calendar, Users, ShieldCheck, Sparkles, Gift } from "lucide-react"
+import Image from "next/image"
+import { X, Calendar, Users, ShieldCheck, Sparkles, Gift, Star, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -27,7 +28,12 @@ export function BookingDateModal({
   const [adults, setAdults] = useState(defaultAdults)
   const [error, setError] = useState("")
 
-  // Update state when defaults change (for prefill from comparison page)
+  // Calculate nights
+  const nights = checkIn && checkOut 
+    ? Math.ceil((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000)
+    : 0
+
+  // Update state when defaults change
   useEffect(() => {
     if (defaultCheckIn) setCheckIn(defaultCheckIn)
     if (defaultCheckOut) setCheckOut(defaultCheckOut)
@@ -74,15 +80,11 @@ export function BookingDateModal({
       return
     }
 
-    // Close modal and navigate
     onClose()
     router.push(`/comparer?checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}`)
   }
 
-  // Get minimum date (today)
   const today = new Date().toISOString().split("T")[0]
-
-  // Get minimum checkout date (day after checkin)
   const minCheckOut = checkIn
     ? new Date(new Date(checkIn).getTime() + 86400000).toISOString().split("T")[0]
     : today
@@ -93,7 +95,7 @@ export function BookingDateModal({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity"
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 transition-opacity"
         onClick={onClose}
       />
 
@@ -101,122 +103,151 @@ export function BookingDateModal({
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 pointer-events-none">
         <div
           className={cn(
-            "bg-card w-full max-w-xl pointer-events-auto shadow-2xl",
+            "bg-card w-full max-w-lg pointer-events-auto shadow-2xl overflow-hidden",
             "max-h-[90vh] overflow-y-auto",
-            // Mobile: bottom sheet style
-            "md:rounded-none md:max-h-none",
             "animate-in fade-in-0 zoom-in-95 duration-300"
           )}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header */}
-          <div className="sticky top-0 bg-card border-b border-border px-6 py-4 flex items-start justify-between">
-            <div>
-              <h2 className="font-serif text-xl md:text-2xl text-foreground">
-                Préparer votre séjour
-              </h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                Choisissez vos dates, nous vérifions ensuite l&apos;offre directe et les prix publics observés.
-              </p>
-            </div>
+          {/* Premium Header with Logo */}
+          <div className="bg-primary text-primary-foreground px-6 py-5 relative">
+            {/* Close button */}
             <button
               onClick={onClose}
-              className="p-2 -m-2 text-muted-foreground hover:text-foreground transition-colors"
+              className="absolute top-4 right-4 p-2 text-primary-foreground/60 hover:text-primary-foreground transition-colors"
               aria-label="Fermer"
             >
               <X className="h-5 w-5" />
             </button>
+
+            {/* Logo and Title */}
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 relative bg-white/10 p-2 flex-shrink-0">
+                <Image
+                  src="/images/logo-ayadina.png"
+                  alt="Riad Ayadina"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <div>
+                <h2 className="font-serif text-xl md:text-2xl">
+                  Réservez en direct
+                </h2>
+                <div className="flex items-center gap-1 mt-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-3 w-3 fill-accent text-accent" />
+                  ))}
+                  <span className="text-xs text-primary-foreground/60 ml-1.5">Riad Ayadina & Spa</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="p-6">
-            <div className="space-y-5">
-              {/* Date inputs */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs text-muted-foreground uppercase tracking-wider mb-2">
-                    <Calendar className="inline h-3 w-3 mr-1.5" />
-                    Arrivée
-                  </label>
+            {/* Date inputs in elegant boxes */}
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="bg-secondary/50 border border-border/50 p-4">
+                <label className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
+                  Arrivée
+                </label>
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-accent" />
                   <input
                     type="date"
                     value={checkIn}
                     onChange={(e) => setCheckIn(e.target.value)}
                     min={today}
-                    className="w-full px-4 py-3 bg-secondary border border-border/50 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
+                    className="flex-1 bg-transparent text-foreground text-sm focus:outline-none cursor-pointer"
                     required
                   />
                 </div>
-                <div>
-                  <label className="block text-xs text-muted-foreground uppercase tracking-wider mb-2">
-                    <Calendar className="inline h-3 w-3 mr-1.5" />
-                    Départ
-                  </label>
+              </div>
+              <div className="bg-secondary/50 border border-border/50 p-4">
+                <label className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
+                  Départ
+                </label>
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-accent" />
                   <input
                     type="date"
                     value={checkOut}
                     onChange={(e) => setCheckOut(e.target.value)}
                     min={minCheckOut}
-                    className="w-full px-4 py-3 bg-secondary border border-border/50 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-accent/50"
+                    className="flex-1 bg-transparent text-foreground text-sm focus:outline-none cursor-pointer"
                     required
                   />
                 </div>
               </div>
+            </div>
 
-              {/* Adults select */}
-              <div>
-                <label className="block text-xs text-muted-foreground uppercase tracking-wider mb-2">
-                  <Users className="inline h-3 w-3 mr-1.5" />
+            {/* Adults and Nights summary */}
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <div className="bg-secondary/50 border border-border/50 p-4">
+                <label className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
                   Voyageurs
                 </label>
-                <select
-                  value={adults}
-                  onChange={(e) => setAdults(Number(e.target.value))}
-                  className="w-full px-4 py-3 bg-secondary border border-border/50 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 appearance-none cursor-pointer"
-                >
-                  <option value={1}>1 adulte</option>
-                  <option value={2}>2 adultes</option>
-                  <option value={3}>3 adultes</option>
-                  <option value={4}>4 adultes</option>
-                </select>
+                <div className="flex items-center gap-2">
+                  <Users className="h-4 w-4 text-accent" />
+                  <select
+                    value={adults}
+                    onChange={(e) => setAdults(Number(e.target.value))}
+                    className="flex-1 bg-transparent text-foreground text-sm focus:outline-none cursor-pointer appearance-none"
+                  >
+                    <option value={1}>1 adulte</option>
+                    <option value={2}>2 adultes</option>
+                    <option value={3}>3 adultes</option>
+                    <option value={4}>4 adultes</option>
+                  </select>
+                </div>
               </div>
-
-              {/* Error message */}
-              {error && (
-                <p className="text-sm text-red-600 bg-red-50 px-4 py-2 border border-red-200">
-                  {error}
-                </p>
+              {nights > 0 && (
+                <div className="bg-accent/10 border border-accent/30 p-4 flex items-center justify-center">
+                  <span className="font-serif text-2xl text-accent">{nights}</span>
+                  <span className="text-sm text-muted-foreground ml-2">nuit{nights > 1 ? "s" : ""}</span>
+                </div>
               )}
             </div>
 
-            {/* Benefit chips */}
-            <div className="flex flex-wrap gap-2 mt-6 mb-6">
-              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground bg-secondary px-3 py-1.5">
-                <ShieldCheck className="h-3 w-3 text-accent" />
-                Flexible en direct
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground bg-secondary px-3 py-1.5">
-                <Sparkles className="h-3 w-3 text-accent" />
-                Sans prépaiement
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground bg-secondary px-3 py-1.5">
-                <Gift className="h-3 w-3 text-accent" />
-                Avantages dès 2 nuits
-              </span>
+            {/* Error message */}
+            {error && (
+              <p className="text-sm text-red-600 bg-red-50 px-4 py-2 border border-red-200 mb-4">
+                {error}
+              </p>
+            )}
+
+            {/* Benefit row */}
+            <div className="border-t border-b border-border py-4 mb-6">
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div className="flex flex-col items-center gap-1">
+                  <ShieldCheck className="h-4 w-4 text-accent" />
+                  <span className="text-[10px] text-muted-foreground">Annulation flexible</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <Sparkles className="h-4 w-4 text-accent" />
+                  <span className="text-[10px] text-muted-foreground">Sans prépaiement</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <Gift className="h-4 w-4 text-accent" />
+                  <span className="text-[10px] text-muted-foreground">Avantages 2+ nuits</span>
+                </div>
+              </div>
             </div>
 
             {/* Submit button */}
             <Button
               type="submit"
               size="lg"
-              className="w-full rounded-none py-6 text-base tracking-wide"
+              className="w-full rounded-none py-6 text-base tracking-wide group"
             >
-              Comparer les offres directes
+              Comparer les tarifs
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
 
-            {/* Secondary text */}
-            <p className="text-xs text-center text-muted-foreground mt-4">
-              Étape suivante : comparaison Google Hotels puis réservation officielle sécurisée.
+            {/* Trust text */}
+            <p className="text-[10px] text-center text-muted-foreground mt-4">
+              Nous comparons le tarif direct avec Google Hotels, puis vous réservez sur le site officiel sécurisé.
             </p>
           </form>
         </div>

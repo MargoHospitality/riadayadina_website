@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { useBookingModal } from "@/components/booking-modal-provider"
 import { 
   MapPin, 
   Phone, 
@@ -21,6 +22,7 @@ import {
 } from "lucide-react"
 
 export default function ContactPage() {
+  const { openBookingModal } = useBookingModal()
   const [formState, setFormState] = useState<"idle" | "sending" | "sent">("idle")
   const [formData, setFormData] = useState({
     name: "",
@@ -354,13 +356,11 @@ export default function ContactPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
-                asChild
+                onClick={() => openBookingModal()}
                 size="lg"
                 className="rounded-none px-10 py-6 bg-white text-primary hover:bg-white/90"
               >
-                <Link href="/#booking">
-                  Réserver en direct
-                </Link>
+                Réserver en direct
               </Button>
               <Button
                 asChild

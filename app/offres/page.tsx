@@ -7,6 +7,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { BookingWidget } from "@/components/booking-widget"
 import { TestimonialsSection } from "@/components/testimonials-section"
+import { useBookingModal } from "@/components/booking-modal-provider"
 import { 
   Check, 
   Gift, 
@@ -71,6 +72,8 @@ const whyDirect = [
 ]
 
 export default function OffresPage() {
+  const { openBookingModal } = useBookingModal()
+  
   return (
     <>
       <Header />
@@ -201,7 +204,7 @@ export default function OffresPage() {
                     </div>
                     
                     <Button
-                      asChild
+                      onClick={() => openBookingModal()}
                       className={`w-full rounded-none py-5 ${
                         offer.featured 
                           ? "bg-white text-primary hover:bg-white/90" 
@@ -209,9 +212,7 @@ export default function OffresPage() {
                       }`}
                       variant={offer.featured ? "default" : "outline"}
                     >
-                      <Link href="#booking">
-                        Réserver en direct
-                      </Link>
+                      Réserver en direct
                     </Button>
                   </div>
                 </div>
@@ -235,10 +236,8 @@ export default function OffresPage() {
                 du même prix — voire moins — avec tous les avantages en plus.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild className="rounded-none px-8 py-6">
-                  <Link href="#booking">
-                    Vérifier les disponibilités
-                  </Link>
+                <Button onClick={() => openBookingModal()} className="rounded-none px-8 py-6">
+                  Vérifier les disponibilités
                 </Button>
                 <Button asChild variant="outline" className="rounded-none px-8 py-6">
                   <a href="tel:+212524383881">

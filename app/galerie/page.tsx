@@ -6,6 +6,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ImageGalleryModal } from "@/components/image-gallery-modal"
 import { AnimateOnScroll } from "@/components/animate-on-scroll"
+import { useBookingModal } from "@/components/booking-modal-provider"
 import { cn } from "@/lib/utils"
 
 // Gallery categories with images and descriptions for decision-making
@@ -105,6 +106,7 @@ export default function GaleriePage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [galleryIndex, setGalleryIndex] = useState(0)
+  const { openBookingModal } = useBookingModal()
 
   const filteredImages = selectedCategory 
     ? galleryCategories.find(cat => cat.id === selectedCategory)?.images || []
@@ -297,12 +299,12 @@ export default function GaleriePage() {
                 Les photos ne racontent qu&apos;une partie de l&apos;histoire. 
                 Venez découvrir Ayadina par vous-même.
               </p>
-              <a 
-                href="/#booking"
+              <button 
+                onClick={() => openBookingModal()}
                 className="inline-flex items-center justify-center px-8 py-4 bg-white text-primary font-medium hover:bg-white/90 transition-colors"
               >
                 Réserver en direct
-              </a>
+              </button>
             </AnimateOnScroll>
           </div>
         </section>

@@ -1,22 +1,11 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Calendar, Users, ShieldCheck, Plane, Percent } from "lucide-react"
+import { useBookingModal } from "@/components/booking-modal-provider"
+import { ShieldCheck, Plane, Percent } from "lucide-react"
 
 export function BookingWidget() {
-  const router = useRouter()
-  const [checkIn, setCheckIn] = useState("")
-  const [checkOut, setCheckOut] = useState("")
-  const [guests, setGuests] = useState("2")
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (checkIn && checkOut) {
-      router.push(`/comparer?checkIn=${checkIn}&checkOut=${checkOut}&adults=${guests}`)
-    }
-  }
+  const { openBookingModal } = useBookingModal()
 
   return (
     <section id="booking" className="py-14 md:py-24 bg-secondary">
@@ -35,7 +24,7 @@ export function BookingWidget() {
             </p>
           </div>
 
-          {/* Booking Form */}
+          {/* CTA Card */}
           <div className="bg-card shadow-lg p-6 md:p-10">
             {/* Benefits reminder */}
             <div className="flex flex-wrap justify-center gap-6 mb-8 pb-8 border-b border-border">
@@ -53,71 +42,14 @@ export function BookingWidget() {
               </div>
             </div>
 
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Check-in */}
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Arrivée
-                  </label>
-                  <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <input
-                      type="date"
-                      value={checkIn}
-                      onChange={(e) => setCheckIn(e.target.value)}
-                      className="w-full pl-10 pr-4 py-4 border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                    />
-                  </div>
-                </div>
-
-                {/* Check-out */}
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Départ
-                  </label>
-                  <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <input
-                      type="date"
-                      value={checkOut}
-                      onChange={(e) => setCheckOut(e.target.value)}
-                      className="w-full pl-10 pr-4 py-4 border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                    />
-                  </div>
-                </div>
-
-                {/* Guests */}
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Voyageurs
-                  </label>
-                  <div className="relative">
-                    <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                    <select
-                      value={guests}
-                      onChange={(e) => setGuests(e.target.value)}
-                      className="w-full pl-10 pr-4 py-4 border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary appearance-none cursor-pointer"
-                    >
-                      <option value="1">1 adulte</option>
-                      <option value="2">2 adultes</option>
-                      <option value="3">3 adultes</option>
-                      <option value="4">4 adultes</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Submit */}
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full rounded-none py-7 text-base tracking-wide"
-              >
-                Réserver en direct
-              </Button>
-            </form>
+            {/* CTA Button */}
+            <Button
+              onClick={() => openBookingModal()}
+              size="lg"
+              className="w-full rounded-none py-7 text-base tracking-wide"
+            >
+              Réserver en direct
+            </Button>
 
             {/* Direct booking note */}
             <div className="mt-8 pt-8 border-t border-border text-center">

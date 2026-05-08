@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { useBookingModal } from "@/components/booking-modal-provider"
 import { ChevronDown } from "lucide-react"
 
 export function HeroSection() {
   const [isVisible, setIsVisible] = useState(false)
+  const { openBookingModal } = useBookingModal()
 
   useEffect(() => {
     setIsVisible(true)
@@ -58,13 +59,11 @@ export function HeroSection() {
             }`}
           >
             <Button
-              asChild
+              onClick={() => openBookingModal()}
               size="lg"
               className="rounded-none px-12 py-7 text-base tracking-widest uppercase bg-white text-foreground hover:bg-white/90"
             >
-              <Link href="#booking">
-                Réserver en direct
-              </Link>
+              Réserver en direct
             </Button>
             
             {/* Reassurance line */}
