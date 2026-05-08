@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { Header } from "@/components/header"
 import { Search, CheckCircle2, Clock, ShieldCheck, ExternalLink } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { buildBookingUrl } from "@/lib/booking-engine"
+import { buildBookingEngineUrl } from "@/lib/booking-engine"
 
 const steps = [
   { id: 1, label: "Recherche de l'offre officielle Ayadina" },
@@ -174,7 +174,7 @@ export default function ComparerLoading() {
               )}
             >
               <a
-                href={buildBookingUrl(mockDates)}
+                href={buildBookingEngineUrl(mockDates)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm text-primary hover:text-accent transition-colors"
