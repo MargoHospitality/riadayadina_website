@@ -1,16 +1,18 @@
 "use client"
 
-import type { ReactNode } from "react"
+import { useState, type ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { ArrowRight, Check, ExternalLink, Shield, Sparkles, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
+import { BookingDateModal } from "@/components/booking-date-modal"
 import { buildBookingEngineUrl, getNightCount, isValidBookingSearch } from "@/lib/booking-engine"
 import { getRateComparisonSync, type RateOffer } from "@/lib/rate-compare"
 
 export default function ComparePage() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const searchParams = useSearchParams()
   const search = {
     checkIn: searchParams.get("checkIn") || undefined,
@@ -70,12 +72,12 @@ export default function ComparePage() {
                 <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-primary-foreground">
                   Votre séjour du {formatLongDate(search.checkIn!)} au {formatLongDate(search.checkOut!)}
                 </h1>
-                <Link 
-                  href="/#booking" 
+                <button 
+                  onClick={() => setIsModalOpen(true)}
                   className="inline-flex items-center gap-1.5 text-xs text-primary-foreground/50 hover:text-primary-foreground border border-primary-foreground/20 hover:border-primary-foreground/40 px-3 py-1.5 transition-colors"
                 >
                   Modifier
-                </Link>
+                </button>
               </div>
               <div className="flex items-center gap-6 text-primary-foreground">
                 <div className="text-center">
@@ -247,6 +249,15 @@ export default function ComparePage() {
           </div>
         </div>
       </section>
+
+      {/* Date Modal */}
+      <BookingDateModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        defaultCheckIn={search.checkIn}
+        defaultCheckOut={search.checkOut}
+        defaultAdults={Number(search.adults)}
+      />
     </main>
   )
 }

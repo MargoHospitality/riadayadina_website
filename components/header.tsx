@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { BookingDateModal } from "@/components/booking-date-modal"
 import { cn } from "@/lib/utils"
 
 const navigation = [
@@ -21,6 +22,7 @@ const navigation = [
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,7 +94,7 @@ export function Header() {
           {/* CTA */}
           <div className="hidden lg:flex items-center">
             <Button 
-              asChild
+              onClick={() => setIsBookingModalOpen(true)}
               className={cn(
                 "rounded-none px-6 py-5 text-sm tracking-wide transition-all duration-300",
                 isScrolled 
@@ -100,9 +102,7 @@ export function Header() {
                   : "bg-white text-foreground hover:bg-white/90"
               )}
             >
-              <Link href="#booking">
-                Réserver
-              </Link>
+              Réserver
             </Button>
           </div>
 
@@ -138,13 +138,23 @@ export function Header() {
               {item.name}
             </Link>
           ))}
-          <Button asChild className="rounded-none px-8 py-6 text-base mt-8">
-            <Link href="#booking" onClick={() => setIsMobileMenuOpen(false)}>
-              Réserver maintenant
-            </Link>
+          <Button 
+            onClick={() => {
+              setIsMobileMenuOpen(false)
+              setIsBookingModalOpen(true)
+            }}
+            className="rounded-none px-8 py-6 text-base mt-8"
+          >
+            Réserver maintenant
           </Button>
         </nav>
       </div>
+
+      {/* Booking Date Modal */}
+      <BookingDateModal
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+      />
     </header>
   )
 }
