@@ -63,20 +63,19 @@ export default function ComparePage() {
         </div>
         <div className="relative container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <Link 
-              href="/#booking" 
-              className="inline-flex items-center gap-2 text-sm text-primary-foreground/60 hover:text-primary-foreground mb-4 transition-colors"
-            >
-              <ArrowRight className="h-4 w-4 rotate-180" />
-              Modifier mes dates
-            </Link>
+            <p className="text-accent text-sm uppercase tracking-[0.2em] mb-2">Comparaison des tarifs</p>
             
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-              <div>
-                <p className="text-accent text-sm uppercase tracking-[0.2em] mb-2">Comparaison des tarifs</p>
+              <div className="flex items-center gap-4 flex-wrap">
                 <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-primary-foreground">
                   Votre séjour du {formatLongDate(search.checkIn!)} au {formatLongDate(search.checkOut!)}
                 </h1>
+                <Link 
+                  href="/#booking" 
+                  className="inline-flex items-center gap-1.5 text-xs text-primary-foreground/50 hover:text-primary-foreground border border-primary-foreground/20 hover:border-primary-foreground/40 px-3 py-1.5 transition-colors"
+                >
+                  Modifier
+                </Link>
               </div>
               <div className="flex items-center gap-6 text-primary-foreground">
                 <div className="text-center">
