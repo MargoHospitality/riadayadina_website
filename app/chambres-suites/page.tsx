@@ -23,12 +23,14 @@ const chambresDoubles = {
     "Petit-déjeuner inclus",
   ],
   images: [
-    { src: "/images/chambre-alicia.jpg", alt: "Chambre Double - Vue lit et décoration" },
-    { src: "/images/chambre-aida.jpg", alt: "Chambre Double - Ambiance et détails" },
-    { src: "/images/salle-de-bain.jpg", alt: "Salle de bain privative" },
-    { src: "/images/hero-patio.jpg", alt: "Vue sur le patio depuis la chambre" },
-    { src: "/images/chambre-alicia.jpg", alt: "Chambre Double - Détails décoratifs" },
-    { src: "/images/chambre-aida.jpg", alt: "Chambre Double - Espace de vie" },
+    { src: "/images/ayadina/adelina-chambre-04.jpg", alt: "Chambre Adelina - lit et décoration" },
+    { src: "/images/ayadina/aida-chambre-02.jpg", alt: "Chambre Aida - ambiance et détails" },
+    { src: "/images/ayadina/alicia-chambre-07.jpg", alt: "Chambre Alicia - espace nuit" },
+    { src: "/images/ayadina/aida-patiobalcon-01.jpg", alt: "Chambre Aida - balcon sur patio" },
+    { src: "/images/ayadina/adelina-salon-01.jpg", alt: "Chambre Adelina - salon" },
+    { src: "/images/ayadina/alicia-sallebain-01.jpg", alt: "Salle de bain privative" },
+    { src: "/images/ayadina/aida-chambre-01.jpg", alt: "Chambre Aida - vue générale" },
+    { src: "/images/ayadina/alicia-chambre-01.jpg", alt: "Chambre Alicia - détails décoratifs" },
   ],
 }
 
@@ -52,13 +54,15 @@ const suitesJunior = {
     "Petit-déjeuner inclus",
   ],
   images: [
-    { src: "/images/suite-antinea.jpg", alt: "Suite Junior - Chambre principale" },
-    { src: "/images/suite-antigua.jpg", alt: "Suite Junior - Espace salon" },
-    { src: "/images/salle-de-bain.jpg", alt: "Suite Junior - Salle de bain" },
-    { src: "/images/rooftop-terrace.jpg", alt: "Vue depuis la terrasse" },
-    { src: "/images/suite-antinea.jpg", alt: "Suite Junior - Détails luxueux" },
-    { src: "/images/suite-antigua.jpg", alt: "Suite Junior - Décoration" },
-    { src: "/images/hero-patio.jpg", alt: "Vue sur le patio" },
+    { src: "/images/ayadina/ambrosia-chambre-06.jpg", alt: "Suite Ambrosia - chambre principale" },
+    { src: "/images/ayadina/ahisia-chambre-07.jpg", alt: "Suite Ahisia - espace nuit" },
+    { src: "/images/ayadina/antiqua-chambre-04.jpg", alt: "Suite Antiqua - décoration" },
+    { src: "/images/ayadina/antinea-chambre-05.jpg", alt: "Suite Antinea - ambiance" },
+    { src: "/images/ayadina/ambrosia-chambre-08.jpg", alt: "Suite Ambrosia - détails" },
+    { src: "/images/ayadina/antiqua-chambre-02.jpg", alt: "Suite Antiqua - espace nuit" },
+    { src: "/images/ayadina/atina-chambre-01.jpg", alt: "Suite Atina - chambre" },
+    { src: "/images/ayadina/atina-sallebain-01.jpg", alt: "Suite Atina - salle de bain" },
+    { src: "/images/ayadina/ahisia-chambre-01.jpg", alt: "Suite Ahisia - vue générale" },
   ],
 }
 

@@ -11,6 +11,7 @@ const rooms = [
     ambiance: "Cocon intime et raffiné",
     description: "Trois alcôves de charme, chacune décorée avec soin. Parfaites pour une escapade romantique ou un voyageur solo en quête de tranquillité.",
     image: "/images/ayadina-home/adelina-chambre-04.jpg",
+    objectPosition: "50% 50%",
     size: "17-22m²",
     capacity: "2 personnes",
     forWho: "Couples · Solo",
@@ -21,6 +22,7 @@ const rooms = [
     ambiance: "Espace et lumière",
     description: "Six suites généreuses avec salon privatif. L'espace idéal pour savourer pleinement l'atmosphère du riad, entre repos et moments de vie.",
     image: "/images/ayadina-home/ambrosia-chambre-06.jpg",
+    objectPosition: "55% 50%",
     size: "24-36m²",
     capacity: "2-3 personnes",
     forWho: "Couples · Familles · Séjours longs",
@@ -63,6 +65,7 @@ export function RoomsSection() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{ objectPosition: room.objectPosition }}
                   />
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />

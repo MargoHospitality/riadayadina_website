@@ -18,12 +18,13 @@ export function HeroSection() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/ayadina-home/patio-jour-02.jpg"
+          src="/images/ayadina-home/patio-jour-04.jpg"
           alt="Patio principal du Riad Ayadina"
           fill
           className="object-cover"
           priority
           sizes="100vw"
+          style={{ objectPosition: "50% 45%" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50" />
       </div>

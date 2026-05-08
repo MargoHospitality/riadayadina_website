@@ -27,11 +27,12 @@ export default function RestaurantPage() {
         <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              src="/images/restaurant-terrasse.jpg"
-              alt="Restaurant terrasse Riad Ayadina"
+              src="/images/ayadina/patio-fontaine-nuit-01.jpg"
+              alt="Restaurant et patio du Riad Ayadina de nuit"
               fill
               className="object-cover"
               priority
+              style={{ objectPosition: "50% 55%" }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
           </div>
@@ -114,11 +115,12 @@ export default function RestaurantPage() {
               {/* Image */}
               <div className="aspect-[4/5] relative">
                 <Image
-                  src="/images/plat-tajine.jpg"
-                  alt="Tajine traditionnel"
+                  src="/images/ayadina/patio-fontaine-nuit-01.jpg"
+                  alt="Gastronomie dans le patio du Riad Ayadina"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
+                  style={{ objectPosition: "50% 58%" }}
                 />
               </div>
             </div>
@@ -133,11 +135,12 @@ export default function RestaurantPage() {
               <div className="relative order-2 lg:order-1">
                 <div className="aspect-[4/5] relative">
                   <Image
-                    src="/images/bar-lounge.jpg"
+                    src="/images/ayadina/bibliothequebar-plafond-jour-02.jpg"
                     alt="Bar lounge du Riad Ayadina"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
+                    style={{ objectPosition: "50% 50%" }}
                   />
                 </div>
                 {/* Floating badge */}

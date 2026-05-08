@@ -30,12 +30,13 @@ export default function LeRiadPage() {
         <section className="relative h-[70vh] min-h-[500px] flex items-end">
           <div className="absolute inset-0">
             <Image
-              src="/images/piscine-rooftop.jpg"
-              alt="Piscine chauffée sur le toit avec vue sur l'Atlas"
+              src="/images/ayadina/patio-jour-01.jpg"
+              alt="Patio du Riad Ayadina"
               fill
               className="object-cover"
               priority
               sizes="100vw"
+              style={{ objectPosition: "50% 46%" }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           </div>
@@ -131,11 +132,12 @@ export default function LeRiadPage() {
               <div className="relative">
                 <div className="aspect-[4/5] relative">
                   <Image
-                    src="/images/piscine-rooftop.jpg"
+                    src="/images/ayadina/piscine-jour-01.jpg"
                     alt="Piscine chauffée sur le toit"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
+                    style={{ objectPosition: "45% 50%" }}
                   />
                 </div>
                 {/* Floating badge */}
@@ -156,11 +158,12 @@ export default function LeRiadPage() {
               <div className="order-2 lg:order-1">
                 <div className="aspect-[4/5] relative">
                   <Image
-                    src="/images/patio-arbore.jpg"
-                    alt="Patio arboré du riad"
+                    src="/images/ayadina/patio-tableolivier-jour-01.jpg"
+                    alt="Architecture intérieure et patio du riad"
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
+                    style={{ objectPosition: "50% 50%" }}
                   />
                 </div>
               </div>
@@ -253,11 +256,12 @@ export default function LeRiadPage() {
               {/* Image */}
               <div className="aspect-[4/5] relative">
                 <Image
-                  src="/images/acces-voiture.jpg"
-                  alt="Entrée du riad accessible en voiture"
+                  src="/images/ayadina/cactus-01.jpg"
+                  alt="Accès privilégié au Riad Ayadina"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
+                  style={{ objectPosition: "50% 52%" }}
                 />
               </div>
             </div>

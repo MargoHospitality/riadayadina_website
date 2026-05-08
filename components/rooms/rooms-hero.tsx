@@ -6,12 +6,13 @@ export function RoomsHero() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/suite-antinea.jpg"
-          alt="Suite du Riad Ayadina"
+          src="/images/ayadina/rooms-hero-adelina-chambre-04.jpg"
+          alt="Chambre Adelina du Riad Ayadina"
           fill
           className="object-cover"
           priority
           sizes="100vw"
+          style={{ objectPosition: "50% 48%" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
       </div>

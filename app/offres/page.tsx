@@ -79,12 +79,13 @@ export default function OffresPage() {
         <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              src="/images/piscine-rooftop.jpg"
+              src="/images/ayadina/piscine-jour-01.jpg"
               alt="Piscine rooftop Riad Ayadina"
               fill
               className="object-cover"
               priority
               sizes="100vw"
+              style={{ objectPosition: "45% 50%" }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60" />
           </div>

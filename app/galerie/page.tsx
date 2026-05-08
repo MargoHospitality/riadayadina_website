@@ -12,62 +12,71 @@ import { cn } from "@/lib/utils"
 const galleryCategories = [
   {
     id: "riad",
-    name: "Patio & Riad",
-    description: "3 patios arborés, architecture traditionnelle",
+    name: "Riad & patios",
+    description: "Patios arborés, salons et architecture traditionnelle",
     cta: { label: "Découvrir le Riad", href: "/le-riad" },
     images: [
-      { src: "/images/patio-arbore.jpg", alt: "Patio arboré aux orangers" },
-      { src: "/images/hero-patio.jpg", alt: "Patio principal" },
-      { src: "/images/acces-voiture.jpg", alt: "Entrée du riad - accès voiture" },
-      { src: "/images/hero-riad.jpg", alt: "Architecture traditionnelle" },
-    ],
-  },
-  {
-    id: "rooftop",
-    name: "Rooftop & Piscine",
-    description: "Piscine chauffée 7x3m, vue Atlas",
-    cta: { label: "Voir les détails", href: "/le-riad" },
-    images: [
-      { src: "/images/piscine-rooftop.jpg", alt: "Piscine chauffée vue Atlas" },
-      { src: "/images/rooftop-terrace.jpg", alt: "Terrasse solarium" },
+      { src: "/images/ayadina/gallery-patio-jour-04.jpg", alt: "Patio principal du Riad Ayadina" },
+      { src: "/images/ayadina/patio-tableolivier-jour-01.jpg", alt: "Patio et table sous l'olivier" },
+      { src: "/images/ayadina/gallery-patio-nuit-02.jpg", alt: "Patio illuminé de nuit" },
+      { src: "/images/ayadina/gallery-salon-jour-02.jpg", alt: "Salon traditionnel du riad" },
+      { src: "/images/ayadina/gallery-salon-marocain-01.jpg", alt: "Salon marocain" },
+      { src: "/images/ayadina/cactus-01.jpg", alt: "Détail extérieur du riad" },
     ],
   },
   {
     id: "chambres",
-    name: "Chambres & Suites",
-    description: "3 chambres (17-22m²) + 6 suites (24-36m²)",
-    cta: { label: "Réserver une chambre", href: "/chambres-suites" },
+    name: "Chambres supérieures",
+    description: "Aida, Adelina et Alicia — 17 à 22m²",
+    cta: { label: "Voir les chambres", href: "/chambres-suites" },
     images: [
-      { src: "/images/suite-amour.jpg", alt: "Suite romantique" },
-      { src: "/images/suite-sultane.jpg", alt: "Suite Sultane" },
-      { src: "/images/chambre-alicia.jpg", alt: "Chambre Alicia" },
-      { src: "/images/chambre-aida.jpg", alt: "Chambre Aida" },
-      { src: "/images/suite-antinea.jpg", alt: "Suite Antinea" },
-      { src: "/images/suite-antigua.jpg", alt: "Suite Antigua" },
-      { src: "/images/salle-de-bain.jpg", alt: "Salle de bain" },
+      { src: "/images/ayadina/adelina-chambre-04.jpg", alt: "Chambre Adelina" },
+      { src: "/images/ayadina/aida-chambre-02.jpg", alt: "Chambre Aida" },
+      { src: "/images/ayadina/alicia-chambre-07.jpg", alt: "Chambre Alicia" },
+      { src: "/images/ayadina/aida-patiobalcon-01.jpg", alt: "Balcon de la chambre Aida" },
+      { src: "/images/ayadina/adelina-salon-01.jpg", alt: "Salon de la chambre Adelina" },
+      { src: "/images/ayadina/alicia-sallebain-01.jpg", alt: "Salle de bain Alicia" },
     ],
   },
   {
-    id: "spa",
-    name: "Spa & Bien-être",
-    description: "Hammam, massage, 250m² dédiés",
-    cta: { label: "Réserver un soin", href: "/spa" },
+    id: "suites",
+    name: "Suites junior",
+    description: "Six suites avec salons privatifs — 24 à 36m²",
+    cta: { label: "Voir les suites", href: "/chambres-suites" },
     images: [
-      { src: "/images/hammam-spa.jpg", alt: "Hammam traditionnel" },
-      { src: "/images/spa-hammam.jpg", alt: "Espace détente spa" },
-      { src: "/images/spa-massage.jpg", alt: "Soin et massage" },
+      { src: "/images/ayadina/ambrosia-chambre-06.jpg", alt: "Suite Ambrosia" },
+      { src: "/images/ayadina/ahisia-chambre-07.jpg", alt: "Suite Ahisia" },
+      { src: "/images/ayadina/antinea-chambre-05.jpg", alt: "Suite Antinea" },
+      { src: "/images/ayadina/antiqua-chambre-04.jpg", alt: "Suite Antiqua" },
+      { src: "/images/ayadina/atina-chambre-01.jpg", alt: "Suite Atina" },
+      { src: "/images/ayadina/atina-sallebain-01.jpg", alt: "Salle de bain de suite" },
+    ],
+  },
+  {
+    id: "spa-piscine",
+    name: "Spa & piscine",
+    description: "Hammam, massages, piscine chauffée et solarium",
+    cta: { label: "Découvrir le Spa", href: "/spa" },
+    images: [
+      { src: "/images/ayadina/piscine-jour-01.jpg", alt: "Piscine chauffée du rooftop" },
+      { src: "/images/ayadina/gallery-piscine-jour-02.jpg", alt: "Terrasse piscine" },
+      { src: "/images/ayadina/gallery-hammam-riad-102.jpg", alt: "Hammam traditionnel" },
+      { src: "/images/ayadina-home/riad-103.jpg", alt: "Les Bains d'Ayadina" },
+      { src: "/images/ayadina/gallery-sallemassages-01.jpg", alt: "Salle de massage" },
     ],
   },
   {
     id: "restaurant",
-    name: "Restaurant & Bar",
-    description: "Licence alcool, terrasse rooftop",
+    name: "Restaurant & bar",
+    description: "Patio, bibliothèque bar, terrasse et petit-déjeuner",
     cta: { label: "Voir la carte", href: "/restaurant" },
     images: [
-      { src: "/images/restaurant-terrasse.jpg", alt: "Dîner sur la terrasse" },
-      { src: "/images/bar-lounge.jpg", alt: "Bar & cocktails" },
-      { src: "/images/plat-tajine.jpg", alt: "Tajine traditionnel" },
-      { src: "/images/breakfast-moroccan.jpg", alt: "Petit-déjeuner marocain" },
+      { src: "/images/ayadina/patio-fontaine-nuit-01.jpg", alt: "Patio restaurant de nuit" },
+      { src: "/images/ayadina/bibliothequebar-plafond-jour-02.jpg", alt: "Bibliothèque bar" },
+      { src: "/images/ayadina/gallery-bibliothequebar-jour-01.jpg", alt: "Bar lounge" },
+      { src: "/images/ayadina/gallery-terrasse-tablecentrale-nuit-01.jpg", alt: "Table centrale sur la terrasse" },
+      { src: "/images/ayadina/gallery-terrasse-jour-01.jpg", alt: "Terrasse de jour" },
+      { src: "/images/ayadina/gallery-petitdejeuner-terrasse-03.jpg", alt: "Petit-déjeuner en terrasse" },
     ],
   },
 ]
@@ -114,12 +123,13 @@ export default function GaleriePage() {
         <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              src="/images/patio-arbore.jpg"
+              src="/images/ayadina/gallery-patio-jour-04.jpg"
               alt="Galerie Riad Ayadina"
               fill
               className="object-cover"
               priority
               sizes="100vw"
+              style={{ objectPosition: "50% 45%" }}
             />
             <div className="absolute inset-0 bg-black/50" />
           </div>

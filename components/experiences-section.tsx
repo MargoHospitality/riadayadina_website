@@ -10,6 +10,7 @@ const experiences = [
     subtitle: "Vue panoramique sur l'Atlas",
     description: "Sur le toit du riad, une piscine chauffée de 7m x 3m avec jet de massage vous attend. Transats, parasols et vue imprenable sur les montagnes de l'Atlas. Petit-déjeuner, déjeuner léger et cocktails servis au bord de l'eau.",
     image: "/images/ayadina-home/piscine-jour-01.jpg",
+    objectPosition: "45% 50%",
     highlight: "Piscine chauffée",
     link: "/le-riad",
   },
@@ -18,24 +19,27 @@ const experiences = [
     subtitle: "Spa & Bien-être",
     description: "250m² dédiés à votre bien-être : hammam traditionnel, sauna, jacuzzi et deux salles de massage. Soins du corps, gommages au savon noir, massages relaxants à l'huile d'argan et soins esthétiques.",
     image: "/images/ayadina-home/riad-103.jpg",
+    objectPosition: "55% 50%",
     highlight: "Spa de 250m²",
     link: "/spa",
+  },
+  {
+    title: "Petit-déjeuner marocain",
+    subtitle: "Inclus avec votre séjour",
+    description: "Commencez la journée par un festin de saveurs authentiques : msemen, beghrir, crêpes mille trous, confitures maison, huile d'argan, miel, fruits frais et thé à la menthe.",
+    image: "/images/ayadina-home/petitdejeuner-terrasse-02.jpg",
+    objectPosition: "45% 60%",
+    highlight: "Inclus",
+    link: null,
   },
   {
     title: "Restaurant & Bar",
     subtitle: "Licence alcool",
     description: "Une expérience gastronomique unique en médina avec notre licence alcool. Cuisine marocaine et française raffinée, carte des vins, cocktails signature et espace cigares. Service sur la terrasse rooftop avec vue panoramique.",
     image: "/images/ayadina-home/bibliotheque-bar-jour-03.jpg",
+    objectPosition: "55% 50%",
     highlight: "Licence alcool",
     link: "/restaurant",
-  },
-  {
-    title: "Petit-déjeuner marocain",
-    subtitle: "Inclus avec votre séjour",
-    description: "Commencez la journée par un festin de saveurs authentiques : msemen, beghrir, crêpes mille trous, confitures maison, huile d'argan, miel, fruits frais et thé à la menthe.",
-    image: "/images/breakfast-moroccan.jpg",
-    highlight: "Inclus",
-    link: null,
   },
 ]
 
@@ -73,6 +77,7 @@ export function ExperiencesSection() {
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-700"
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectPosition: experience.objectPosition }}
                 />
               </div>
 

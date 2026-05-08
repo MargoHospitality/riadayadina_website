@@ -18,6 +18,7 @@ export function StorytellingSection() {
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
+                  style={{ objectPosition: "50% 50%" }}
                 />
               </div>
               {/* Decorative frame */}
