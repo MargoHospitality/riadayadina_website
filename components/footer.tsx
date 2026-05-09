@@ -3,6 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { MapPin, Phone, Mail, Instagram, Facebook, MessageCircle, Car } from "lucide-react"
+import { useBookingModal } from "@/components/booking-modal-provider"
 
 const footerLinks = {
   decouvrir: [
@@ -14,7 +15,6 @@ const footerLinks = {
   ],
   reserver: [
     { name: "Nos Offres Exclusives", href: "/offres" },
-    { name: "Réserver en direct", href: "/#booking" },
     { name: "Nous contacter", href: "/contact" },
   ],
 }
@@ -54,6 +54,8 @@ function GoogleIcon({ className }: { className?: string }) {
 }
 
 export function Footer() {
+  const { openBookingModal } = useBookingModal()
+  
   return (
     <footer className="bg-[#0a0a0a] text-white">
       {/* Main Footer */}
@@ -187,6 +189,14 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <button
+                  onClick={() => openBookingModal()}
+                  className="text-white/70 hover:text-white transition-colors text-sm"
+                >
+                  Réserver en direct
+                </button>
+              </li>
             </ul>
           </div>
 

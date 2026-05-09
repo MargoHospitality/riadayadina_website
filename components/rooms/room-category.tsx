@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Check, Images, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ImageGalleryModal } from "@/components/image-gallery-modal"
+import { useBookingModal } from "@/components/booking-modal-provider"
 import { cn } from "@/lib/utils"
 
 interface RoomCategoryProps {
@@ -31,6 +32,7 @@ export function RoomCategory({
   variant = "light",
 }: RoomCategoryProps) {
   const [galleryOpen, setGalleryOpen] = useState(false)
+  const { openBookingModal } = useBookingModal()
 
   const isDark = variant === "dark"
 
@@ -120,7 +122,7 @@ export function RoomCategory({
 
               {/* CTA */}
               <Button
-                asChild
+                onClick={() => openBookingModal()}
                 size="lg"
                 className={cn(
                   "rounded-none px-8 py-6 text-base tracking-wide group",
@@ -129,10 +131,8 @@ export function RoomCategory({
                     : "bg-primary text-primary-foreground hover:bg-primary/90"
                 )}
               >
-                <a href="#booking">
-                  Réserver en direct
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
+                Réserver en direct
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </div>
 

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ScrollToTop } from '@/components/scroll-to-top'
+import { BookingModalProvider } from '@/components/booking-modal-provider'
 import './globals.css'
 
 const cormorant = Cormorant_Garamond({ 
@@ -34,8 +35,10 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${cormorant.variable} ${inter.variable}`}>
       <body className="font-sans antialiased">
-        {children}
-        <ScrollToTop />
+        <BookingModalProvider>
+          {children}
+          <ScrollToTop />
+        </BookingModalProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

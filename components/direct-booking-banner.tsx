@@ -1,11 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { AnimateOnScroll } from "@/components/animate-on-scroll"
+import { useBookingModal } from "@/components/booking-modal-provider"
 
 export function DirectBookingBanner() {
+  const { openBookingModal } = useBookingModal()
+  
   return (
     <section className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4">
@@ -61,13 +63,11 @@ export function DirectBookingBanner() {
                 </div>
 
                 <Button
-                  asChild
+                  onClick={() => openBookingModal()}
                   variant="outline"
                   className="w-full rounded-none py-5 border-foreground/20 hover:bg-foreground/5 hover:border-accent/50 transition-all"
                 >
-                  <Link href="#booking">
-                    Réserver en direct
-                  </Link>
+                  Réserver en direct
                 </Button>
               </div>
             </div>
@@ -121,12 +121,10 @@ export function DirectBookingBanner() {
                 </div>
 
                 <Button
-                  asChild
+                  onClick={() => openBookingModal()}
                   className="w-full rounded-none py-5 bg-white text-primary hover:bg-white/90 transition-all"
                 >
-                  <Link href="#booking">
-                    Réserver en direct
-                  </Link>
+                  Réserver en direct
                 </Button>
               </div>
             </div>
