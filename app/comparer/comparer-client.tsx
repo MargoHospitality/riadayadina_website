@@ -253,6 +253,7 @@ export function CompareClient() {
   const comparison = comparisonResult ?? createUnavailableComparison()
   const referenceOffer = chooseReferenceOffer(comparison.offers)
   const directOffer = comparison.directOffer
+  const hasLivePrices = comparison.status === "available" && Boolean(directOffer)
   const savingsPerNight = directOffer && referenceOffer ? Math.max(referenceOffer.price - directOffer.price, 0) : 0
   const totalSavings = savingsPerNight * nights
   const perks = getDirectPerks(nights)
@@ -308,6 +309,15 @@ export function CompareClient() {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             
+            {!hasLivePrices && (
+              <div className="mb-6 border border-accent/30 bg-accent/10 p-4 text-sm text-foreground">
+                <p className="font-medium mb-1">Comparaison des prix momentanément indisponible.</p>
+                <p className="text-muted-foreground">
+                  {comparison.message || "Les tarifs Google Hotels ne sont pas remontés pour ces dates."} Vous pouvez continuer vers le moteur officiel Cloudbeds pour consulter le tarif en direct.
+                </p>
+              </div>
+            )}
+
             {/* Price Cards Grid */}
             <div className="grid lg:grid-cols-5 gap-6 mb-10">
               
@@ -339,7 +349,7 @@ export function CompareClient() {
                       </div>
                     </div>
                     <div className="bg-accent text-accent-foreground text-xs uppercase tracking-wider px-3 py-1.5 font-medium self-start">
-                      Meilleur choix
+                      {hasLivePrices ? "Meilleur choix" : "Officiel"}
                     </div>
                   </div>
 
@@ -348,7 +358,7 @@ export function CompareClient() {
                       <p className="text-sm text-muted-foreground mb-1">Prix par nuit</p>
                       <div className="flex items-baseline gap-2">
                         <span className="font-serif text-4xl md:text-5xl text-foreground">
-                          {directOffer ? formatMoney(directOffer.price, directOffer.currency) : "—"}
+                          {directOffer ? formatMoney(directOffer.price, directOffer.currency) : "À vérifier"}
                         </span>
                       </div>
                       {totalSavings > 0 && (
@@ -360,7 +370,7 @@ export function CompareClient() {
                     <div className="text-right">
                       <p className="text-sm text-muted-foreground mb-1">Total estimé</p>
                       <p className="font-serif text-2xl text-foreground">
-                        {directOffer ? formatMoney(directOffer.price * nights, directOffer.currency) : "—"}
+                        {directOffer ? formatMoney(directOffer.price * nights, directOffer.currency) : "Sur Cloudbeds"}
                       </p>
                     </div>
                   </div>
@@ -390,7 +400,7 @@ export function CompareClient() {
                   {/* CTA */}
                   <Button asChild size="lg" className="w-full rounded-none py-7 text-base tracking-wide">
                     <a href={bookingUrl} target="_blank" rel="noreferrer">
-                      Réserver au meilleur prix
+                      {hasLivePrices ? "Réserver au meilleur prix" : "Voir le tarif officiel"}
                       <ExternalLink className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
@@ -413,7 +423,11 @@ export function CompareClient() {
                   </>
                 ) : (
                   <div className="bg-muted/30 border border-border p-6 text-center">
-                    <p className="text-muted-foreground">Aucune offre OTA disponible pour ces dates.</p>
+                    <p className="text-muted-foreground">
+                      {comparison.status === "empty"
+                        ? "Aucune offre OTA disponible pour ces dates."
+                        : "Comparaison OTA indisponible pour le moment."}
+                    </p>
                   </div>
                 )}
 
