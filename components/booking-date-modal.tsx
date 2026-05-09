@@ -122,9 +122,9 @@ export function BookingDateModal({
 
             {/* Logo and Title */}
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 relative bg-white/10 p-2 flex-shrink-0">
+              <div className="w-14 h-14 relative flex-shrink-0">
                 <Image
-                  src="/images/logo-ayadina.png"
+                  src="/images/logo-ayadina-white.png"
                   alt="Riad Ayadina"
                   fill
                   className="object-contain"
@@ -195,10 +195,10 @@ export function BookingDateModal({
                     onChange={(e) => setAdults(Number(e.target.value))}
                     className="flex-1 bg-transparent text-foreground text-sm focus:outline-none cursor-pointer appearance-none"
                   >
-                    <option value={1}>1 adulte</option>
-                    <option value={2}>2 adultes</option>
-                    <option value={3}>3 adultes</option>
-                    <option value={4}>4 adultes</option>
+                    <option value={1}>1 personne</option>
+                    <option value={2}>2 personnes</option>
+                    <option value={3}>3 personnes</option>
+                    <option value={4}>4 personnes</option>
                   </select>
                 </div>
               </div>

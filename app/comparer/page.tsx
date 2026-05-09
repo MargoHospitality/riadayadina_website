@@ -81,12 +81,12 @@ export default function ComparePage() {
           <div className="container mx-auto px-4">
             <div className="max-w-xl mx-auto text-center">
               {/* Step indicator */}
-              <div className="inline-flex items-center gap-2 text-xs text-muted-foreground uppercase tracking-[0.2em] mb-6">
-                <span className="w-5 h-5 rounded-full bg-accent/20 text-accent flex items-center justify-center text-[10px] font-medium">1</span>
-                <span>/</span>
-                <span className="text-muted-foreground/50">2</span>
-                <span className="mx-2">·</span>
-                <span>Vérification en cours</span>
+              <div className="inline-flex items-center gap-2 text-xs text-primary uppercase tracking-[0.2em] mb-6">
+                <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-medium">1</span>
+                <span className="text-primary/60">/</span>
+                <span className="text-primary/40">2</span>
+                <span className="mx-2 text-primary/40">·</span>
+                <span className="text-primary/80">Vérification en cours</span>
               </div>
 
               {/* Main title */}
@@ -117,13 +117,13 @@ export default function ComparePage() {
                   <div className="h-8 w-px bg-border mx-2 hidden sm:block" />
                   <div className="text-center hidden sm:block">
                     <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Voyageurs</p>
-                    <p className="font-serif text-lg text-foreground">{search.adults} adulte{Number(search.adults) > 1 ? "s" : ""}</p>
+                    <p className="font-serif text-lg text-foreground">{search.adults} personne{Number(search.adults) > 1 ? "s" : ""}</p>
                   </div>
                 </div>
               </div>
 
               {/* Loading checklist */}
-              <div className="bg-card border border-border/50 p-6 mb-8">
+              <div className="bg-card border border-primary/20 p-6 mb-8 shadow-sm">
                 <div className="space-y-4">
                   {loadingSteps.map((step) => {
                     const isComplete = currentStep > step.id
@@ -141,10 +141,10 @@ export default function ComparePage() {
                           className={cn(
                             "w-6 h-6 rounded-full flex items-center justify-center transition-all duration-500",
                             isComplete
-                              ? "bg-accent text-accent-foreground"
+                              ? "bg-primary text-primary-foreground"
                               : isActive
-                              ? "bg-primary/10 text-primary"
-                              : "bg-muted text-muted-foreground"
+                              ? "bg-primary/20 text-primary"
+                              : "bg-primary/10 text-primary/40"
                           )}
                         >
                           {isComplete ? (
@@ -176,9 +176,9 @@ export default function ComparePage() {
                 </div>
 
                 {/* Progress bar */}
-                <div className="mt-6 h-1 bg-muted rounded-full overflow-hidden">
+                <div className="mt-6 h-1.5 bg-primary/10 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-accent transition-all duration-1000 ease-out"
+                    className="h-full bg-primary transition-all duration-1000 ease-out rounded-full"
                     style={{ width: `${(currentStep / loadingSteps.length) * 100}%` }}
                   />
                 </div>
@@ -260,7 +260,7 @@ export default function ComparePage() {
                 <div className="w-px h-12 bg-primary-foreground/20" />
                 <div className="text-center">
                   <p className="font-serif text-4xl lg:text-5xl">{search.adults}</p>
-                  <p className="text-sm text-primary-foreground/60">adulte{Number(search.adults) > 1 ? "s" : ""}</p>
+                  <p className="text-sm text-primary-foreground/60">personne{Number(search.adults) > 1 ? "s" : ""}</p>
                 </div>
               </div>
             </div>
