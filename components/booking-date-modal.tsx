@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import Image from "next/image"
 import { X, Calendar, Users, ShieldCheck, Sparkles, Gift, Star, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -120,26 +119,16 @@ export function BookingDateModal({
               <X className="h-5 w-5" />
             </button>
 
-            {/* Logo and Title */}
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 relative flex-shrink-0">
-                <Image
-                  src="/images/logo-ayadina-nb.png"
-                  alt="Riad Ayadina"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <div>
-                <h2 className="font-serif text-xl md:text-2xl">
-                  Réservez en direct
-                </h2>
-                <div className="flex items-center gap-1 mt-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-3 w-3 fill-accent text-accent" />
-                  ))}
-                  <span className="text-xs text-primary-foreground/60 ml-1.5">Riad Ayadina & Spa</span>
-                </div>
+            {/* Title */}
+            <div>
+              <h2 className="font-serif text-xl md:text-2xl">
+                Réservez en direct
+              </h2>
+              <div className="flex items-center gap-1 mt-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-3 w-3 fill-accent text-accent" />
+                ))}
+                <span className="text-xs text-primary-foreground/60 ml-1.5">Riad Ayadina & Spa</span>
               </div>
             </div>
           </div>
