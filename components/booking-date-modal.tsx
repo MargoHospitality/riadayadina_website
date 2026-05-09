@@ -124,10 +124,11 @@ export function BookingDateModal({
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 relative flex-shrink-0">
                 <Image
-                  src="/images/logo-ayadina-white.png"
+                  src="/images/logo-ayadina-nb.png"
                   alt="Riad Ayadina"
                   fill
-                  className="object-contain"
+                  className="object-contain invert brightness-0 brightness-100"
+                  style={{ filter: "invert(1) brightness(100)" }}
                 />
               </div>
               <div>
