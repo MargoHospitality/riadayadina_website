@@ -145,15 +145,27 @@ function collectOffers(payload: unknown) {
           : undefined,
     }
 
-    const key = `${offer.title}-${offer.domain || ""}-${offer.price}-${offer.currency}`
-    if (officialSite) directOffers.set(key, offer)
-    else externalOffers.set(key, offer)
+    const key = `${normalizeOfferTitle(offer.title)}-${offer.price}-${offer.currency}`
+    const target = officialSite ? directOffers : externalOffers
+    const previous = target.get(key)
+
+    if (!previous || isBetterOfferRecord(offer, previous)) target.set(key, offer)
   }
 
   return {
     directOffer: [...directOffers.values()].sort((a, b) => a.price - b.price)[0],
     externalOffers: [...externalOffers.values()].sort((a, b) => a.price - b.price).slice(0, MAX_OFFERS),
   }
+}
+
+function normalizeOfferTitle(title: string) {
+  return title.trim().toLowerCase().replace(/\s+/g, " ")
+}
+
+function isBetterOfferRecord(next: RateOffer, previous: RateOffer) {
+  if (!previous.url && next.url) return true
+  if (previous.domain === "google.co.ma" && next.domain && next.domain !== "google.co.ma") return true
+  return false
 }
 
 function getPriceItems(payload: unknown): Record<string, unknown>[] {
