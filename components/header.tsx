@@ -55,7 +55,7 @@ export function Header() {
                 "w-auto transition-all duration-300",
                 isScrolled 
                   ? "hidden" 
-                  : "block h-20 md:h-24 lg:h-28"
+                  : "block h-12 md:h-20 lg:h-24"
               )}
               priority
             />
@@ -68,7 +68,7 @@ export function Header() {
               className={cn(
                 "w-auto transition-all duration-300",
                 isScrolled 
-                  ? "block h-20 md:h-24 lg:h-28" 
+                  ? "block h-12 md:h-20 lg:h-24" 
                   : "hidden"
               )}
               priority
@@ -120,34 +120,78 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Bottom Sheet Premium */}
+      {/* Backdrop */}
       <div
         className={cn(
-          "lg:hidden fixed inset-0 top-[72px] bg-background/98 backdrop-blur-lg transition-all duration-300",
-          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+          "lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300",
+          isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+      
+      {/* Bottom Sheet */}
+      <div
+        className={cn(
+          "lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background rounded-t-2xl shadow-2xl transition-transform duration-300 ease-out",
+          isMobileMenuOpen ? "translate-y-0" : "translate-y-full"
         )}
       >
-        <nav className="flex flex-col items-center justify-center h-full gap-8 pb-20">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="font-serif text-2xl text-foreground hover:text-primary transition-colors"
-            >
-              {item.name}
-            </Link>
-          ))}
+        {/* Handle */}
+        <div className="flex justify-center pt-3 pb-2">
+          <div className="w-10 h-1 bg-border rounded-full" />
+        </div>
+        
+        {/* Close button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground transition-colors"
+          aria-label="Fermer"
+        >
+          <X className="h-5 w-5" />
+        </button>
+        
+        {/* Navigation */}
+        <nav className="px-6 pb-8 pt-2">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+            {navigation.slice(0, -1).map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="py-3 text-sm text-foreground hover:text-primary transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+          
+          {/* Separator */}
+          <div className="border-t border-border my-4" />
+          
+          {/* CTA */}
           <Button 
             onClick={() => {
               setIsMobileMenuOpen(false)
               openBookingModal()
             }}
-            className="rounded-none px-8 py-6 text-base mt-8"
+            className="w-full rounded-none py-5 text-sm tracking-wide"
           >
-            Réserver maintenant
+            Réserver en direct
           </Button>
+          
+          {/* Contact quick link */}
+          <Link
+            href="/contact"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block text-center text-xs text-muted-foreground mt-4 hover:text-foreground transition-colors"
+          >
+            Nous contacter
+          </Link>
         </nav>
+        
+        {/* Safe area for iOS */}
+        <div className="h-safe-area-inset-bottom bg-background" />
       </div>
     </header>
   )

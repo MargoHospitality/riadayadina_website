@@ -59,114 +59,114 @@ export function Footer() {
   return (
     <footer className="bg-[#0a0a0a] text-white">
       {/* Main Footer */}
-      <div className="container mx-auto px-4 py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+      <div className="container mx-auto px-4 py-10 md:py-20">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-12 gap-6 md:gap-12 lg:gap-8">
           
           {/* Brand & Contact - Takes more space */}
-          <div className="lg:col-span-5">
-            <Link href="/" className="inline-block mb-6">
+          <div className="col-span-2 lg:col-span-5">
+            <Link href="/" className="inline-block mb-4 md:mb-6">
               <Image
                 src="/images/logo-ayadina-outline.png"
                 alt="Riad Ayadina & Spa"
                 width={200}
                 height={60}
-                className="h-16 md:h-20 w-auto"
+                className="h-12 md:h-20 w-auto"
               />
             </Link>
             
-            <p className="text-white/60 text-sm leading-relaxed mb-8 max-w-sm">
+            <p className="text-white/60 text-xs md:text-sm leading-relaxed mb-4 md:mb-8 max-w-sm">
               1200m² de sérénité au coeur de la médina de Marrakech. 
-              Spa, piscine chauffée sur le toit, restaurant avec licence alcool.
+              Spa, piscine chauffée, restaurant avec licence alcool.
             </p>
 
             {/* Contact rapide - WhatsApp en premier */}
-            <div className="space-y-3 mb-8">
+            <div className="space-y-2 md:space-y-3 mb-4 md:mb-8">
               <a
                 href="https://wa.me/212524383881"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-white hover:text-accent transition-colors group"
+                className="flex items-center gap-2 md:gap-3 text-white hover:text-accent transition-colors group"
               >
-                <div className="w-10 h-10 bg-white/5 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                  <MessageCircle className="h-5 w-5" />
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-white/5 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                  <MessageCircle className="h-4 w-4 md:h-5 md:w-5" />
                 </div>
                 <div>
-                  <span className="text-sm font-medium">WhatsApp</span>
-                  <span className="text-xs text-white/50 block">Réponse rapide</span>
+                  <span className="text-xs md:text-sm font-medium">WhatsApp</span>
+                  <span className="text-[10px] md:text-xs text-white/50 block">Réponse rapide</span>
                 </div>
               </a>
               
               <a
                 href="tel:+212524383881"
-                className="flex items-center gap-3 text-white/80 hover:text-white transition-colors"
+                className="flex items-center gap-2 md:gap-3 text-white/80 hover:text-white transition-colors"
               >
-                <div className="w-10 h-10 bg-white/5 flex items-center justify-center">
-                  <Phone className="h-5 w-5" />
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-white/5 flex items-center justify-center">
+                  <Phone className="h-4 w-4 md:h-5 md:w-5" />
                 </div>
-                <span className="text-sm">+212 524 38 38 81</span>
+                <span className="text-xs md:text-sm">+212 524 38 38 81</span>
               </a>
               
               <a
                 href="mailto:contact@riadayadina.com"
-                className="flex items-center gap-3 text-white/80 hover:text-white transition-colors"
+                className="flex items-center gap-2 md:gap-3 text-white/80 hover:text-white transition-colors"
               >
-                <div className="w-10 h-10 bg-white/5 flex items-center justify-center">
-                  <Mail className="h-5 w-5" />
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-white/5 flex items-center justify-center">
+                  <Mail className="h-4 w-4 md:h-5 md:w-5" />
                 </div>
-                <span className="text-sm">contact@riadayadina.com</span>
+                <span className="text-xs md:text-sm">contact@riadayadina.com</span>
               </a>
             </div>
 
             {/* Social Icons */}
-            <div className="flex gap-2">
+            <div className="flex gap-1.5 md:gap-2">
               <a
                 href="https://www.instagram.com/riadayadina/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
+                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
                 aria-label="Instagram"
               >
-                <Instagram className="h-4 w-4" />
+                <Instagram className="h-3.5 w-3.5 md:h-4 md:w-4" />
               </a>
               <a
                 href="https://www.facebook.com/RiadAyadina.Spa"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
+                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
                 aria-label="Facebook"
               >
-                <Facebook className="h-4 w-4" />
+                <Facebook className="h-3.5 w-3.5 md:h-4 md:w-4" />
               </a>
               <a
                 href="https://www.tripadvisor.com/Hotel_Review-g293734-d585332-Reviews-Riad_Ayadina_et_SPa-Marrakech_Marrakech_Safi.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
+                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
                 aria-label="Tripadvisor"
               >
-                <TripadvisorIcon className="h-4 w-4" />
+                <TripadvisorIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
               </a>
               <a
                 href="https://g.page/riad-ayadina-spa"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
+                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors"
                 aria-label="Google"
               >
-                <GoogleIcon className="h-4 w-4" />
+                <GoogleIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
               </a>
             </div>
           </div>
 
           {/* Découvrir */}
-          <div className="lg:col-span-2">
-            <h3 className="text-xs uppercase tracking-[0.2em] text-white/40 mb-6">Découvrir</h3>
-            <ul className="space-y-3">
+          <div className="col-span-1 lg:col-span-2">
+            <h3 className="text-[10px] md:text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/40 mb-3 md:mb-6">Découvrir</h3>
+            <ul className="space-y-2 md:space-y-3">
               {footerLinks.decouvrir.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-white/70 hover:text-white transition-colors text-sm"
+                    className="text-white/70 hover:text-white transition-colors text-xs md:text-sm"
                   >
                     {link.name}
                   </Link>
@@ -176,14 +176,14 @@ export function Footer() {
           </div>
 
           {/* Réserver */}
-          <div className="lg:col-span-2">
-            <h3 className="text-xs uppercase tracking-[0.2em] text-white/40 mb-6">Réserver</h3>
-            <ul className="space-y-3">
+          <div className="col-span-1 lg:col-span-2">
+            <h3 className="text-[10px] md:text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/40 mb-3 md:mb-6">Réserver</h3>
+            <ul className="space-y-2 md:space-y-3">
               {footerLinks.reserver.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-white/70 hover:text-white transition-colors text-sm"
+                    className="text-white/70 hover:text-white transition-colors text-xs md:text-sm"
                   >
                     {link.name}
                   </Link>
@@ -192,7 +192,7 @@ export function Footer() {
               <li>
                 <button
                   onClick={() => openBookingModal()}
-                  className="text-white/70 hover:text-white transition-colors text-sm"
+                  className="text-white/70 hover:text-white transition-colors text-xs md:text-sm"
                 >
                   Réserver en direct
                 </button>
@@ -201,27 +201,27 @@ export function Footer() {
           </div>
 
           {/* Adresse & Accès */}
-          <div className="lg:col-span-3">
-            <h3 className="text-xs uppercase tracking-[0.2em] text-white/40 mb-6">Nous trouver</h3>
+          <div className="col-span-2 lg:col-span-3">
+            <h3 className="text-[10px] md:text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/40 mb-3 md:mb-6">Nous trouver</h3>
             
-            <div className="space-y-4">
+            <div className="space-y-3 md:space-y-4">
               <a
                 href="https://maps.google.com/?q=35+Zaouia+El+Abassia+Marrakech"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-3 text-white/70 hover:text-white transition-colors group"
+                className="flex items-start gap-2 md:gap-3 text-white/70 hover:text-white transition-colors group"
               >
-                <MapPin className="h-5 w-5 flex-shrink-0 mt-0.5" />
-                <span className="text-sm leading-relaxed">
+                <MapPin className="h-4 w-4 md:h-5 md:w-5 flex-shrink-0 mt-0.5" />
+                <span className="text-xs md:text-sm leading-relaxed">
                   35 Zaouia El Abassia<br />
                   Bab El Khemis, Médina<br />
                   Marrakech 40000
                 </span>
               </a>
               
-              <div className="flex items-start gap-3 text-white/60">
-                <Car className="h-5 w-5 flex-shrink-0 mt-0.5" />
-                <span className="text-sm leading-relaxed">
+              <div className="flex items-start gap-2 md:gap-3 text-white/60">
+                <Car className="h-4 w-4 md:h-5 md:w-5 flex-shrink-0 mt-0.5" />
+                <span className="text-xs md:text-sm leading-relaxed">
                   Accès voiture direct<br />
                   <span className="text-white/40">à 10m de Bab El Ayadi</span>
                 </span>
@@ -233,24 +233,24 @@ export function Footer() {
 
       {/* Bottom Bar - Margo + Legal */}
       <div className="border-t border-white/5">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="container mx-auto px-4 py-4 md:py-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
             {/* Margo */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 md:gap-3">
               <Image
                 src="/images/margo-hospitality-white.png"
                 alt="Margo Hospitality"
                 width={100}
                 height={25}
-                className="h-5 w-auto opacity-60"
+                className="h-4 md:h-5 w-auto opacity-60"
               />
-              <span className="text-white/40 text-xs">
+              <span className="text-white/40 text-[10px] md:text-xs">
                 Membre du réseau Margo Hospitality
               </span>
             </div>
             
             {/* Legal */}
-            <div className="flex items-center gap-6 text-xs text-white/40">
+            <div className="flex items-center gap-3 md:gap-6 text-[10px] md:text-xs text-white/40">
               <Link href="/mentions-legales" className="hover:text-white/60 transition-colors">
                 Mentions légales
               </Link>

@@ -9,37 +9,37 @@ export function DirectBookingBanner() {
   const { openBookingModal } = useBookingModal()
   
   return (
-    <section className="py-16 md:py-24 bg-background">
+    <section className="py-10 md:py-24 bg-background">
       <div className="container mx-auto px-4">
         {/* Header - Editorial style */}
-        <AnimateOnScroll animation="fade-up" className="text-center mb-12 md:mb-16">
-          <p className="text-accent text-sm uppercase tracking-[0.25em] mb-3">
+        <AnimateOnScroll animation="fade-up" className="text-center mb-8 md:mb-16">
+          <p className="text-accent text-xs md:text-sm uppercase tracking-[0.2em] md:tracking-[0.25em] mb-2 md:mb-3">
             Privilèges réservation directe
           </p>
-          <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">
+          <h2 className="font-serif text-2xl md:text-4xl text-foreground mb-3 md:mb-4">
             Ce que vous gagnez en réservant ici
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
+          <p className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto">
             Sur les plateformes, nous reversons jusqu&apos;à 20% de commission. 
             En direct, ces économies deviennent vos avantages.
           </p>
         </AnimateOnScroll>
 
         {/* Two editorial cards */}
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto">
           {/* Card 1 - Escapade */}
           <AnimateOnScroll animation="fade-up" delay={100}>
             <div className="group bg-card border border-border/50 hover:border-accent/30 transition-all duration-300 overflow-hidden">
-              <div className="p-6 md:p-8">
-                <div className="flex items-baseline justify-between mb-6">
+              <div className="p-4 md:p-8">
+                <div className="flex items-baseline justify-between mb-4 md:mb-6">
                   <div>
-                    <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">À partir de 2 nuitées</p>
-                    <h3 className="font-serif text-2xl md:text-3xl text-foreground">Escapade</h3>
+                    <p className="text-[10px] md:text-xs uppercase tracking-wider text-muted-foreground mb-1">À partir de 2 nuitées</p>
+                    <h3 className="font-serif text-xl md:text-3xl text-foreground">Escapade</h3>
                   </div>
-                  <span className="font-serif text-4xl text-accent/60">2</span>
+                  <span className="font-serif text-3xl md:text-4xl text-accent/60">2</span>
                 </div>
                 
-                <div className="space-y-3 text-sm text-muted-foreground mb-6">
+                <div className="space-y-2 md:space-y-3 text-xs md:text-sm text-muted-foreground mb-4 md:mb-6">
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                     <span>Tarif préférentiel exclusif</span>
@@ -65,7 +65,7 @@ export function DirectBookingBanner() {
                 <Button
                   onClick={() => openBookingModal()}
                   variant="outline"
-                  className="w-full rounded-none py-5 border-foreground/20 hover:bg-foreground/5 hover:border-accent/50 transition-all"
+                  className="w-full rounded-none py-4 md:py-5 text-sm border-foreground/20 hover:bg-foreground/5 hover:border-accent/50 transition-all"
                 >
                   Réserver en direct
                 </Button>
@@ -88,16 +88,16 @@ export function DirectBookingBanner() {
                 Recommandé
               </div>
 
-              <div className="relative p-6 md:p-8">
-                <div className="flex items-baseline justify-between mb-6">
+              <div className="relative p-4 md:p-8">
+                <div className="flex items-baseline justify-between mb-4 md:mb-6">
                   <div>
-                    <p className="text-xs uppercase tracking-wider text-primary-foreground/60 mb-1">À partir de 3 nuitées</p>
-                    <h3 className="font-serif text-2xl md:text-3xl">Immersion</h3>
+                    <p className="text-[10px] md:text-xs uppercase tracking-wider text-primary-foreground/60 mb-1">À partir de 3 nuitées</p>
+                    <h3 className="font-serif text-xl md:text-3xl">Immersion</h3>
                   </div>
-                  <span className="font-serif text-4xl text-accent">3</span>
+                  <span className="font-serif text-3xl md:text-4xl text-accent">3</span>
                 </div>
                 
-                <div className="space-y-3 text-sm text-primary-foreground/90 mb-6">
+                <div className="space-y-2 md:space-y-3 text-xs md:text-sm text-primary-foreground/90 mb-4 md:mb-6">
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                     <span className="font-medium">Meilleur tarif garanti</span>
@@ -122,7 +122,7 @@ export function DirectBookingBanner() {
 
                 <Button
                   onClick={() => openBookingModal()}
-                  className="w-full rounded-none py-5 bg-white text-primary hover:bg-white/90 transition-all"
+                  className="w-full rounded-none py-4 md:py-5 text-sm bg-white text-primary hover:bg-white/90 transition-all"
                 >
                   Réserver en direct
                 </Button>
