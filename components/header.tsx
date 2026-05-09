@@ -134,18 +134,13 @@ export function Header() {
           
           {/* Bottom Sheet */}
           <div className="lg:hidden fixed bottom-0 left-0 right-0 z-[101] bg-background rounded-t-2xl shadow-2xl animate-in slide-in-from-bottom duration-300">
-            {/* Header with centered logo */}
-            <div className="flex items-center justify-center px-5 py-4 border-b border-border relative">
-              <Image
-                src="/images/logo-ayadina.png"
-                alt="Riad Ayadina & Spa"
-                width={280}
-                height={80}
-                className="h-20 w-auto"
-              />
+            {/* Handle bar + close button */}
+            <div className="flex items-center justify-between px-4 pt-3 pb-2">
+              <div className="w-8" /> {/* Spacer for balance */}
+              <div className="w-10 h-1 bg-border rounded-full" />
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="absolute right-4 p-1 text-muted-foreground hover:text-foreground transition-colors"
+                className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="Fermer"
               >
                 <X className="h-5 w-5" />
