@@ -18,6 +18,7 @@ export type RateComparison = {
   source: "DataForSEO Google Hotels"
   checkedAt?: string
   message?: string
+  providerStatusCode?: number
 }
 
 const DATAFORSEO_ENDPOINT = "https://api.dataforseo.com/v3/business_data/google/hotel_info/live/advanced"
@@ -73,6 +74,20 @@ export async function getRateComparison(search: BookingSearch): Promise<RateComp
     }
 
     const payload: unknown = await response.json()
+    const providerError = getDataForSeoError(payload)
+    if (providerError) {
+      console.warn("DataForSEO rate comparison failed", providerError)
+
+      return {
+        status: "error",
+        offers: [],
+        source: "DataForSEO Google Hotels",
+        checkedAt: new Date().toISOString(),
+        message: getPublicDataForSeoErrorMessage(providerError),
+        providerStatusCode: providerError.code,
+      }
+    }
+
     const { directOffer, externalOffers } = collectOffers(payload)
     const hasOffers = Boolean(directOffer) || externalOffers.length > 0
 
@@ -97,6 +112,36 @@ export async function getRateComparison(search: BookingSearch): Promise<RateComp
   } finally {
     clearTimeout(timeout)
   }
+}
+
+function getDataForSeoError(payload: unknown) {
+  if (!isRecord(payload)) return null
+
+  const topLevelCode = typeof payload.status_code === "number" ? payload.status_code : undefined
+  const topLevelMessage = typeof payload.status_message === "string" ? payload.status_message : undefined
+  if (topLevelCode && topLevelCode !== 20000) return { code: topLevelCode, message: topLevelMessage }
+
+  const tasks = Array.isArray(payload.tasks) ? payload.tasks : []
+  for (const task of tasks) {
+    if (!isRecord(task)) continue
+    const taskCode = typeof task.status_code === "number" ? task.status_code : undefined
+    const taskMessage = typeof task.status_message === "string" ? task.status_message : undefined
+    if (taskCode && taskCode !== 20000) return { code: taskCode, message: taskMessage }
+  }
+
+  return null
+}
+
+function getPublicDataForSeoErrorMessage(error: { code: number; message?: string }) {
+  if (error.code === 40207) {
+    return "DataForSEO bloque l'adresse IP de ce serveur. Vérifiez la whitelist IP dans API access."
+  }
+
+  if (error.code === 40100) {
+    return "DataForSEO refuse les identifiants configurés sur cet environnement."
+  }
+
+  return `DataForSEO a répondu ${error.code}${error.message ? ` : ${error.message}` : ""}.`
 }
 
 function getDataForSeoAuthorization() {
