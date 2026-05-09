@@ -34,7 +34,7 @@ export async function getRateComparison(search: BookingSearch): Promise<RateComp
       status: "unconfigured",
       offers: [],
       source: "DataForSEO Google Hotels",
-      message: "Comparaison externe prête côté site, en attente des identifiants DataForSEO.",
+      message: "La comparaison Google Hotels n'est pas encore activée sur cet environnement.",
     }
   }
 
