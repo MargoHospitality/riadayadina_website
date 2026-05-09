@@ -127,8 +127,7 @@ export function BookingDateModal({
                   src="/images/logo-ayadina-nb.png"
                   alt="Riad Ayadina"
                   fill
-                  className="object-contain invert brightness-0 brightness-100"
-                  style={{ filter: "invert(1) brightness(100)" }}
+                  className="object-contain"
                 />
               </div>
               <div>
@@ -149,10 +148,10 @@ export function BookingDateModal({
           <form onSubmit={handleSubmit} className="p-6">
             {/* Date inputs in elegant boxes */}
             <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="bg-secondary/50 border border-border/50 p-4">
-                <label className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
+              <label className="bg-secondary/50 border border-border/50 p-4 cursor-pointer hover:border-accent/50 transition-colors">
+                <span className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
                   Arrivée
-                </label>
+                </span>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-accent" />
                   <input
@@ -164,11 +163,11 @@ export function BookingDateModal({
                     required
                   />
                 </div>
-              </div>
-              <div className="bg-secondary/50 border border-border/50 p-4">
-                <label className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
+              </label>
+              <label className="bg-secondary/50 border border-border/50 p-4 cursor-pointer hover:border-accent/50 transition-colors">
+                <span className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
                   Départ
-                </label>
+                </span>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-accent" />
                   <input
@@ -180,7 +179,7 @@ export function BookingDateModal({
                     required
                   />
                 </div>
-              </div>
+              </label>
             </div>
 
             {/* Adults and Nights summary */}
