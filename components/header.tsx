@@ -3,20 +3,20 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Home, Building2, Bed, UtensilsCrossed, Sparkles, Image as ImageIcon, Tag, Phone, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useBookingModal } from "@/components/booking-modal-provider"
 import { cn } from "@/lib/utils"
 
 const navigation = [
-  { name: "Accueil", href: "/" },
-  { name: "Le Riad", href: "/le-riad" },
-  { name: "Chambres & Suites", href: "/chambres-suites" },
-  { name: "Restaurant", href: "/restaurant" },
-  { name: "Spa", href: "/spa" },
-  { name: "Galerie", href: "/galerie" },
-  { name: "Nos Offres", href: "/offres" },
-  { name: "Contact", href: "/contact" },
+  { name: "Accueil", href: "/", icon: Home },
+  { name: "Le Riad", href: "/le-riad", icon: Building2 },
+  { name: "Chambres & Suites", href: "/chambres-suites", icon: Bed },
+  { name: "Restaurant", href: "/restaurant", icon: UtensilsCrossed },
+  { name: "Spa", href: "/spa", icon: Sparkles },
+  { name: "Galerie", href: "/galerie", icon: ImageIcon },
+  { name: "Nos Offres", href: "/offres", icon: Tag },
+  { name: "Contact", href: "/contact", icon: Phone },
 ]
 
 export function Header() {
@@ -120,79 +120,72 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu - Bottom Sheet Premium */}
-      {/* Backdrop */}
-      <div
-        className={cn(
-          "lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity duration-300",
-          isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        )}
-        onClick={() => setIsMobileMenuOpen(false)}
-      />
-      
-      {/* Bottom Sheet */}
-      <div
-        className={cn(
-          "lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background rounded-t-2xl shadow-2xl transition-transform duration-300 ease-out",
-          isMobileMenuOpen ? "translate-y-0" : "translate-y-full"
-        )}
-      >
-        {/* Handle */}
-        <div className="flex justify-center pt-3 pb-2">
-          <div className="w-10 h-1 bg-border rounded-full" />
-        </div>
-        
-        {/* Close button */}
-        <button
-          onClick={() => setIsMobileMenuOpen(false)}
-          className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground transition-colors"
-          aria-label="Fermer"
-        >
-          <X className="h-5 w-5" />
-        </button>
-        
-        {/* Navigation */}
-        <nav className="px-6 pb-8 pt-2">
-          <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-            {navigation.slice(0, -1).map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="py-3 text-sm text-foreground hover:text-primary transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
-          
-          {/* Separator */}
-          <div className="border-t border-border my-4" />
-          
-          {/* CTA */}
-          <Button 
-            onClick={() => {
-              setIsMobileMenuOpen(false)
-              openBookingModal()
-            }}
-            className="w-full rounded-none py-5 text-sm tracking-wide"
-          >
-            Réserver en direct
-          </Button>
-          
-          {/* Contact quick link */}
-          <Link
-            href="/contact"
+      </header>
+
+      {/* Mobile Menu - Bottom Sheet (Outside header to avoid positioning issues) */}
+      {isMobileMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="lg:hidden fixed inset-0 bg-black/50 z-[100] animate-in fade-in duration-200"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="block text-center text-xs text-muted-foreground mt-4 hover:text-foreground transition-colors"
-          >
-            Nous contacter
-          </Link>
-        </nav>
-        
-        {/* Safe area for iOS */}
-        <div className="h-safe-area-inset-bottom bg-background" />
-      </div>
-    </header>
+          />
+          
+          {/* Bottom Sheet */}
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-[101] bg-background rounded-t-2xl shadow-2xl animate-in slide-in-from-bottom duration-300">
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+              <span className="text-sm text-muted-foreground">Menu</span>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-1 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Fermer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
+            {/* CTA at top */}
+            <div className="px-4 py-3 border-b border-border">
+              <Button 
+                onClick={() => {
+                  setIsMobileMenuOpen(false)
+                  openBookingModal()
+                }}
+                className="w-full rounded-none py-4 text-sm tracking-wide"
+              >
+                Réserver en direct
+              </Button>
+            </div>
+            
+            {/* Navigation list */}
+            <nav className="max-h-[60vh] overflow-y-auto">
+              {navigation.map((item, index) => {
+                const Icon = item.icon
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={cn(
+                      "flex items-center gap-4 px-5 py-4 border-b border-border/50 transition-colors",
+                      index === 0 
+                        ? "bg-accent/20" 
+                        : "hover:bg-secondary/50"
+                    )}
+                  >
+                    <Icon className="h-5 w-5 text-accent flex-shrink-0" />
+                    <span className="flex-1 text-sm text-foreground">{item.name}</span>
+                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                  </Link>
+                )
+              })}
+            </nav>
+            
+            {/* Safe area for iOS */}
+            <div className="h-6 bg-background" />
+          </div>
+        </>
+      )}
   )
 }
