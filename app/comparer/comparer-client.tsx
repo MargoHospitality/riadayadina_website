@@ -128,15 +128,6 @@ export function CompareClient() {
         <section className="pt-32 md:pt-40 pb-16">
           <div className="container mx-auto px-4">
             <div className="max-w-xl mx-auto text-center">
-              {/* Step indicator */}
-              <div className="inline-flex items-center gap-2 text-xs text-primary uppercase tracking-[0.2em] mb-6">
-                <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-medium">1</span>
-                <span className="text-primary/60">/</span>
-                <span className="text-primary/40">2</span>
-                <span className="mx-2 text-primary/40">·</span>
-                <span className="text-primary/80">Vérification en cours</span>
-              </div>
-
               {/* Main title */}
               <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground mb-4 text-balance">
                 Nous vérifions les meilleurs prix pour vos dates.
@@ -178,41 +169,15 @@ export function CompareClient() {
                     const isActive = currentStep === step.id
 
                     return (
-                      <div
+                      <p
                         key={step.id}
                         className={cn(
-                          "flex items-center gap-3 transition-all duration-500",
-                          isComplete ? "opacity-100" : isActive ? "opacity-100" : "opacity-40"
+                          "text-sm transition-colors duration-300",
+                          isComplete || isActive ? "text-foreground" : "text-muted-foreground/60"
                         )}
                       >
-                        <span
-                          className={cn(
-                            "h-6 w-6 rounded-full text-[11px] flex items-center justify-center transition-all duration-500",
-                            isComplete
-                              ? "bg-primary text-primary-foreground"
-                              : isActive
-                              ? "bg-primary/20 text-primary"
-                              : "bg-primary/10 text-primary/40"
-                          )}
-                        >
-                          {step.id}
-                        </span>
-                        <span
-                          className={cn(
-                            "text-sm transition-colors duration-300",
-                            isComplete ? "text-foreground" : isActive ? "text-foreground" : "text-muted-foreground"
-                          )}
-                        >
-                          {step.label}
-                        </span>
-                        {isActive && (
-                          <div className="ml-auto flex gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0ms" }} />
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "150ms" }} />
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "300ms" }} />
-                          </div>
-                        )}
-                      </div>
+                        {step.label}
+                      </p>
                     )
                   })}
                 </div>
