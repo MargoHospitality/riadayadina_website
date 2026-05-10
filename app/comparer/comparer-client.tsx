@@ -4,7 +4,6 @@ import { useState, useEffect, type ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { ArrowRight, Check, CheckCircle2, Clock, ExternalLink, Search, Shield, ShieldCheck, Sparkles, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { BookingDateModal } from "@/components/booking-date-modal"
@@ -186,9 +185,9 @@ export function CompareClient() {
                           isComplete ? "opacity-100" : isActive ? "opacity-100" : "opacity-40"
                         )}
                       >
-                        <div
+                        <span
                           className={cn(
-                            "w-6 h-6 rounded-full flex items-center justify-center transition-all duration-500",
+                            "h-6 w-6 rounded-full text-[11px] flex items-center justify-center transition-all duration-500",
                             isComplete
                               ? "bg-primary text-primary-foreground"
                               : isActive
@@ -196,14 +195,8 @@ export function CompareClient() {
                               : "bg-primary/10 text-primary/40"
                           )}
                         >
-                          {isComplete ? (
-                            <CheckCircle2 className="h-4 w-4" />
-                          ) : isActive ? (
-                            <Search className="h-3 w-3 animate-pulse" />
-                          ) : (
-                            <Clock className="h-3 w-3" />
-                          )}
-                        </div>
+                          {step.id}
+                        </span>
                         <span
                           className={cn(
                             "text-sm transition-colors duration-300",
@@ -251,9 +244,7 @@ export function CompareClient() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm text-primary hover:text-accent transition-colors"
                 >
-                  <ShieldCheck className="h-4 w-4" />
                   Continuer directement vers la réservation officielle
-                  <ExternalLink className="h-3 w-3" />
                 </a>
               </div>
             </div>
@@ -345,7 +336,6 @@ export function CompareClient() {
                         onClick={() => trackDirectBookingEvent("rate_compare_click_contact", { checkIn: search.checkIn, checkOut: search.checkOut, reason: "no_availability_email" })}
                       >
                         Écrire au service réservation
-                        <ArrowRight className="ml-2 h-4 w-4" />
                       </a>
                     </Button>
                   </div>
@@ -386,12 +376,7 @@ export function CompareClient() {
                       <div>
                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Site officiel</p>
                         <h2 className="font-serif text-xl md:text-2xl text-foreground">Riad Ayadina & Spa</h2>
-                        <div className="flex items-center gap-1 mt-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="h-3 w-3 fill-accent text-accent" />
-                          ))}
-                          <span className="text-xs text-muted-foreground ml-1">Réservation directe</span>
-                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">Réservation directe</p>
                       </div>
                     </div>
                     <div className="bg-accent text-accent-foreground text-xs uppercase tracking-wider px-3 py-1.5 font-medium self-start">
@@ -423,10 +408,7 @@ export function CompareClient() {
 
                   {/* Perks */}
                   <div className="mb-6">
-                    <div className="flex items-center gap-2 mb-4">
-                      <Sparkles className="h-4 w-4 text-accent" />
-                      <p className="text-sm font-medium text-foreground">Avantages exclusifs réservation directe</p>
-                    </div>
+                    <p className="text-sm font-medium text-foreground mb-4">Avantages exclusifs réservation directe</p>
                     <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
                       {perks.map((perk, index) => (
                         <PerkItem key={index}>{perk}</PerkItem>
@@ -435,11 +417,8 @@ export function CompareClient() {
                   </div>
 
                   {/* Conditions */}
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6 p-4 bg-secondary/50 rounded-sm">
-                    <Shield className="h-5 w-5 text-accent flex-shrink-0" />
-                    <p>
-                      Réservation sur le moteur officiel · Conditions affichées avant confirmation · Confirmation immédiate
-                    </p>
+                  <div className="text-sm text-muted-foreground mb-6 p-4 bg-secondary/50 rounded-sm">
+                    <p>Réservation sur le moteur officiel · Conditions affichées avant confirmation · Confirmation immédiate</p>
                   </div>
 
                   {/* CTA */}
@@ -451,7 +430,6 @@ export function CompareClient() {
                       onClick={() => trackDirectBookingEvent("rate_compare_click_cloudbeds", { checkIn: search.checkIn, checkOut: search.checkOut, adults: String(search.adults || 2), outcome: getComparisonOutcome(comparison) })}
                     >
                       {totalSavings > 0 ? "Réserver au meilleur prix" : hasLivePrices && !usesCloudbedsFallback ? "Réserver en direct" : "Voir le tarif officiel"}
-                      <ExternalLink className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
                 </div>
@@ -470,10 +448,7 @@ export function CompareClient() {
                     </p>
                     <div className="space-y-2">
                       {perks.slice(0, 4).map((perk) => (
-                        <div key={perk} className="flex items-center gap-2 text-sm">
-                          <Check className="h-4 w-4 text-accent shrink-0" />
-                          <span>{perk}</span>
-                        </div>
+                        <div key={perk} className="text-sm">{perk}</div>
                       ))}
                     </div>
                   </div>
@@ -510,32 +485,17 @@ export function CompareClient() {
 
             {/* Trust Section */}
             <div className="grid md:grid-cols-3 gap-6 py-8 border-t border-border">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-accent/10 flex items-center justify-center flex-shrink-0">
-                  <Shield className="h-6 w-6 text-accent" />
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">Paiement sécurisé</p>
-                  <p className="text-sm text-muted-foreground">Directement sur notre moteur officiel</p>
-                </div>
+              <div>
+                <p className="font-medium text-foreground">Paiement sécurisé</p>
+                <p className="text-sm text-muted-foreground">Directement sur notre moteur officiel</p>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-accent/10 flex items-center justify-center flex-shrink-0">
-                  <Check className="h-6 w-6 text-accent" />
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">Confirmation instantanée</p>
-                  <p className="text-sm text-muted-foreground">Email de confirmation immédiat</p>
-                </div>
+              <div>
+                <p className="font-medium text-foreground">Confirmation instantanée</p>
+                <p className="text-sm text-muted-foreground">Email de confirmation immédiat</p>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-accent/10 flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="h-6 w-6 text-accent" />
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">Accueil personnalisé</p>
-                  <p className="text-sm text-muted-foreground">Thé de bienvenue et accompagnement</p>
-                </div>
+              <div>
+                <p className="font-medium text-foreground">Accueil personnalisé</p>
+                <p className="text-sm text-muted-foreground">Thé de bienvenue et accompagnement</p>
               </div>
             </div>
               </>
@@ -581,10 +541,7 @@ function OTACard({ offer, nights, isMain = false }: { offer: RateOffer; nights: 
 
 function PerkItem({ children }: { children: ReactNode }) {
   return (
-    <div className="flex items-center gap-2 text-sm">
-      <Check className="h-4 w-4 text-accent shrink-0" />
-      <span className="text-foreground">{children}</span>
-    </div>
+    <p className="text-sm text-foreground">{children}</p>
   )
 }
 
