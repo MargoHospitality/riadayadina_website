@@ -266,12 +266,14 @@ export function CompareClient() {
   // Results State
   const comparison = comparisonResult ?? createUnavailableComparison()
   const referenceOffer = chooseReferenceOffer(comparison.offers)
-  const directOffer = comparison.directOffer
+  const cloudbedsFallbackOffer = getCloudbedsFallbackOffer(comparison)
+  const directOffer = comparison.directOffer ?? cloudbedsFallbackOffer
+  const usesCloudbedsFallback = !comparison.directOffer && Boolean(cloudbedsFallbackOffer)
   const hasNoAvailability = comparison.status === "no_availability"
   const hasLivePrices = comparison.status === "available" && Boolean(directOffer)
   const sameCurrency = Boolean(directOffer && referenceOffer && directOffer.currency === referenceOffer.currency)
   const otaBeatsDirect = Boolean(sameCurrency && directOffer && referenceOffer && referenceOffer.price < directOffer.price)
-  const showPriceComparison = hasLivePrices && !otaBeatsDirect
+  const showPriceComparison = hasLivePrices && !otaBeatsDirect && !usesCloudbedsFallback
   const savingsPerNight = showPriceComparison && directOffer && referenceOffer ? Math.max(referenceOffer.price - directOffer.price, 0) : 0
   const totalSavings = savingsPerNight * nights
   const perks = getDirectPerks(nights)
@@ -410,7 +412,7 @@ export function CompareClient() {
                       <p className="text-sm text-muted-foreground mb-1">Prix par nuit</p>
                       <div className="flex items-baseline gap-2">
                         <span className="font-serif text-4xl md:text-5xl text-foreground">
-                          {directOffer ? formatMoney(directOffer.price, directOffer.currency) : "À vérifier"}
+                          {directOffer ? formatMoney(directOffer.price, directOffer.currency) : "Sur Cloudbeds"}
                         </span>
                       </div>
                       {totalSavings > 0 && (
@@ -456,7 +458,7 @@ export function CompareClient() {
                       rel="noreferrer"
                       onClick={() => trackDirectBookingEvent("rate_compare_click_cloudbeds", { checkIn: search.checkIn, checkOut: search.checkOut, adults: String(search.adults || 2), outcome: getComparisonOutcome(comparison) })}
                     >
-                      {totalSavings > 0 ? "Réserver au meilleur prix" : hasLivePrices ? "Réserver en direct" : "Voir le tarif officiel"}
+                      {totalSavings > 0 ? "Réserver au meilleur prix" : hasLivePrices && !usesCloudbedsFallback ? "Réserver en direct" : "Voir le tarif officiel"}
                       <ExternalLink className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
@@ -465,12 +467,14 @@ export function CompareClient() {
 
               {/* OTA Offers - Takes 2 columns */}
               <div className="lg:col-span-2 space-y-4">
-                {otaBeatsDirect ? (
+                {otaBeatsDirect || usesCloudbedsFallback ? (
                   <div className="bg-primary text-primary-foreground p-6">
                     <p className="text-accent text-xs uppercase tracking-[0.2em] mb-3">Réserver en direct</p>
                     <h3 className="font-serif text-2xl mb-4">Le prix n&apos;est pas le seul critère utile pour ce séjour.</h3>
                     <p className="text-primary-foreground/75 text-sm mb-5">
-                      Pour ces dates, nous mettons en avant les avantages inclus en direct plutôt qu&apos;un comparatif de prix moins lisible.
+                      {usesCloudbedsFallback
+                        ? "L'offre officielle est disponible sur Cloudbeds. Nous évitons un comparatif chiffré tant que Google Hotels ne renvoie pas une offre officielle exploitable."
+                        : "Pour ces dates, nous mettons en avant les avantages inclus en direct plutôt qu'un comparatif de prix moins lisible."}
                     </p>
                     <div className="space-y-2">
                       {perks.slice(0, 4).map((perk) => (
@@ -599,6 +603,24 @@ function chooseReferenceOffer(offers: RateOffer[]) {
   const booking = sorted.find((offer) => /booking\.com/i.test(offer.title) || /booking\.com/i.test(offer.domain || ""))
   if (booking && booking.price <= best.price + 10) return booking
   return best
+}
+
+function getCloudbedsFallbackOffer(comparison: RateComparison): RateOffer | undefined {
+  if (comparison.directOffer || comparison.availability?.status !== "available") return undefined
+
+  const pricedRooms = comparison.availability.rooms.filter(
+    (room) => typeof room.minRate === "number" && Number.isFinite(room.minRate)
+  )
+  const bestRoom = pricedRooms.sort((a, b) => (a.minRate || 0) - (b.minRate || 0))[0]
+  if (!bestRoom?.minRate) return undefined
+
+  return {
+    title: "Riad Ayadina & Spa",
+    price: bestRoom.minRate,
+    currency: bestRoom.currency || "MAD",
+    conditions: "Tarif officiel Cloudbeds",
+    officialSite: true,
+  }
 }
 
 function getDirectPerks(nights: number) {
