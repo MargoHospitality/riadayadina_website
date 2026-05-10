@@ -111,8 +111,8 @@
     } else {
       card.innerHTML = `
         <p class="margo-direct-kicker">Réservation directe Ayadina</p>
-        <h2 class="margo-direct-title">Les avantages directs restent visibles ici.</h2>
-        <p class="margo-direct-text">Quand le comparatif prix n'est pas favorable ou pas parfaitement comparable, nous affichons uniquement les bénéfices inclus en direct.</p>
+        <h2 class="margo-direct-title">Réservez en direct avec les attentions Ayadina.</h2>
+        <p class="margo-direct-text">En réservant sur le moteur officiel, vous gardez un contact direct avec le riad et bénéficiez des avantages réservés aux clients directs.</p>
         <div class="margo-direct-benefits">${benefits.map((benefit) => `<span class="margo-direct-chip">${benefit}</span>`).join("")}</div>
       `
     }
