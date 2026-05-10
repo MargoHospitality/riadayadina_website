@@ -211,11 +211,11 @@ export function BookingDateModal({
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div className="flex flex-col items-center gap-1">
                   <ShieldCheck className="h-4 w-4 text-accent" />
-                  <span className="text-[10px] text-muted-foreground">Annulation flexible</span>
+                  <span className="text-[10px] text-muted-foreground">Contact direct</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
                   <Sparkles className="h-4 w-4 text-accent" />
-                  <span className="text-[10px] text-muted-foreground">Sans prépaiement</span>
+                  <span className="text-[10px] text-muted-foreground">Confirmation rapide</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
                   <Gift className="h-4 w-4 text-accent" />

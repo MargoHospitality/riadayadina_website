@@ -30,7 +30,7 @@ export function BookingWidget() {
             <div className="flex flex-wrap justify-center gap-6 mb-8 pb-8 border-b border-border">
               <div className="flex items-center gap-2 text-sm">
                 <ShieldCheck className="h-5 w-5 text-primary" />
-                <span>Meilleur tarif garanti</span>
+                <span>Tarif direct Ayadina</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Plane className="h-5 w-5 text-primary" />
@@ -54,7 +54,7 @@ export function BookingWidget() {
             {/* Direct booking note */}
             <div className="mt-8 pt-8 border-t border-border text-center">
               <p className="text-sm text-muted-foreground">
-                Réservation sécurisée • Confirmation immédiate • Support disponible 24/7
+                Réservation sécurisée • Confirmation immédiate • Contact direct avec le riad
               </p>
             </div>
           </div>

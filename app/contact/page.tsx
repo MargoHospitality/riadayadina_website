@@ -352,7 +352,7 @@ export default function ContactPage() {
               Réservez en direct, profitez pleinement
             </h2>
             <p className="text-primary-foreground/70 mb-8 max-w-xl mx-auto text-sm">
-              Meilleur tarif garanti, transfert aéroport offert dès 2 nuitées, -10% sur le spa.
+              Tarif direct Ayadina, cocktail de bienvenue, transfert selon durée du séjour, -10% sur le spa.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button

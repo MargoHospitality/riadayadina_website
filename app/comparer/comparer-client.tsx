@@ -444,8 +444,7 @@ export function CompareClient() {
                   <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6 p-4 bg-secondary/50 rounded-sm">
                     <Shield className="h-5 w-5 text-accent flex-shrink-0" />
                     <p>
-                      <span className="font-medium text-foreground">Annulation flexible</span> · 
-                      Aucun prépaiement requis · Confirmation immédiate
+                      Réservation sur le moteur officiel · Conditions affichées avant confirmation · Confirmation immédiate
                     </p>
                   </div>
 
@@ -568,7 +567,7 @@ function OTACard({ offer, nights, isMain = false }: { offer: RateOffer; nights: 
       <div className="flex items-center justify-between mb-2">
         <p className="text-sm font-medium text-muted-foreground">{offer.title}</p>
         {isMain && (
-          <span className="text-xs text-red-600 bg-red-50 px-2 py-0.5">Non remboursable</span>
+          <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5">Offre observée</span>
         )}
       </div>
       <div className="flex items-end justify-between">
@@ -605,7 +604,7 @@ function chooseReferenceOffer(offers: RateOffer[]) {
 function getDirectPerks(nights: number) {
   if (nights >= 3) {
     return [
-      "Meilleur tarif garanti",
+      "Tarif direct Ayadina",
       "Transfert aéroport A/R offert",
       "-10% sur les soins Spa",
       "Cocktail de bienvenue",
@@ -622,9 +621,9 @@ function getDirectPerks(nights: number) {
     ]
   }
   return [
-    "Conditions flexibles",
-    "Sans prépaiement",
-    "Contact direct",
+    "Contact direct avec le riad",
+    "Confirmation immédiate",
+    "Avantages selon durée",
   ]
 }
 

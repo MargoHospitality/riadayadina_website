@@ -20,8 +20,7 @@ export function DirectBookingBanner() {
             Ce que vous gagnez en réservant ici
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Sur les plateformes, nous reversons jusqu&apos;à 20% de commission. 
-            En direct, ces économies deviennent vos avantages.
+            En réservant sur le site officiel, votre séjour inclut des attentions réservées aux hôtes Ayadina.
           </p>
         </AnimateOnScroll>
 
@@ -42,7 +41,7 @@ export function DirectBookingBanner() {
                 <div className="space-y-3 text-sm text-muted-foreground mb-6">
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span>Tarif préférentiel exclusif</span>
+                    <span>Tarif direct Ayadina</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent/60" />
@@ -100,7 +99,7 @@ export function DirectBookingBanner() {
                 <div className="space-y-3 text-sm text-primary-foreground/90 mb-6">
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    <span className="font-medium">Meilleur tarif garanti</span>
+                    <span className="font-medium">Tarif direct Ayadina</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />

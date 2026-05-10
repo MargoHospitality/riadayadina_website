@@ -68,7 +68,7 @@ export function HeroSection() {
             
             {/* Reassurance line */}
             <p className="text-white/60 text-sm mt-6 tracking-wide">
-              Meilleur tarif garanti · Confirmation rapide · Transfert offert dès 2 nuitées
+              Confirmation rapide · Cocktail de bienvenue · Avantages dès 2 nuitées
             </p>
           </div>
         </div>

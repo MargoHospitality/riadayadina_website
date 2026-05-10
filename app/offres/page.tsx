@@ -24,11 +24,11 @@ import {
 const offers = [
   {
     nights: 2,
-    title: "Escapade",
+    title: "Séjour Patio",
     subtitle: "À partir de 2 nuitées",
-    description: "L'essentiel pour une première découverte d'Ayadina",
+    description: "Les attentions directes pour profiter d'Ayadina dès les premières nuits",
     benefits: [
-      { icon: BadgePercent, text: "Tarif préférentiel exclusif", highlight: true },
+      { icon: BadgePercent, text: "Tarif direct Ayadina", highlight: true },
       { icon: Sparkles, text: "Surclassement offert (selon disponibilité)" },
       { icon: Car, text: "Transfert aéroport aller" },
       { icon: Gift, text: "-10% sur les soins au Spa" },
@@ -38,11 +38,11 @@ const offers = [
   },
   {
     nights: 3,
-    title: "Immersion",
+    title: "Séjour Ayadina",
     subtitle: "À partir de 3 nuitées",
-    description: "L'expérience complète pour profiter pleinement du riad",
+    description: "Le séjour le plus complet, avec transfert aller-retour inclus",
     benefits: [
-      { icon: BadgePercent, text: "Meilleur tarif garanti", highlight: true },
+      { icon: BadgePercent, text: "Tarif direct Ayadina", highlight: true },
       { icon: Sparkles, text: "Surclassement offert (selon disponibilité)" },
       { icon: Car, text: "Transfert aéroport aller ET retour" },
       { icon: Gift, text: "-10% sur les soins au Spa" },
@@ -56,8 +56,8 @@ const offers = [
 const whyDirect = [
   {
     icon: ShieldCheck,
-    title: "Prix le plus bas garanti",
-    description: "Nous nous alignons sur tout tarif inférieur trouvé ailleurs",
+    title: "Tarif direct officiel",
+    description: "Vous réservez sur le moteur officiel du Riad Ayadina",
   },
   {
     icon: Gift,
@@ -133,9 +133,8 @@ export default function OffresPage() {
                 Pourquoi réserver en direct ?
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-4">
-                Sur les plateformes de réservation, nous reversons jusqu&apos;à 20% de commission. 
-                En réservant directement chez nous, nous partageons cette économie avec vous 
-                sous forme d&apos;avantages concrets.
+                En réservant directement sur le site officiel, vous gardez un contact direct avec le riad
+                et profitez d&apos;attentions réservées aux hôtes Ayadina.
               </p>
               <p className="text-muted-foreground text-lg leading-relaxed">
                 Transferts aéroport, surclassements, réductions au spa, cocktails de bienvenue... 
@@ -232,8 +231,8 @@ export default function OffresPage() {
                 Booking.com, Expedia, Hotels.com...
               </h2>
               <p className="text-muted-foreground mb-8">
-                Consultez les plateformes si vous le souhaitez. Puis revenez ici et profitez 
-                du même prix — voire moins — avec tous les avantages en plus.
+                Comparez librement, puis réservez sur le moteur officiel pour bénéficier
+                des attentions directes Ayadina et d&apos;un contact sans intermédiaire.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button onClick={() => openBookingModal()} className="rounded-none px-8 py-6">

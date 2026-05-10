@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 const benefits = [
   {
     icon: ShieldCheck,
-    text: "Meilleur tarif garanti",
+    text: "Tarif direct Ayadina",
   },
   {
     icon: Gift,
@@ -16,7 +16,7 @@ const benefits = [
   },
   {
     icon: Clock,
-    text: "Annulation flexible",
+    text: "Contact direct",
   },
 ]
 
@@ -24,16 +24,18 @@ export function RoomsBookingCta() {
   const [checkIn, setCheckIn] = useState("")
   const [checkOut, setCheckOut] = useState("")
   const [guests, setGuests] = useState("2")
+  const minCheckOut = checkIn
+    ? new Date(new Date(checkIn).getTime() + 86_400_000).toISOString().split("T")[0]
+    : undefined
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Redirect to booking engine with dates
     const params = new URLSearchParams({
-      checkin: checkIn,
-      checkout: checkOut,
+      checkIn,
+      checkOut,
       adults: guests,
     })
-    window.location.href = `#booking?${params.toString()}`
+    window.location.href = `/comparer?${params.toString()}`
   }
 
   return (
@@ -75,7 +77,10 @@ export function RoomsBookingCta() {
                       type="date"
                       id="checkin"
                       value={checkIn}
-                      onChange={(e) => setCheckIn(e.target.value)}
+                      onChange={(e) => {
+                        setCheckIn(e.target.value)
+                        if (checkOut && checkOut <= e.target.value) setCheckOut("")
+                      }}
                       className={cn(
                         "w-full pl-10 pr-4 py-3 border border-border bg-background",
                         "text-foreground placeholder:text-muted-foreground",
@@ -102,7 +107,7 @@ export function RoomsBookingCta() {
                       id="checkout"
                       value={checkOut}
                       onChange={(e) => setCheckOut(e.target.value)}
-                      min={checkIn}
+                      min={minCheckOut}
                       className={cn(
                         "w-full pl-10 pr-4 py-3 border border-border bg-background",
                         "text-foreground placeholder:text-muted-foreground",

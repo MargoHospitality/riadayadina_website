@@ -184,7 +184,7 @@ function collectOffers(payload: unknown) {
       currency,
       domain,
       url,
-      conditions: officialSite ? "Flexible, sans prépaiement" : "Non remboursable",
+      conditions: officialSite ? "Site officiel" : "Offre observée",
       officialSite,
       freeCancellationUntil:
         typeof value.free_cancellation_until === "string" || value.free_cancellation_until === null
