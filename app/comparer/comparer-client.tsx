@@ -277,7 +277,7 @@ export function CompareClient() {
   const savingsPerNight = showPriceComparison && directOffer && referenceOffer ? Math.max(referenceOffer.price - directOffer.price, 0) : 0
   const totalSavings = savingsPerNight * nights
   const perks = getDirectPerks(nights)
-  const contactUrl = buildContactUrl(search)
+  const reservationEmailUrl = buildReservationEmailUrl(search)
 
   return (
     <main className="min-h-screen bg-background">
@@ -334,27 +334,19 @@ export function CompareClient() {
               <div className="bg-card border border-accent/40 shadow-sm p-6 md:p-8 mb-8">
                 <div className="max-w-3xl">
                   <p className="text-accent text-sm uppercase tracking-[0.2em] mb-3">Disponibilité en ligne</p>
-                  <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Aucune chambre disponible en ligne pour ces dates.</h2>
+                  <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Nous n&apos;avons plus de disponibilité en ligne pour ces dates.</h2>
                   <p className="text-muted-foreground mb-6">
-                    Le moteur officiel Cloudbeds ne remonte pas de disponibilité pour ce séjour. Le plus utile est de vérifier directement avec le riad : il peut rester une option manuelle, une libération récente ou une alternative de dates.
+                    Pour votre séjour du {formatLongDate(search.checkIn!)} au {formatLongDate(search.checkOut!)}, aucune chambre n&apos;est disponible à la réservation en ligne actuellement. Vous pouvez écrire au service réservation si vous souhaitez une confirmation directe ou proposer d&apos;autres dates.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button asChild size="lg" className="rounded-none px-8 py-6">
-                      <Link
-                        href={contactUrl}
-                        onClick={() => trackDirectBookingEvent("rate_compare_click_contact", { checkIn: search.checkIn, checkOut: search.checkOut, reason: "no_availability" })}
+                      <a
+                        href={reservationEmailUrl}
+                        onClick={() => trackDirectBookingEvent("rate_compare_click_contact", { checkIn: search.checkIn, checkOut: search.checkOut, reason: "no_availability_email" })}
                       >
-                        Vérifier avec le riad
+                        Écrire au service réservation
                         <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                    <Button asChild variant="outline" size="lg" className="rounded-none px-8 py-6 bg-transparent">
-                      <Link
-                        href={`${contactUrl}&intent=waitlist`}
-                        onClick={() => trackDirectBookingEvent("rate_compare_click_contact", { checkIn: search.checkIn, checkOut: search.checkOut, reason: "waitlist" })}
-                      >
-                        Être prévenu si une chambre se libère
-                      </Link>
+                      </a>
                     </Button>
                   </div>
                 </div>
@@ -661,15 +653,20 @@ function formatMoney(value: number, currency: string) {
   }).format(value)
 }
 
-function buildContactUrl(search: { checkIn?: string; checkOut?: string; adults?: string }) {
-  const params = new URLSearchParams({
-    intent: "availability_check",
-    checkIn: search.checkIn || "",
-    checkOut: search.checkOut || "",
-    adults: String(search.adults || 2),
-  })
+function buildReservationEmailUrl(search: { checkIn?: string; checkOut?: string; adults?: string }) {
+  const subject = "Demande de disponibilité - Riad Ayadina"
+  const body = [
+    "Bonjour,",
+    "",
+    "Je souhaite vérifier les disponibilités pour le séjour suivant :",
+    `- Arrivée : ${search.checkIn || ""}`,
+    `- Départ : ${search.checkOut || ""}`,
+    `- Voyageurs : ${search.adults || 2}`,
+    "",
+    "Merci par avance.",
+  ].join("\n")
 
-  return `/contact?${params.toString()}`
+  return `mailto:booking@riadayadinamarrakech.net?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
 function trackComparisonResult(comparison: RateComparison, nights: number) {
