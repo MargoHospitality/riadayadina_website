@@ -10,6 +10,7 @@
   const apiPath = window.MARGO_DIRECT_BOOKING_API_PATH || "/api/rate-compare"
   const contactUrl = window.MARGO_DIRECT_BOOKING_CONTACT_URL || `${apiOrigin}/contact`
   const state = { renderedTop: false, renderedPackages: new WeakSet(), result: null }
+  const debug = Boolean(window.MARGO_DIRECT_BOOKING_DEBUG)
 
   const benefits = [
     "Transfert aéroport offert selon la durée du séjour",
@@ -74,9 +75,13 @@
   }
 
   function renderTopCard() {
-    if (state.renderedTop) return
-    const firstCard = document.querySelector(".cb-accommodation-card")
-    if (!firstCard || !state.result) return
+    if (state.renderedTop || !state.result) return
+
+    const anchor = getTopCardAnchor()
+    if (!anchor.parent) {
+      log("No injection anchor found yet")
+      return
+    }
 
     const direct = state.result.directOffer
     const reference = getReferenceOffer(state.result)
@@ -85,7 +90,13 @@
     const card = document.createElement("section")
     card.className = "margo-direct-card"
 
-    if (directCheaper) {
+    if (state.result.status === "no_availability") {
+      card.innerHTML = `
+        <p class="margo-direct-kicker">Disponibilité officielle Ayadina</p>
+        <h2 class="margo-direct-title">Aucune chambre disponible en ligne pour ces dates.</h2>
+        <p class="margo-direct-text">Cloudbeds ne remonte pas de disponibilité pour ce séjour. Vous pouvez contacter directement le riad : il peut rester une option manuelle, une libération récente ou une alternative de dates.</p>
+      `
+    } else if (directCheaper) {
       const saving = Number(reference.price) - Number(direct.price)
       card.innerHTML = `
         <p class="margo-direct-kicker">Réservation directe Ayadina</p>
@@ -106,9 +117,35 @@
       `
     }
 
-    firstCard.parentElement?.insertBefore(card, firstCard)
+    anchor.parent.insertBefore(card, anchor.before)
     state.renderedTop = true
-    track("bke_direct_block_view", { outcome: directCheaper ? "direct_cheaper" : "benefits_only" })
+    track("bke_direct_block_view", {
+      outcome: state.result.status === "no_availability" ? "no_availability" : directCheaper ? "direct_cheaper" : "benefits_only",
+    })
+    log("Top card rendered", state.result.status)
+  }
+
+  function getTopCardAnchor() {
+    const firstCard = document.querySelector(".cb-accommodation-card")
+    if (firstCard?.parentElement) return { parent: firstCard.parentElement, before: firstCard }
+
+    const candidates = [
+      ".cb-results-container",
+      ".cb-accommodations-list",
+      ".cb-search-results",
+      ".cb-main-content",
+      ".cb-booking-engine",
+      "main",
+      "#root",
+      "#app",
+    ]
+
+    for (const selector of candidates) {
+      const element = document.querySelector(selector)
+      if (element) return { parent: element, before: element.firstChild }
+    }
+
+    return { parent: document.body, before: document.body.firstChild }
   }
 
   function renderPackageBlocks() {
@@ -131,6 +168,13 @@
   function track(event, properties) {
     try {
       if (window.va) window.va("event", { name: event, data: properties || {} })
+    } catch {}
+  }
+
+  function log() {
+    if (!debug) return
+    try {
+      console.log("[Margo BKE]", ...arguments)
     } catch {}
   }
 
