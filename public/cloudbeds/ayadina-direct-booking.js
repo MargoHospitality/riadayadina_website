@@ -9,7 +9,7 @@
   const apiOrigin = window.MARGO_DIRECT_BOOKING_API_ORIGIN || scriptOrigin
   const apiPath = window.MARGO_DIRECT_BOOKING_API_PATH || "/api/rate-compare"
   const contactUrl = window.MARGO_DIRECT_BOOKING_CONTACT_URL || `${apiOrigin}/contact`
-  const state = { renderedTop: false, renderedPackages: new WeakSet(), result: null }
+  const state = { renderedTop: false, renderedPackages: new WeakSet(), renderedRoomPackages: new WeakSet(), result: null }
   const debug = Boolean(window.MARGO_DIRECT_BOOKING_DEBUG)
 
   const benefits = [
@@ -63,6 +63,7 @@
       .margo-direct-chip{padding:6px 8px;background:#f7f8fa;border:1px solid #dde0e4;color:#1e2330;font-size:11px;line-height:1.2;border-radius:999px}
       .margo-direct-package{margin:8px 0 0;padding:10px;background:#f7f8fa;border-left:3px solid #dbc584;color:#1e2330}
       .margo-direct-package-title{margin:0 0 7px;color:#0d479f;font-size:12px;font-weight:700}
+      .margo-direct-package-inline{max-width:520px;margin-top:12px;background:#fffaf0;border:1px solid #eadfbf;border-left:3px solid #dbc584}
     `
     document.head.appendChild(style)
   }
@@ -168,16 +169,38 @@
       if (state.renderedPackages.has(plan)) return
       const title = plan.querySelector(".cb-rate-plan-title-text")?.textContent || ""
       if (!/offre spéciale directe|special direct offer|package escapade|immersion package/i.test(title)) return
-      const block = document.createElement("div")
-      block.className = "margo-direct-package"
-      block.innerHTML = `
-        <p class="margo-direct-package-title">Inclus avec cette offre directe</p>
-        <div class="margo-direct-benefits">${benefits.map((benefit) => `<span class="margo-direct-chip">${benefit}</span>`).join("")}</div>
-      `
-      plan.appendChild(block)
+
+      const roomCard = plan.closest(".cb-accommodation-card")
+      const placedInRoomSummary = roomCard && renderRoomSummaryPackage(roomCard)
+      if (!placedInRoomSummary) plan.appendChild(createPackageBlock())
+
       state.renderedPackages.add(plan)
-      track("bke_direct_package_view", { ratePlan: title.trim().slice(0, 80) })
+      track("bke_direct_package_view", { ratePlan: title.trim().slice(0, 80), placement: placedInRoomSummary ? "room_summary" : "rate_plan" })
     })
+  }
+
+  function renderRoomSummaryPackage(roomCard) {
+    if (state.renderedRoomPackages.has(roomCard)) return true
+
+    const detailsLink = [...roomCard.querySelectorAll("button,a")].find((element) =>
+      /afficher les détails|show details/i.test(element.textContent || "")
+    )
+    if (!detailsLink) return false
+
+    const block = createPackageBlock("margo-direct-package-inline")
+    detailsLink.insertAdjacentElement("afterend", block)
+    state.renderedRoomPackages.add(roomCard)
+    return true
+  }
+
+  function createPackageBlock(extraClass) {
+    const block = document.createElement("div")
+    block.className = ["margo-direct-package", extraClass].filter(Boolean).join(" ")
+    block.innerHTML = `
+      <p class="margo-direct-package-title">Inclus avec cette offre directe</p>
+      <div class="margo-direct-benefits">${benefits.map((benefit) => `<span class="margo-direct-chip">${benefit}</span>`).join("")}</div>
+    `
+    return block
   }
 
   function track(event, properties) {
