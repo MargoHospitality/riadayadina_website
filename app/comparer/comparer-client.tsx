@@ -374,16 +374,16 @@ export function CompareClient() {
                   {/* Perks */}
                   <div className="mb-6">
                     <p className="text-sm font-medium text-foreground mb-4">Avantages exclusifs réservation directe</p>
-                    <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+                    <div className="flex flex-wrap gap-2">
                       {perks.map((perk, index) => (
-                        <PerkItem key={index}>{perk}</PerkItem>
+                        <PerkBadge key={index}>{perk}</PerkBadge>
                       ))}
                     </div>
                   </div>
 
                   {/* Conditions */}
                   <div className="text-sm text-muted-foreground mb-6 p-4 bg-secondary/50 rounded-sm">
-                    <p>Réservation sur le moteur officiel · Conditions affichées avant confirmation · Confirmation immédiate</p>
+                    <p>Réservation Directe “Riad Ayadina & Spa” · Conditions détaillées affichées avant confirmation · Confirmation immédiate</p>
                   </div>
 
                   {/* CTA */}
@@ -411,15 +411,15 @@ export function CompareClient() {
                         ? "L'offre officielle est disponible sur Cloudbeds. Nous évitons un comparatif chiffré tant que Google Hotels ne renvoie pas une offre officielle exploitable."
                         : "Pour ces dates, nous mettons en avant les avantages inclus en direct plutôt qu'un comparatif de prix moins lisible."}
                     </p>
-                    <div className="space-y-2">
+                    <div className="flex flex-wrap gap-2">
                       {perks.slice(0, 4).map((perk) => (
-                        <div key={perk} className="text-sm">{perk}</div>
+                        <PerkBadge key={perk} variant="dark">{perk}</PerkBadge>
                       ))}
                     </div>
                   </div>
                 ) : (
                   <>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider px-1">Comparaison OTA</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider px-1">Comparaison “agence en ligne”</p>
                     {referenceOffer ? (
                       <>
                         <OTACard offer={referenceOffer} nights={nights} isMain />
@@ -434,8 +434,8 @@ export function CompareClient() {
                       <div className="bg-muted/30 border border-border p-6 text-center">
                         <p className="text-muted-foreground">
                           {comparison.status === "empty"
-                            ? "Aucune offre OTA disponible pour ces dates."
-                            : "Comparaison OTA indisponible pour le moment."}
+                            ? "Aucune offre d’agence en ligne disponible pour ces dates."
+                            : "Comparaison agence en ligne indisponible pour le moment."}
                         </p>
                       </div>
                     )}
@@ -504,9 +504,18 @@ function OTACard({ offer, nights, isMain = false }: { offer: RateOffer; nights: 
   )
 }
 
-function PerkItem({ children }: { children: ReactNode }) {
+function PerkBadge({ children, variant = "light" }: { children: ReactNode; variant?: "light" | "dark" }) {
   return (
-    <p className="text-sm text-foreground">{children}</p>
+    <span
+      className={cn(
+        "inline-flex rounded-full border px-3 py-1.5 text-xs font-medium leading-none",
+        variant === "dark"
+          ? "border-primary-foreground/20 bg-primary-foreground/10 text-primary-foreground"
+          : "border-accent/25 bg-accent/10 text-foreground"
+      )}
+    >
+      {children}
+    </span>
   )
 }
 
