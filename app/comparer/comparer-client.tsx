@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { BookingDateModal } from "@/components/booking-date-modal"
 import { trackDirectBookingEvent } from "@/lib/analytics"
-import { buildBookingEngineUrl, getNightCount, isValidBookingSearch } from "@/lib/booking-engine"
+import { buildBookingEngineUrl, getNightCount, isValidBookingSearch, normalizeBookingCurrency, normalizeBookingLanguage } from "@/lib/booking-engine"
 import type { RateComparison, RateOffer } from "@/lib/rate-compare"
 import { cn } from "@/lib/utils"
 
@@ -30,6 +30,8 @@ export function CompareClient() {
     checkIn: searchParams.get("checkIn") || undefined,
     checkOut: searchParams.get("checkOut") || undefined,
     adults: searchParams.get("adults") || "2",
+    currency: searchParams.get("currency") ? normalizeBookingCurrency(searchParams.get("currency") || undefined) : undefined,
+    language: normalizeBookingLanguage(searchParams.get("language") || "fr"),
   }
 
   useEffect(() => {
@@ -45,6 +47,8 @@ export function CompareClient() {
       checkIn: search.checkIn,
       checkOut: search.checkOut,
       adults: String(search.adults || 2),
+      currency: search.currency,
+      language: search.language,
     })
 
     const step2Timer = setTimeout(() => setCurrentStep(2), 1200)
@@ -55,7 +59,9 @@ export function CompareClient() {
       checkIn: search.checkIn,
       checkOut: search.checkOut,
       adults: String(search.adults || 2),
+      language: search.language,
     })
+    if (search.currency) params.set("currency", search.currency)
 
     fetch(`/api/rate-compare?${params.toString()}`, {
       cache: "no-store",
@@ -94,7 +100,7 @@ export function CompareClient() {
       clearTimeout(step3Timer)
       clearTimeout(fallbackTimer)
     }
-  }, [search.checkIn, search.checkOut, search.adults])
+  }, [search.checkIn, search.checkOut, search.adults, search.currency, search.language])
 
   if (!isValidBookingSearch(search)) {
     return (
@@ -117,7 +123,7 @@ export function CompareClient() {
   }
 
   const nights = getNightCount(search.checkIn!, search.checkOut!)
-  const bookingUrl = buildBookingEngineUrl(search)
+  const loadingBookingUrl = buildBookingEngineUrl(search)
 
   // Loading State
   if (isLoading) {
@@ -204,7 +210,7 @@ export function CompareClient() {
                 )}
               >
                 <a
-                  href={bookingUrl}
+                  href={loadingBookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm text-primary hover:text-accent transition-colors"
@@ -233,6 +239,7 @@ export function CompareClient() {
   const savingsPerNight = showPriceComparison && directOffer && referenceOffer ? Math.max(referenceOffer.price - directOffer.price, 0) : 0
   const totalSavings = savingsPerNight * nights
   const perks = getDirectPerks(nights)
+  const bookingUrl = buildBookingEngineUrl({ ...search, currency: getResolvedCurrency(comparison, search.currency) })
   const reservationEmailUrl = buildReservationEmailUrl(search)
 
   return (
@@ -480,6 +487,10 @@ export function CompareClient() {
       />
     </main>
   )
+}
+
+function getResolvedCurrency(comparison: RateComparison, fallback?: string) {
+  return comparison.directOffer?.currency || comparison.availability?.rooms.find((room) => room.currency)?.currency || fallback
 }
 
 function OTACard({ offer, nights, isMain = false }: { offer: RateOffer; nights: number; isMain?: boolean }) {

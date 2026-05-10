@@ -49,6 +49,7 @@ export async function getCloudbedsAvailability(search: BookingSearch): Promise<C
       rooms: "1",
       adults: String(search.adults || 2),
       children: "0",
+      currency: search.currency || propertyConfig.defaultCurrency,
       detailedRates: "false",
       pageSize: "50",
     })

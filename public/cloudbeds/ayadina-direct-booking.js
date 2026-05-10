@@ -26,8 +26,15 @@
     const checkIn = get("checkin", get("checkIn", ""))
     const checkOut = get("checkout", get("checkOut", ""))
     const adults = get("adults", get("guests", "2"))
+    const currency = (get("currency", "MAD") || "MAD").toUpperCase()
+    const language = get("language", getLanguageFromPath()) || "fr"
     if (!/^\d{4}-\d{2}-\d{2}$/.test(checkIn) || !/^\d{4}-\d{2}-\d{2}$/.test(checkOut)) return null
-    return { checkIn, checkOut, adults }
+    return { checkIn, checkOut, adults, currency, language }
+  }
+
+  function getLanguageFromPath() {
+    const match = window.location.pathname.match(/^\/([a-z]{2})(?:\/|$)/i)
+    return match?.[1]?.toLowerCase()
   }
 
   async function loadComparison() {

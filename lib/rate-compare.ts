@@ -55,11 +55,11 @@ export async function getRateComparison(search: BookingSearch): Promise<RateComp
         {
           hotel_identifier: hotelIdentifier,
           ...getDataForSeoLocation(),
-          language_code: process.env.DATAFORSEO_LANGUAGE_CODE || "fr",
+          language_code: search.language || process.env.DATAFORSEO_LANGUAGE_CODE || "fr",
           check_in: search.checkIn,
           check_out: search.checkOut,
           adults: Number(search.adults || 2),
-          currency: process.env.DATAFORSEO_CURRENCY || "MAD",
+          currency: search.currency || process.env.DATAFORSEO_CURRENCY || "MAD",
         },
       ]),
       cache: "no-store",

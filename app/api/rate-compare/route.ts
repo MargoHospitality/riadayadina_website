@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { isValidBookingSearch } from "@/lib/booking-engine"
+import { inferCurrencyFromCountry, isValidBookingSearch, normalizeBookingCurrency, normalizeBookingLanguage } from "@/lib/booking-engine"
 import { getCloudbedsAvailability } from "@/lib/cloudbeds-availability"
 import { getRateComparison, type RateComparison } from "@/lib/rate-compare"
 
@@ -9,6 +9,8 @@ type Search = {
   checkIn?: string
   checkOut?: string
   adults?: string
+  currency?: string
+  language?: string
 }
 
 const CACHE_TTL_MS = 5 * 60 * 1000
@@ -24,13 +26,15 @@ export async function GET(request: Request) {
     checkIn: searchParams.get("checkIn") || undefined,
     checkOut: searchParams.get("checkOut") || undefined,
     adults: searchParams.get("adults") || "2",
+    currency: normalizeBookingCurrency(searchParams.get("currency") || inferCurrencyFromRequest(request)),
+    language: normalizeBookingLanguage(searchParams.get("language") || request.headers.get("accept-language") || undefined),
   }
 
   if (!isValidBookingSearch(search)) {
     return NextResponse.json({ error: "Invalid booking search" }, { status: 400, headers: getCorsHeaders(request) })
   }
 
-  const cacheKey = `${search.checkIn}:${search.checkOut}:${search.adults || 2}`
+  const cacheKey = `${search.checkIn}:${search.checkOut}:${search.adults || 2}:${search.currency}:${search.language}`
   const cached = cache.get(cacheKey)
   if (cached && cached.expiresAt > Date.now()) {
     return json(cached.value, "HIT", request)
@@ -56,6 +60,16 @@ export async function GET(request: Request) {
   cache.set(cacheKey, { expiresAt: Date.now() + CACHE_TTL_MS, value: comparison })
 
   return json(comparison, "MISS", request)
+}
+
+function inferCurrencyFromRequest(request: Request) {
+  const country =
+    request.headers.get("x-vercel-ip-country") ||
+    request.headers.get("cf-ipcountry") ||
+    request.headers.get("x-country-code") ||
+    undefined
+
+  return inferCurrencyFromCountry(country)
 }
 
 function json(value: RateComparison, cacheStatus: "HIT" | "MISS", request: Request) {
