@@ -1,10 +1,10 @@
+import { propertyConfig } from "@/lib/property-config"
+
 export type BookingSearch = {
   checkIn: string
   checkOut: string
   adults?: string | number
 }
-
-const DEFAULT_BOOKING_ENGINE_URL = "https://hotels.cloudbeds.com/reservation/9mPc6B"
 
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/
 
@@ -25,11 +25,15 @@ export function getNightCount(checkIn: string, checkOut: string) {
 }
 
 export function buildBookingEngineUrl(search: BookingSearch) {
-  const url = new URL(process.env.NEXT_PUBLIC_BOOKING_ENGINE_URL || DEFAULT_BOOKING_ENGINE_URL)
+  const url = new URL(propertyConfig.bookingEngineUrl)
+  const currency = propertyConfig.defaultCurrency.toLowerCase()
+  url.searchParams.set("currency", currency)
+
   const bookingParams = new URLSearchParams({
     checkin: search.checkIn,
     checkout: search.checkOut,
     adults: String(search.adults || 2),
+    currency,
   })
 
   // Cloudbeds Booking Engine Plus reads booking context from the URL hash on initial load.

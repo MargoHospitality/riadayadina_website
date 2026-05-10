@@ -8,6 +8,7 @@ import { ArrowRight, Check, CheckCircle2, Clock, ExternalLink, Search, Shield, S
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { BookingDateModal } from "@/components/booking-date-modal"
+import { trackDirectBookingEvent } from "@/lib/analytics"
 import { buildBookingEngineUrl, getNightCount, isValidBookingSearch } from "@/lib/booking-engine"
 import type { RateComparison, RateOffer } from "@/lib/rate-compare"
 import { cn } from "@/lib/utils"
@@ -36,10 +37,16 @@ export function CompareClient() {
     if (!isValidBookingSearch(search)) return
 
     const controller = new AbortController()
+    const searchNights = getNightCount(search.checkIn!, search.checkOut!)
     setIsLoading(true)
     setComparisonResult(null)
     setCurrentStep(1)
     setShowFallback(false)
+    trackDirectBookingEvent("rate_compare_search", {
+      checkIn: search.checkIn,
+      checkOut: search.checkOut,
+      adults: String(search.adults || 2),
+    })
 
     const step2Timer = setTimeout(() => setCurrentStep(2), 1200)
     const step3Timer = setTimeout(() => setCurrentStep(3), 2800)
@@ -62,6 +69,7 @@ export function CompareClient() {
       .then((comparison) => {
         setCurrentStep(3)
         setComparisonResult(comparison)
+        trackComparisonResult(comparison, searchNights)
         setIsLoading(false)
       })
       .catch((error) => {
@@ -71,6 +79,12 @@ export function CompareClient() {
           offers: [],
           source: "DataForSEO Google Hotels",
           message: "Comparaison momentanément indisponible. Vous pouvez continuer vers la réservation officielle.",
+        })
+        trackDirectBookingEvent("rate_compare_unavailable", {
+          checkIn: search.checkIn,
+          checkOut: search.checkOut,
+          adults: String(search.adults || 2),
+          reason: "client_error",
         })
         setIsLoading(false)
       })
@@ -253,10 +267,15 @@ export function CompareClient() {
   const comparison = comparisonResult ?? createUnavailableComparison()
   const referenceOffer = chooseReferenceOffer(comparison.offers)
   const directOffer = comparison.directOffer
+  const hasNoAvailability = comparison.status === "no_availability"
   const hasLivePrices = comparison.status === "available" && Boolean(directOffer)
-  const savingsPerNight = directOffer && referenceOffer ? Math.max(referenceOffer.price - directOffer.price, 0) : 0
+  const sameCurrency = Boolean(directOffer && referenceOffer && directOffer.currency === referenceOffer.currency)
+  const otaBeatsDirect = Boolean(sameCurrency && directOffer && referenceOffer && referenceOffer.price < directOffer.price)
+  const showPriceComparison = hasLivePrices && !otaBeatsDirect
+  const savingsPerNight = showPriceComparison && directOffer && referenceOffer ? Math.max(referenceOffer.price - directOffer.price, 0) : 0
   const totalSavings = savingsPerNight * nights
   const perks = getDirectPerks(nights)
+  const contactUrl = buildContactUrl(search)
 
   return (
     <main className="min-h-screen bg-background">
@@ -309,7 +328,38 @@ export function CompareClient() {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             
-            {!hasLivePrices && (
+            {hasNoAvailability && (
+              <div className="bg-card border border-accent/40 shadow-sm p-6 md:p-8 mb-8">
+                <div className="max-w-3xl">
+                  <p className="text-accent text-sm uppercase tracking-[0.2em] mb-3">Disponibilité en ligne</p>
+                  <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Aucune chambre disponible en ligne pour ces dates.</h2>
+                  <p className="text-muted-foreground mb-6">
+                    Le moteur officiel Cloudbeds ne remonte pas de disponibilité pour ce séjour. Le plus utile est de vérifier directement avec le riad : il peut rester une option manuelle, une libération récente ou une alternative de dates.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button asChild size="lg" className="rounded-none px-8 py-6">
+                      <Link
+                        href={contactUrl}
+                        onClick={() => trackDirectBookingEvent("rate_compare_click_contact", { checkIn: search.checkIn, checkOut: search.checkOut, reason: "no_availability" })}
+                      >
+                        Vérifier avec le riad
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                    <Button asChild variant="outline" size="lg" className="rounded-none px-8 py-6 bg-transparent">
+                      <Link
+                        href={`${contactUrl}&intent=waitlist`}
+                        onClick={() => trackDirectBookingEvent("rate_compare_click_contact", { checkIn: search.checkIn, checkOut: search.checkOut, reason: "waitlist" })}
+                      >
+                        Être prévenu si une chambre se libère
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {!hasLivePrices && !hasNoAvailability && (
               <div className="mb-6 border border-accent/30 bg-accent/10 p-4 text-sm text-foreground">
                 <p className="font-medium mb-1">Comparaison des prix momentanément indisponible.</p>
                 <p className="text-muted-foreground">
@@ -318,6 +368,8 @@ export function CompareClient() {
               </div>
             )}
 
+            {!hasNoAvailability && (
+              <>
             {/* Price Cards Grid */}
             <div className="grid lg:grid-cols-5 gap-6 mb-10">
               
@@ -349,7 +401,7 @@ export function CompareClient() {
                       </div>
                     </div>
                     <div className="bg-accent text-accent-foreground text-xs uppercase tracking-wider px-3 py-1.5 font-medium self-start">
-                      {hasLivePrices ? "Meilleur choix" : "Officiel"}
+                      {totalSavings > 0 ? "Meilleur prix direct" : "Officiel"}
                     </div>
                   </div>
 
@@ -399,8 +451,13 @@ export function CompareClient() {
 
                   {/* CTA */}
                   <Button asChild size="lg" className="w-full rounded-none py-7 text-base tracking-wide">
-                    <a href={bookingUrl} target="_blank" rel="noreferrer">
-                      {hasLivePrices ? "Réserver au meilleur prix" : "Voir le tarif officiel"}
+                    <a
+                      href={bookingUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => trackDirectBookingEvent("rate_compare_click_cloudbeds", { checkIn: search.checkIn, checkOut: search.checkOut, adults: String(search.adults || 2), outcome: getComparisonOutcome(comparison) })}
+                    >
+                      {totalSavings > 0 ? "Réserver au meilleur prix" : hasLivePrices ? "Réserver en direct" : "Voir le tarif officiel"}
                       <ExternalLink className="ml-2 h-4 w-4" />
                     </a>
                   </Button>
@@ -409,31 +466,50 @@ export function CompareClient() {
 
               {/* OTA Offers - Takes 2 columns */}
               <div className="lg:col-span-2 space-y-4">
-                <p className="text-xs text-muted-foreground uppercase tracking-wider px-1">Comparaison OTA</p>
-                
-                {referenceOffer ? (
-                  <>
-                    <OTACard offer={referenceOffer} nights={nights} isMain />
-                    {comparison.offers
-                      .filter(o => o.title !== referenceOffer.title)
-                      .slice(0, 2)
-                      .map((offer, index) => (
-                        <OTACard key={index} offer={offer} nights={nights} />
-                      ))}
-                  </>
-                ) : (
-                  <div className="bg-muted/30 border border-border p-6 text-center">
-                    <p className="text-muted-foreground">
-                      {comparison.status === "empty"
-                        ? "Aucune offre OTA disponible pour ces dates."
-                        : "Comparaison OTA indisponible pour le moment."}
+                {otaBeatsDirect ? (
+                  <div className="bg-primary text-primary-foreground p-6">
+                    <p className="text-accent text-xs uppercase tracking-[0.2em] mb-3">Réserver en direct</p>
+                    <h3 className="font-serif text-2xl mb-4">Le prix n&apos;est pas le seul critère utile pour ce séjour.</h3>
+                    <p className="text-primary-foreground/75 text-sm mb-5">
+                      Pour ces dates, nous mettons en avant les avantages inclus en direct plutôt qu&apos;un comparatif de prix moins lisible.
                     </p>
+                    <div className="space-y-2">
+                      {perks.slice(0, 4).map((perk) => (
+                        <div key={perk} className="flex items-center gap-2 text-sm">
+                          <Check className="h-4 w-4 text-accent shrink-0" />
+                          <span>{perk}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                )}
+                ) : (
+                  <>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider px-1">Comparaison OTA</p>
+                    {referenceOffer ? (
+                      <>
+                        <OTACard offer={referenceOffer} nights={nights} isMain />
+                        {comparison.offers
+                          .filter(o => o.title !== referenceOffer.title)
+                          .slice(0, 2)
+                          .map((offer, index) => (
+                            <OTACard key={index} offer={offer} nights={nights} />
+                          ))}
+                      </>
+                    ) : (
+                      <div className="bg-muted/30 border border-border p-6 text-center">
+                        <p className="text-muted-foreground">
+                          {comparison.status === "empty"
+                            ? "Aucune offre OTA disponible pour ces dates."
+                            : "Comparaison OTA indisponible pour le moment."}
+                        </p>
+                      </div>
+                    )}
 
-                <p className="text-xs text-muted-foreground text-center pt-2">
-                  Source : Google Hotels · Tarifs indicatifs
-                </p>
+                    <p className="text-xs text-muted-foreground text-center pt-2">
+                      Source : Google Hotels · Tarifs indicatifs
+                    </p>
+                  </>
+                )}
               </div>
             </div>
 
@@ -467,6 +543,8 @@ export function CompareClient() {
                 </div>
               </div>
             </div>
+              </>
+            )}
 
           </div>
         </div>
@@ -562,6 +640,65 @@ function formatMoney(value: number, currency: string) {
   }).format(value)
 }
 
+function buildContactUrl(search: { checkIn?: string; checkOut?: string; adults?: string }) {
+  const params = new URLSearchParams({
+    intent: "availability_check",
+    checkIn: search.checkIn || "",
+    checkOut: search.checkOut || "",
+    adults: String(search.adults || 2),
+  })
+
+  return `/contact?${params.toString()}`
+}
+
+function trackComparisonResult(comparison: RateComparison, nights: number) {
+  const referenceOffer = chooseReferenceOffer(comparison.offers)
+  const directOffer = comparison.directOffer
+  const base = {
+    status: comparison.status,
+    nights,
+    cloudbedsAvailability: comparison.availability?.status,
+    cloudbedsLatencyMs: comparison.availability?.latencyMs,
+    offerCount: comparison.offers.length,
+  }
+
+  if (comparison.status === "no_availability") {
+    trackDirectBookingEvent("rate_compare_no_availability", base)
+    return
+  }
+
+  if (!directOffer) {
+    trackDirectBookingEvent("rate_compare_unavailable", base)
+    return
+  }
+
+  if (referenceOffer && directOffer.currency === referenceOffer.currency && referenceOffer.price < directOffer.price) {
+    trackDirectBookingEvent("rate_compare_ota_cheaper_hidden", {
+      ...base,
+      directPrice: directOffer.price,
+      otaPrice: referenceOffer.price,
+      currency: directOffer.currency,
+    })
+    return
+  }
+
+  trackDirectBookingEvent("rate_compare_direct_cheaper", {
+    ...base,
+    directPrice: directOffer.price,
+    otaPrice: referenceOffer?.price,
+    currency: directOffer.currency,
+  })
+}
+
+function getComparisonOutcome(comparison: RateComparison) {
+  const referenceOffer = chooseReferenceOffer(comparison.offers)
+  if (comparison.status === "no_availability") return "no_availability"
+  if (!comparison.directOffer) return "unavailable"
+  if (referenceOffer && comparison.directOffer.currency === referenceOffer.currency && referenceOffer.price < comparison.directOffer.price) {
+    return "ota_cheaper_hidden"
+  }
+  return "direct_cheaper_or_equal"
+}
 
 function createUnavailableComparison(): RateComparison {
   return {

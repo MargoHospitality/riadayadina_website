@@ -1,4 +1,5 @@
 import { BookingSearch } from "@/lib/booking-engine"
+import type { CloudbedsAvailability } from "@/lib/cloudbeds-availability"
 
 export type RateOffer = {
   title: string
@@ -12,13 +13,14 @@ export type RateOffer = {
 }
 
 export type RateComparison = {
-  status: "available" | "unconfigured" | "timeout" | "error" | "empty"
+  status: "available" | "no_availability" | "unconfigured" | "timeout" | "error" | "empty"
   directOffer?: RateOffer
   offers: RateOffer[]
   source: "DataForSEO Google Hotels"
   checkedAt?: string
   message?: string
   providerStatusCode?: number
+  availability?: CloudbedsAvailability
 }
 
 const DATAFORSEO_ENDPOINT = "https://api.dataforseo.com/v3/business_data/google/hotel_info/live/advanced"

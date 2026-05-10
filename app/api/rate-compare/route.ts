@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { isValidBookingSearch } from "@/lib/booking-engine"
-import { getRateComparison } from "@/lib/rate-compare"
+import { getCloudbedsAvailability } from "@/lib/cloudbeds-availability"
+import { getRateComparison, type RateComparison } from "@/lib/rate-compare"
 
 export const dynamic = "force-dynamic"
 
@@ -8,6 +9,13 @@ type Search = {
   checkIn?: string
   checkOut?: string
   adults?: string
+}
+
+const CACHE_TTL_MS = 5 * 60 * 1000
+const cache = new Map<string, { expiresAt: number; value: RateComparison }>()
+
+export async function OPTIONS(request: Request) {
+  return new NextResponse(null, { status: 204, headers: getCorsHeaders(request) })
 }
 
 export async function GET(request: Request) {
@@ -19,14 +27,58 @@ export async function GET(request: Request) {
   }
 
   if (!isValidBookingSearch(search)) {
-    return NextResponse.json({ error: "Invalid booking search" }, { status: 400 })
+    return NextResponse.json({ error: "Invalid booking search" }, { status: 400, headers: getCorsHeaders(request) })
   }
 
-  const comparison = await getRateComparison(search)
+  const cacheKey = `${search.checkIn}:${search.checkOut}:${search.adults || 2}`
+  const cached = cache.get(cacheKey)
+  if (cached && cached.expiresAt > Date.now()) {
+    return json(cached.value, "HIT", request)
+  }
 
-  return NextResponse.json(comparison, {
+  const availability = await getCloudbedsAvailability(search)
+
+  const comparison: RateComparison =
+    availability.status === "no_availability"
+      ? {
+          status: "no_availability",
+          offers: [],
+          source: "DataForSEO Google Hotels",
+          checkedAt: availability.checkedAt,
+          message: availability.message,
+          availability,
+        }
+      : {
+          ...(await getRateComparison(search)),
+          availability,
+        }
+
+  cache.set(cacheKey, { expiresAt: Date.now() + CACHE_TTL_MS, value: comparison })
+
+  return json(comparison, "MISS", request)
+}
+
+function json(value: RateComparison, cacheStatus: "HIT" | "MISS", request: Request) {
+  return NextResponse.json(value, {
     headers: {
-      "Cache-Control": "private, max-age=0, no-store",
+      ...getCorsHeaders(request),
+      "Cache-Control": "private, max-age=300",
+      "X-Margo-Cache": cacheStatus,
     },
   })
+}
+
+function getCorsHeaders(request: Request) {
+  const origin = request.headers.get("origin") || ""
+  const allowedOrigin =
+    origin === "https://hotels.cloudbeds.com" || origin.endsWith(".cloudbeds.com") || origin.includes("riad-ayadina")
+      ? origin
+      : "https://hotels.cloudbeds.com"
+
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    Vary: "Origin",
+  }
 }
