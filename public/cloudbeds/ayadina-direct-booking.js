@@ -99,13 +99,13 @@
       const saving = Number(reference.price) - Number(direct.price)
       card.innerHTML = `
         <p class="margo-direct-kicker">Réservation directe Ayadina</p>
-        <h2 class="margo-direct-title">Votre tarif officiel est mieux placé pour ces dates.</h2>
-        <p class="margo-direct-text">Comparaison indicative effectuée au moment de votre recherche. Si vous changez devise, dates ou occupation, vérifiez le total final Cloudbeds.</p>
+        <h2 class="margo-direct-title">Notre tarif direct est plus avantageux pour ces dates.</h2>
+        <p class="margo-direct-text">Comparaison indicative effectuée au moment de votre recherche. Si vous changez devise, dates ou occupation, n'hésitez pas à vérifier le total final.</p>
         <div class="margo-direct-grid">
           <div class="margo-direct-price"><span>Site officiel</span><strong>${formatMoney(direct.price, direct.currency)} / nuit</strong></div>
-          <div class="margo-direct-price"><span>Meilleure agence en ligne observée</span><strong>${formatMoney(reference.price, reference.currency)} / nuit</strong></div>
+          <div class="margo-direct-price"><span>Meilleure agence en ligne</span><strong>${formatMoney(reference.price, reference.currency)} / nuit</strong></div>
         </div>
-        <span class="margo-direct-saving">Économie observée : ${formatMoney(saving, direct.currency)} / nuit</span>
+        <span class="margo-direct-saving">Economie : ${formatMoney(saving, direct.currency)} / nuit</span>
       `
     } else {
       card.innerHTML = `
@@ -160,7 +160,7 @@
     document.querySelectorAll(".cb-rate-plan").forEach((plan) => {
       if (state.renderedPackages.has(plan)) return
       const title = plan.querySelector(".cb-rate-plan-title-text")?.textContent || ""
-      if (!/offre spéciale directe|package escapade/i.test(title)) return
+      if (!/offre spéciale directe|special direct offer|package escapade|immersion package/i.test(title)) return
       const block = document.createElement("div")
       block.className = "margo-direct-package"
       block.innerHTML = `
