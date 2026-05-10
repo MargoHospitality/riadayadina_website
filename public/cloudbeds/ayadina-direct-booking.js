@@ -44,19 +44,18 @@
     const style = document.createElement("style")
     style.id = "margo-direct-booking-style"
     style.textContent = `
-      .margo-direct-card{box-sizing:border-box;margin:0 16px 24px;padding:18px 18px 16px;background:#fff;border:1px solid #dde0e4;box-shadow:rgba(0,0,0,.2) 0 1px 8px 0;color:#1e2330;font-family:inherit}
-      .margo-direct-kicker{margin:0 0 8px;color:#0d479f;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
-      .margo-direct-title{margin:0 0 8px;color:#1e2330;font-size:20px;line-height:1.2;font-weight:650}
-      .margo-direct-text{margin:0;color:#545b66;font-size:14px;line-height:1.45}
-      .margo-direct-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
-      .margo-direct-price{display:flex;justify-content:space-between;gap:12px;padding:11px 12px;background:#f7f8fa;border:1px solid #dde0e4;font-size:13px}
-      .margo-direct-price strong{color:#0d479f;font-size:16px;white-space:nowrap}
-      .margo-direct-saving{display:inline-flex;margin-top:12px;padding:7px 10px;background:#dbc584;color:#1e2330;font-size:12px;font-weight:700}
-      .margo-direct-benefits{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-      .margo-direct-chip{padding:7px 10px;background:#f7f8fa;border:1px solid #dde0e4;color:#1e2330;font-size:12px;line-height:1.2}
-      .margo-direct-package{margin:10px 0 0;padding:12px;background:#f7f8fa;border-left:3px solid #dbc584;color:#1e2330}
-      .margo-direct-package-title{margin:0 0 8px;color:#0d479f;font-size:13px;font-weight:700}
-      @media(min-width:640px){.margo-direct-grid{grid-template-columns:1fr 1fr}.margo-direct-card{padding:20px 22px}}
+      .margo-direct-card{box-sizing:border-box;margin:0 16px 12px;padding:12px 14px;background:#fff;border:1px solid #dde0e4;border-left:4px solid #dbc584;color:#1e2330;font-family:inherit}
+      .margo-direct-kicker{margin:0 0 5px;color:#0d479f;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+      .margo-direct-title{margin:0 0 5px;color:#1e2330;font-size:16px;line-height:1.25;font-weight:650}
+      .margo-direct-text{margin:0;color:#545b66;font-size:12px;line-height:1.4}
+      .margo-direct-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+      .margo-direct-price{display:inline-flex;align-items:center;gap:8px;padding:7px 9px;background:#f7f8fa;border:1px solid #dde0e4;font-size:12px}
+      .margo-direct-price strong{color:#0d479f;font-size:13px;white-space:nowrap}
+      .margo-direct-saving{display:inline-flex;margin-top:9px;padding:6px 9px;background:#f3ead0;color:#1e2330;font-size:11px;font-weight:700}
+      .margo-direct-benefits{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+      .margo-direct-chip{padding:6px 8px;background:#f7f8fa;border:1px solid #dde0e4;color:#1e2330;font-size:11px;line-height:1.2;border-radius:999px}
+      .margo-direct-package{margin:8px 0 0;padding:10px;background:#f7f8fa;border-left:3px solid #dbc584;color:#1e2330}
+      .margo-direct-package-title{margin:0 0 7px;color:#0d479f;font-size:12px;font-weight:700}
     `
     document.head.appendChild(style)
   }
@@ -93,8 +92,8 @@
     if (state.result.status === "no_availability") {
       card.innerHTML = `
         <p class="margo-direct-kicker">Disponibilité officielle Ayadina</p>
-        <h2 class="margo-direct-title">Aucune chambre disponible en ligne pour ces dates.</h2>
-        <p class="margo-direct-text">Cloudbeds ne remonte pas de disponibilité pour ce séjour. Vous pouvez contacter directement le riad : il peut rester une option manuelle, une libération récente ou une alternative de dates.</p>
+        <h2 class="margo-direct-title">Nous n’avons plus de disponibilité en ligne pour ces dates.</h2>
+        <p class="margo-direct-text">Vous pouvez écrire au service réservation si vous souhaitez une confirmation directe ou proposer d’autres dates : booking@riadayadinamarrakech.net.</p>
       `
     } else if (directCheaper) {
       const saving = Number(reference.price) - Number(direct.price)
@@ -104,7 +103,7 @@
         <p class="margo-direct-text">Comparaison indicative effectuée au moment de votre recherche. Si vous changez devise, dates ou occupation, vérifiez le total final Cloudbeds.</p>
         <div class="margo-direct-grid">
           <div class="margo-direct-price"><span>Site officiel</span><strong>${formatMoney(direct.price, direct.currency)} / nuit</strong></div>
-          <div class="margo-direct-price"><span>Meilleure OTA observée</span><strong>${formatMoney(reference.price, reference.currency)} / nuit</strong></div>
+          <div class="margo-direct-price"><span>Meilleure agence en ligne observée</span><strong>${formatMoney(reference.price, reference.currency)} / nuit</strong></div>
         </div>
         <span class="margo-direct-saving">Économie observée : ${formatMoney(saving, direct.currency)} / nuit</span>
       `
@@ -148,6 +147,15 @@
     return { parent: document.body, before: document.body.firstChild }
   }
 
+  function hideNativeRateCheckButton() {
+    document.querySelectorAll("button,a,div,span").forEach((element) => {
+      if (element.closest(".margo-direct-card,.margo-direct-package")) return
+      if ((element.textContent || "").trim().toLowerCase() !== "rate check") return
+      const target = element.closest("button,a") || element
+      target.style.display = "none"
+    })
+  }
+
   function renderPackageBlocks() {
     document.querySelectorAll(".cb-rate-plan").forEach((plan) => {
       if (state.renderedPackages.has(plan)) return
@@ -187,9 +195,11 @@
     }
     renderTopCard()
     renderPackageBlocks()
+    hideNativeRateCheckButton()
     const observer = new MutationObserver(() => {
       renderTopCard()
       renderPackageBlocks()
+      hideNativeRateCheckButton()
     })
     observer.observe(document.body, { childList: true, subtree: true })
   }
