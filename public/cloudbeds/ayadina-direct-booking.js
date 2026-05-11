@@ -174,7 +174,7 @@
   }
 
   function getBenefitsForRatePlan(title) {
-    if (/immersion package|package immersion|escapade package|package escapade/i.test(title)) return packageBenefits
+    if (/immersion|escapade/i.test(title)) return packageBenefits
     if (/offre spéciale directe|special direct offer/i.test(title)) return directOfferBenefits
     return null
   }

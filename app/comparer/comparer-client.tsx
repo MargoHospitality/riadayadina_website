@@ -238,7 +238,8 @@ export function CompareClient() {
   const showPriceComparison = hasLivePrices && !otaBeatsDirect && !usesCloudbedsFallback
   const savingsPerNight = showPriceComparison && directOffer && referenceOffer ? Math.max(referenceOffer.price - directOffer.price, 0) : 0
   const totalSavings = savingsPerNight * nights
-  const perks = getDirectPerks(nights)
+  const directOfferBundle = getDirectOfferBundle(nights)
+  const perks = directOfferBundle.perks
   const bookingUrl = buildBookingEngineUrl({ ...search, currency: getResolvedCurrency(comparison, search.currency) })
   const reservationEmailUrl = buildReservationEmailUrl(search)
 
@@ -380,7 +381,7 @@ export function CompareClient() {
 
                   {/* Perks */}
                   <div className="mb-6">
-                    <p className="text-sm font-medium text-foreground mb-4">Avantages exclusifs réservation directe</p>
+                    <p className="text-sm font-medium text-foreground mb-4">{directOfferBundle.label}</p>
                     <div className="flex flex-wrap gap-2">
                       {perks.map((perk, index) => (
                         <PerkBadge key={index}>{perk}</PerkBadge>
@@ -412,7 +413,8 @@ export function CompareClient() {
                 {otaBeatsDirect || usesCloudbedsFallback ? (
                   <div className="bg-primary text-primary-foreground p-6">
                     <p className="text-accent text-xs uppercase tracking-[0.2em] mb-3">Réserver en direct</p>
-                    <h3 className="font-serif text-2xl mb-5">Profitez toujours d&apos;avantages exclusifs en réservant sur notre site.</h3>
+                    <h3 className="font-serif text-2xl mb-2">Profitez toujours d&apos;avantages exclusifs en réservant sur notre site.</h3>
+                    <p className="text-sm text-primary-foreground/70 mb-5">{directOfferBundle.label}</p>
                     <div className="flex flex-wrap gap-2">
                       {perks.slice(0, 4).map((perk) => (
                         <PerkBadge key={perk} variant="dark">{perk}</PerkBadge>
@@ -552,10 +554,25 @@ function getCloudbedsFallbackOffer(comparison: RateComparison, nights: number): 
   }
 }
 
-function getDirectPerks(nights: number) {
-  if (nights >= 3) return getPackagePerks()
-  if (nights >= 2) return getPackagePerks()
-  return ["-10% sur les soins Spa", "Surclassement & early check-in selon disponibilité"]
+function getDirectOfferBundle(nights: number) {
+  if (nights >= 3) {
+    return {
+      label: "Package Immersion (3 nuits et plus)",
+      perks: getPackagePerks(),
+    }
+  }
+
+  if (nights >= 2) {
+    return {
+      label: "Package Escapade (2 nuits)",
+      perks: getPackagePerks(),
+    }
+  }
+
+  return {
+    label: "Offre Spéciale Directe",
+    perks: ["-10% sur les soins Spa", "Surclassement & early check-in selon disponibilité"],
+  }
 }
 
 function getPackagePerks() {
