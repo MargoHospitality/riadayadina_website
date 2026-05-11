@@ -146,7 +146,7 @@ export function RoomsBookingCta() {
                     </select>
                   </div>
                   <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                    Prix comparés pour une chambre. Si vous voyagez à plusieurs, vous pourrez sélectionner plusieurs chambres sur notre moteur de réservation à l&apos;étape suivante.
+                    Prix comparés pour une chambre. Si vous voyagez à plusieurs, vous pourrez sélectionner plusieurs chambres sur notre moteur de réservation.
                   </p>
                 </div>
               </div>

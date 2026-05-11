@@ -199,7 +199,7 @@ export function BookingDateModal({
             </div>
 
             <p className="text-[11px] leading-relaxed text-muted-foreground mb-6">
-              Prix comparés pour une chambre. Si vous voyagez à plusieurs, vous pourrez sélectionner plusieurs chambres sur notre moteur de réservation à l&apos;étape suivante.
+              Prix comparés pour une chambre. Si vous voyagez à plusieurs, vous pourrez sélectionner plusieurs chambres sur notre moteur de réservation.
             </p>
 
             {/* Error message */}
