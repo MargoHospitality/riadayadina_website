@@ -9,12 +9,16 @@ export const propertyConfig = {
   directBenefits: {
     twoNights: [
       "Transfert aéroport aller offert",
+      "Annulation flexible",
+      "Pas de prépaiement",
       "-10% sur les soins Spa",
       "Cocktail de bienvenue",
       "Contact direct avec le riad",
     ],
     threeNights: [
       "Transfert aéroport A/R offert",
+      "Annulation flexible",
+      "Pas de prépaiement",
       "-10% sur les soins Spa",
       "Cocktail de bienvenue",
       "Surclassement & early check-in selon disponibilité",

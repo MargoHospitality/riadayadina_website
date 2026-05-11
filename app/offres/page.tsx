@@ -18,7 +18,9 @@ import {
   ArrowRight,
   ShieldCheck,
   BadgePercent,
-  Star
+  Star,
+  CalendarCheck,
+  CreditCard
 } from "lucide-react"
 
 const offers = [
@@ -29,6 +31,8 @@ const offers = [
     description: "Les attentions directes pour profiter d'Ayadina dès les premières nuits",
     benefits: [
       { icon: BadgePercent, text: "Tarif direct Ayadina", highlight: true },
+      { icon: CalendarCheck, text: "Annulation flexible", highlight: true },
+      { icon: CreditCard, text: "Pas de prépaiement", highlight: true },
       { icon: Sparkles, text: "Surclassement offert (selon disponibilité)" },
       { icon: Car, text: "Transfert aéroport aller" },
       { icon: Gift, text: "-10% sur les soins au Spa" },
@@ -43,6 +47,8 @@ const offers = [
     description: "Le séjour le plus complet, avec transfert aller-retour inclus",
     benefits: [
       { icon: BadgePercent, text: "Tarif direct Ayadina", highlight: true },
+      { icon: CalendarCheck, text: "Annulation flexible", highlight: true },
+      { icon: CreditCard, text: "Pas de prépaiement", highlight: true },
       { icon: Sparkles, text: "Surclassement offert (selon disponibilité)" },
       { icon: Car, text: "Transfert aéroport aller ET retour" },
       { icon: Gift, text: "-10% sur les soins au Spa" },
@@ -67,7 +73,7 @@ const whyDirect = [
   {
     icon: Star,
     title: "Flexibilité maximale",
-    description: "Modification et annulation facilitées, sans intermédiaire",
+    description: "Annulation flexible et pas de prépaiement",
   },
 ]
 

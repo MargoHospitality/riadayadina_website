@@ -44,6 +44,14 @@ export function DirectBookingBanner() {
                     <span>Tarif direct Ayadina</span>
                   </div>
                   <div className="flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                    <span>Annulation flexible</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                    <span>Pas de prépaiement</span>
+                  </div>
+                  <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent/60" />
                     <span>Transfert aéroport aller</span>
                   </div>
@@ -100,6 +108,14 @@ export function DirectBookingBanner() {
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                     <span className="font-medium">Tarif direct Ayadina</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                    <span className="font-medium">Annulation flexible</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                    <span className="font-medium">Pas de prépaiement</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent" />

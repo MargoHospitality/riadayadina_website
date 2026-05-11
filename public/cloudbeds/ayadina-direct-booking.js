@@ -25,9 +25,9 @@
       noAvailabilityTitle: "Nous n’avons plus de disponibilité en ligne pour ces dates.",
       noAvailabilityText: "Vous pouvez écrire au service réservation : booking@riadayadinamarrakech.net.",
       packages: {
-        immersion: ["Transfert aéroport A/R", "-10% sur les soins Spa", "Cocktail de bienvenue", "Surclassement & early check-in selon disponibilité"],
-        escapade: ["Transfert aéroport aller", "-10% sur les soins Spa", "Cocktail de bienvenue", "Surclassement & early check-in selon disponibilité"],
-        direct: ["-10% sur les soins Spa", "Surclassement & early check-in selon disponibilité"],
+        immersion: ["Transfert aéroport A/R", "Annulation flexible", "Pas de prépaiement", "-10% sur les soins Spa", "Cocktail de bienvenue", "Surclassement & early check-in selon disponibilité"],
+        escapade: ["Transfert aéroport aller", "Annulation flexible", "Pas de prépaiement", "-10% sur les soins Spa", "Cocktail de bienvenue", "Surclassement & early check-in selon disponibilité"],
+        direct: ["Annulation flexible", "Pas de prépaiement", "-10% sur les soins Spa", "Surclassement & early check-in selon disponibilité"],
       },
     },
     en: {
@@ -41,9 +41,9 @@
       noAvailabilityTitle: "We no longer have online availability for these dates.",
       noAvailabilityText: "You can contact reservations directly: booking@riadayadinamarrakech.net.",
       packages: {
-        immersion: ["Round-trip airport transfer", "10% off Spa treatments", "Welcome cocktail", "Upgrade & early check-in subject to availability"],
-        escapade: ["One-way airport transfer", "10% off Spa treatments", "Welcome cocktail", "Upgrade & early check-in subject to availability"],
-        direct: ["10% off Spa treatments", "Upgrade & early check-in subject to availability"],
+        immersion: ["Round-trip airport transfer", "Flexible cancellation", "No prepayment", "10% off Spa treatments", "Welcome cocktail", "Upgrade & early check-in subject to availability"],
+        escapade: ["One-way airport transfer", "Flexible cancellation", "No prepayment", "10% off Spa treatments", "Welcome cocktail", "Upgrade & early check-in subject to availability"],
+        direct: ["Flexible cancellation", "No prepayment", "10% off Spa treatments", "Upgrade & early check-in subject to availability"],
       },
     },
   }

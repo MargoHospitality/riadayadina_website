@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { useBookingModal } from "@/components/booking-modal-provider"
-import { ShieldCheck, Plane, Percent } from "lucide-react"
+import { ShieldCheck, Plane, Percent, CalendarCheck, CreditCard } from "lucide-react"
 
 export function BookingWidget() {
   const { openBookingModal } = useBookingModal()
@@ -31,6 +31,14 @@ export function BookingWidget() {
               <div className="flex items-center gap-2 text-sm">
                 <ShieldCheck className="h-5 w-5 text-primary" />
                 <span>Tarif direct Ayadina</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <CalendarCheck className="h-5 w-5 text-primary" />
+                <span>Annulation flexible</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <CreditCard className="h-5 w-5 text-primary" />
+                <span>Pas de prépaiement</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Plane className="h-5 w-5 text-primary" />

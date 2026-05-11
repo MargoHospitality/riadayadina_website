@@ -584,13 +584,15 @@ function getDirectOfferBundle(nights: number) {
 
   return {
     label: "Offre Spéciale Directe",
-    perks: ["-10% sur les soins Spa", "Surclassement & early check-in selon disponibilité"],
+    perks: ["Annulation flexible", "Pas de prépaiement", "-10% sur les soins Spa", "Surclassement & early check-in selon disponibilité"],
   }
 }
 
 function getImmersionPackagePerks() {
   return [
     "Transfert aéroport A/R",
+    "Annulation flexible",
+    "Pas de prépaiement",
     "-10% sur les soins Spa",
     "Cocktail de bienvenue",
     "Surclassement & early check-in selon disponibilité",
@@ -600,6 +602,8 @@ function getImmersionPackagePerks() {
 function getEscapadePackagePerks() {
   return [
     "Transfert aéroport aller",
+    "Annulation flexible",
+    "Pas de prépaiement",
     "-10% sur les soins Spa",
     "Cocktail de bienvenue",
     "Surclassement & early check-in selon disponibilité",

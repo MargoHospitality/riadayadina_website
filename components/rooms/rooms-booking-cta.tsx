@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { CalendarIcon, Users, Sparkles, ShieldCheck, Gift, Clock } from "lucide-react"
+import { CalendarIcon, Users, Sparkles, ShieldCheck, Gift, Clock, CalendarCheck, CreditCard } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -9,6 +9,14 @@ const benefits = [
   {
     icon: ShieldCheck,
     text: "Tarif direct Ayadina",
+  },
+  {
+    icon: CalendarCheck,
+    text: "Annulation flexible",
+  },
+  {
+    icon: CreditCard,
+    text: "Pas de prépaiement",
   },
   {
     icon: Gift,
