@@ -235,7 +235,8 @@ export function CompareClient() {
   const hasLivePrices = comparison.status === "available" && Boolean(directOffer)
   const sameCurrency = Boolean(directOffer && referenceOffer && directOffer.currency === referenceOffer.currency)
   const otaBeatsDirect = Boolean(sameCurrency && directOffer && referenceOffer && referenceOffer.price < directOffer.price)
-  const showPriceComparison = hasLivePrices && !otaBeatsDirect && !usesCloudbedsFallback
+  const shouldShowDirectPrice = hasLivePrices && !otaBeatsDirect && !usesCloudbedsFallback
+  const showPriceComparison = shouldShowDirectPrice
   const savingsPerNight = showPriceComparison && directOffer && referenceOffer ? Math.max(referenceOffer.price - directOffer.price, 0) : 0
   const totalSavings = savingsPerNight * nights
   const directOfferBundle = getDirectOfferBundle(nights)
@@ -353,31 +354,43 @@ export function CompareClient() {
                       </div>
                     </div>
                     <div className="bg-accent text-accent-foreground text-xs uppercase tracking-wider px-3 py-1.5 font-medium self-start">
-                      {totalSavings > 0 ? "Meilleur prix direct" : "Officiel"}
+                      {totalSavings > 0 ? "Meilleur prix direct" : shouldShowDirectPrice ? "Officiel" : "Avantages directs"}
                     </div>
                   </div>
 
-                  <div className="flex items-end justify-between mb-6 pb-6 border-b border-border">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-1">Prix par nuit</p>
-                      <div className="flex items-baseline gap-2">
-                        <span className="font-serif text-4xl md:text-5xl text-foreground">
-                          {directOffer ? formatMoney(directOffer.price, directOffer.currency) : "Sur Cloudbeds"}
-                        </span>
+                  {shouldShowDirectPrice ? (
+                    <div className="flex items-end justify-between mb-6 pb-6 border-b border-border">
+                      <div>
+                        <p className="text-sm text-muted-foreground mb-1">Prix par nuit</p>
+                        <div className="flex items-baseline gap-2">
+                          <span className="font-serif text-4xl md:text-5xl text-foreground">
+                            {directOffer ? formatMoney(directOffer.price, directOffer.currency) : "Sur Cloudbeds"}
+                          </span>
+                        </div>
+                        {totalSavings > 0 && (
+                          <p className="text-accent font-medium mt-2">
+                            Économie de {formatMoney(totalSavings, directOffer?.currency || "EUR")} sur votre séjour
+                          </p>
+                        )}
                       </div>
-                      {totalSavings > 0 && (
-                        <p className="text-accent font-medium mt-2">
-                          Économie de {formatMoney(totalSavings, directOffer?.currency || "EUR")} sur votre séjour
+                      <div className="text-right">
+                        <p className="text-sm text-muted-foreground mb-1">Total estimé</p>
+                        <p className="font-serif text-2xl text-foreground">
+                          {directOffer ? formatMoney(directOffer.price * nights, directOffer.currency) : "Sur Cloudbeds"}
                         </p>
-                      )}
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm text-muted-foreground mb-1">Total estimé</p>
-                      <p className="font-serif text-2xl text-foreground">
-                        {directOffer ? formatMoney(directOffer.price * nights, directOffer.currency) : "Sur Cloudbeds"}
+                  ) : (
+                    <div className="mb-6 pb-6 border-b border-border">
+                      <p className="text-sm text-muted-foreground mb-2">Réservation officielle</p>
+                      <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3">
+                        Les avantages directs restent réservés aux clients du site officiel.
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        Les tarifs, disponibilités et conditions finales seront affichés sur le moteur sécurisé Ayadina avant confirmation. Nous n&apos;affichons pas de comparaison prix lorsqu&apos;une agence est moins chère ou lorsque la comparaison n&apos;est pas strictement comparable.
                       </p>
                     </div>
-                  </div>
+                  )}
 
                   {/* Perks */}
                   <div className="mb-6">
@@ -402,7 +415,7 @@ export function CompareClient() {
                       rel="noreferrer"
                       onClick={() => trackDirectBookingEvent("rate_compare_click_cloudbeds", { checkIn: search.checkIn, checkOut: search.checkOut, adults: String(search.adults || 2), outcome: getComparisonOutcome(comparison) })}
                     >
-                      {totalSavings > 0 ? "Réserver au meilleur prix" : hasLivePrices && !usesCloudbedsFallback ? "Réserver en direct" : "Voir le tarif officiel"}
+                      {totalSavings > 0 ? "Réserver au meilleur prix" : shouldShowDirectPrice ? "Réserver en direct" : "Voir les disponibilités officielles"}
                     </a>
                   </Button>
                 </div>
@@ -586,7 +599,7 @@ function getImmersionPackagePerks() {
 
 function getEscapadePackagePerks() {
   return [
-    "Transfert aéroport Aller",
+    "Transfert aéroport aller",
     "-10% sur les soins Spa",
     "Cocktail de bienvenue",
     "Surclassement & early check-in selon disponibilité",

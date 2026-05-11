@@ -20,7 +20,7 @@ export function BookingWidget() {
               Réservez votre séjour
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              En réservant directement sur notre site, vous bénéficiez du meilleur tarif garanti et d&apos;avantages exclusifs
+              En réservant directement sur notre site, vous bénéficiez du tarif officiel Ayadina et d&apos;avantages exclusifs
             </p>
           </div>
 
@@ -34,7 +34,7 @@ export function BookingWidget() {
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Plane className="h-5 w-5 text-primary" />
-                <span>Transfert aéroport offert</span>
+                <span>Transfert offert selon durée</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Percent className="h-5 w-5 text-primary" />

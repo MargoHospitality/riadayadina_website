@@ -12,19 +12,40 @@
   const state = { renderedTop: false, renderedPackages: new WeakSet(), result: null }
   const debug = Boolean(window.MARGO_DIRECT_BOOKING_DEBUG)
 
-  const immersionBenefits = [
-    "Transfert aéroport A/R",
-    "-10% sur les soins Spa",
-    "Cocktail de bienvenue",
-    "Surclassement & early check-in",
-  ]
-  const escapadeBenefits = [
-    "Transfert aéroport Aller",
-    "-10% sur les soins Spa",
-    "Cocktail de bienvenue",
-    "Surclassement & early check-in",
-  ]
-  const directOfferBenefits = ["-10% sur les soins Spa", "Surclassement & early check-in"]
+  const copy = {
+    fr: {
+      comparisonKicker: "Comparaison agences en ligne",
+      comparisonTitle: "Notre tarif direct est plus avantageux pour ces dates.",
+      officialSite: "Site officiel",
+      otherSites: "Autres sites de réservation",
+      perNight: " / nuit",
+      saving: "Économie",
+      noAvailabilityKicker: "Disponibilité officielle Ayadina",
+      noAvailabilityTitle: "Nous n’avons plus de disponibilité en ligne pour ces dates.",
+      noAvailabilityText: "Vous pouvez écrire au service réservation : booking@riadayadinamarrakech.net.",
+      packages: {
+        immersion: ["Transfert aéroport A/R", "-10% sur les soins Spa", "Cocktail de bienvenue", "Surclassement & early check-in selon disponibilité"],
+        escapade: ["Transfert aéroport aller", "-10% sur les soins Spa", "Cocktail de bienvenue", "Surclassement & early check-in selon disponibilité"],
+        direct: ["-10% sur les soins Spa", "Surclassement & early check-in selon disponibilité"],
+      },
+    },
+    en: {
+      comparisonKicker: "Online travel agency comparison",
+      comparisonTitle: "Our direct rate is better for these dates.",
+      officialSite: "Official website",
+      otherSites: "Other booking sites",
+      perNight: " / night",
+      saving: "Saving",
+      noAvailabilityKicker: "Official Ayadina availability",
+      noAvailabilityTitle: "We no longer have online availability for these dates.",
+      noAvailabilityText: "You can contact reservations directly: booking@riadayadinamarrakech.net.",
+      packages: {
+        immersion: ["Round-trip airport transfer", "10% off Spa treatments", "Welcome cocktail", "Upgrade & early check-in subject to availability"],
+        escapade: ["One-way airport transfer", "10% off Spa treatments", "Welcome cocktail", "Upgrade & early check-in subject to availability"],
+        direct: ["10% off Spa treatments", "Upgrade & early check-in subject to availability"],
+      },
+    },
+  }
 
   function parseBookingSearch() {
     const search = new URLSearchParams(window.location.search)
@@ -76,9 +97,14 @@
     document.head.appendChild(style)
   }
 
+  function getCopy() {
+    return copy[getLanguageFromPath() === "en" ? "en" : "fr"]
+  }
+
   function formatMoney(value, currency) {
     try {
-      return new Intl.NumberFormat("fr-FR", { style: "currency", currency, maximumFractionDigits: 0 }).format(value)
+      const locale = getLanguageFromPath() === "en" ? "en-US" : "fr-FR"
+      return new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 0 }).format(value)
     } catch {
       return `${Math.round(value)} ${currency || "MAD"}`
     }
@@ -109,22 +135,24 @@
     const card = document.createElement("section")
     card.className = "margo-direct-card"
 
+    const labels = getCopy()
+
     if (state.result.status === "no_availability") {
       card.innerHTML = `
-        <p class="margo-direct-kicker">Disponibilité officielle Ayadina</p>
-        <h2 class="margo-direct-title">Nous n’avons plus de disponibilité en ligne pour ces dates.</h2>
-        <p class="margo-direct-text">Vous pouvez écrire au service réservation : booking@riadayadinamarrakech.net.</p>
+        <p class="margo-direct-kicker">${labels.noAvailabilityKicker}</p>
+        <h2 class="margo-direct-title">${labels.noAvailabilityTitle}</h2>
+        <p class="margo-direct-text">${labels.noAvailabilityText}</p>
       `
     } else {
       const saving = Number(reference.price) - Number(direct.price)
       card.innerHTML = `
-        <p class="margo-direct-kicker">Comparaison agence en ligne</p>
-        <h2 class="margo-direct-title">Notre tarif direct est plus avantageux pour ces dates.</h2>
+        <p class="margo-direct-kicker">${labels.comparisonKicker}</p>
+        <h2 class="margo-direct-title">${labels.comparisonTitle}</h2>
         <div class="margo-direct-grid">
-          <div class="margo-direct-price"><span>Site officiel</span><strong>${formatMoney(direct.price, direct.currency)} / nuit</strong></div>
-          <div class="margo-direct-price"><span>Autres sites de réservation</span><strong>${formatMoney(reference.price, reference.currency)} / nuit</strong></div>
+          <div class="margo-direct-price"><span>${labels.officialSite}</span><strong>${formatMoney(direct.price, direct.currency)}${labels.perNight}</strong></div>
+          <div class="margo-direct-price"><span>${labels.otherSites}</span><strong>${formatMoney(reference.price, reference.currency)}${labels.perNight}</strong></div>
         </div>
-        <span class="margo-direct-saving">Economie : ${formatMoney(saving, direct.currency)} / nuit</span>
+        <span class="margo-direct-saving">${labels.saving}: ${formatMoney(saving, direct.currency)}${labels.perNight}</span>
       `
     }
 
@@ -180,9 +208,10 @@
   }
 
   function getBenefitsForRatePlan(title) {
-    if (/immersion/i.test(title)) return immersionBenefits
-    if (/escapade/i.test(title)) return escapadeBenefits
-    if (/offre spéciale directe|special direct offer/i.test(title)) return directOfferBenefits
+    const packages = getCopy().packages
+    if (/immersion/i.test(title)) return packages.immersion
+    if (/escapade/i.test(title)) return packages.escapade
+    if (/offre spéciale directe|special direct offer/i.test(title)) return packages.direct
     return null
   }
 
