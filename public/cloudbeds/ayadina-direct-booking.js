@@ -52,14 +52,15 @@
     const style = document.createElement("style")
     style.id = "margo-direct-booking-style"
     style.textContent = `
-      .margo-direct-card{box-sizing:border-box;margin:0 16px 24px;padding:18px 18px 16px;background:#fff;border:1px solid #dde0e4;box-shadow:rgba(0,0,0,.12) 0 1px 8px 0;color:#1e2330;font-family:inherit}
+      .margo-direct-card{box-sizing:border-box;width:100%;margin:0 0 18px;padding:18px 20px;background:#fff;border:1px solid #dde0e4;border-radius:10px;box-shadow:rgba(18,31,53,.08) 0 2px 10px;color:#1e2330;font-family:inherit;overflow:hidden}
       .margo-direct-kicker{margin:0 0 8px;color:#0d479f;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
-      .margo-direct-title{margin:0 0 8px;color:#1e2330;font-size:20px;line-height:1.2;font-weight:650}
+      .margo-direct-title{margin:0 0 8px;color:#1e2330;font-size:20px;line-height:1.22;font-weight:650}
       .margo-direct-text{margin:0;color:#545b66;font-size:14px;line-height:1.45}
-      .margo-direct-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
-      .margo-direct-price{display:flex;justify-content:space-between;gap:12px;padding:11px 12px;background:#f7f8fa;border:1px solid #dde0e4;font-size:13px}
-      .margo-direct-price strong{color:#0d479f;font-size:16px;white-space:nowrap}
-      .margo-direct-saving{display:inline-flex;margin-top:12px;padding:7px 10px;background:#f3ead0;color:#1e2330;font-size:12px;font-weight:700}
+      .margo-direct-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:15px}
+      .margo-direct-price{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:#f7f8fa;border:1px solid #dde0e4;border-radius:8px;font-size:13px;line-height:1.25}
+      .margo-direct-price span{color:#545b66}
+      .margo-direct-price strong{color:#0d479f;font-size:16px;white-space:nowrap;font-weight:700}
+      .margo-direct-saving{display:inline-flex;margin-top:12px;padding:7px 11px;background:#f3ead0;border:1px solid #e4d4a8;border-radius:999px;color:#1e2330;font-size:12px;font-weight:700}
       @media(min-width:640px){.margo-direct-grid{grid-template-columns:1fr 1fr}.margo-direct-card{padding:20px 22px}}
       .margo-direct-benefits{display:flex;flex-wrap:wrap;gap:6px;margin-top:0}
       .margo-direct-chip{padding:5px 8px;background:transparent;border:1px solid #dbc584;color:#1e2330;font-size:11px;line-height:1.2;border-radius:999px}
