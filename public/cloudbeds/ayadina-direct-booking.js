@@ -52,14 +52,15 @@
     const style = document.createElement("style")
     style.id = "margo-direct-booking-style"
     style.textContent = `
-      .margo-direct-card{box-sizing:border-box;margin:12px 0 0;padding:12px 14px;background:#fff;border:1px solid #dde0e4;border-left:4px solid #dbc584;color:#1e2330;font-family:inherit}
-      .margo-direct-kicker{margin:0 0 5px;color:#0d479f;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-      .margo-direct-title{margin:0 0 5px;color:#1e2330;font-size:16px;line-height:1.25;font-weight:650}
-      .margo-direct-text{margin:0;color:#545b66;font-size:12px;line-height:1.4}
-      .margo-direct-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-      .margo-direct-price{display:inline-flex;align-items:center;gap:8px;padding:7px 9px;background:#f7f8fa;border:1px solid #dde0e4;font-size:12px}
-      .margo-direct-price strong{color:#0d479f;font-size:13px;white-space:nowrap}
-      .margo-direct-saving{display:inline-flex;margin-top:9px;padding:6px 9px;background:#f3ead0;color:#1e2330;font-size:11px;font-weight:700}
+      .margo-direct-card{box-sizing:border-box;margin:0 16px 24px;padding:18px 18px 16px;background:#fff;border:1px solid #dde0e4;box-shadow:rgba(0,0,0,.12) 0 1px 8px 0;color:#1e2330;font-family:inherit}
+      .margo-direct-kicker{margin:0 0 8px;color:#0d479f;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+      .margo-direct-title{margin:0 0 8px;color:#1e2330;font-size:20px;line-height:1.2;font-weight:650}
+      .margo-direct-text{margin:0;color:#545b66;font-size:14px;line-height:1.45}
+      .margo-direct-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+      .margo-direct-price{display:flex;justify-content:space-between;gap:12px;padding:11px 12px;background:#f7f8fa;border:1px solid #dde0e4;font-size:13px}
+      .margo-direct-price strong{color:#0d479f;font-size:16px;white-space:nowrap}
+      .margo-direct-saving{display:inline-flex;margin-top:12px;padding:7px 10px;background:#f3ead0;color:#1e2330;font-size:12px;font-weight:700}
+      @media(min-width:640px){.margo-direct-grid{grid-template-columns:1fr 1fr}.margo-direct-card{padding:20px 22px}}
       .margo-direct-benefits{display:flex;flex-wrap:wrap;gap:6px;margin-top:0}
       .margo-direct-chip{padding:5px 8px;background:transparent;border:1px solid #dbc584;color:#1e2330;font-size:11px;line-height:1.2;border-radius:999px}
       .margo-direct-package{margin:7px 0 0;padding:0;background:transparent;border:0;color:#1e2330}
@@ -84,9 +85,9 @@
   function renderComparisonCard() {
     if (state.renderedTop || !state.result) return
 
-    const anchor = getComparisonAnchor()
+    const anchor = getTopCardAnchor()
     if (!anchor) {
-      log("No comparison anchor found yet")
+      log("No top-card anchor found yet")
       return
     }
 
@@ -118,7 +119,7 @@
       `
     }
 
-    anchor.appendChild(card)
+    anchor.parent.insertBefore(card, anchor.before)
     state.renderedTop = true
     track("bke_direct_block_view", {
       outcome: state.result.status === "no_availability" ? "no_availability" : "direct_cheaper",
@@ -126,15 +127,20 @@
     log("Comparison card rendered", state.result.status)
   }
 
-  function getComparisonAnchor() {
-    const labels = /aucun hébergement ajouté|no accommodation added|no accommodations added/i
-    const marker = [...document.querySelectorAll("div,section,aside")].find((element) =>
-      labels.test((element.textContent || "").trim())
-    )
-    const sidebar = marker?.closest("aside,section,div")
-    if (sidebar) return sidebar
+  function getTopCardAnchor() {
+    const firstRoomCard = document.querySelector(".cb-accommodation-card")
+    if (firstRoomCard?.parentElement) {
+      return { parent: firstRoomCard.parentElement, before: firstRoomCard }
+    }
 
-    return document.querySelector("aside")
+    const firstRatePlan = document.querySelector(".cb-rate-plan")
+    const roomCard = firstRatePlan?.closest(".cb-accommodation-card")
+    if (roomCard?.parentElement) {
+      return { parent: roomCard.parentElement, before: roomCard }
+    }
+
+    const bookingContent = document.querySelector("main") || document.body
+    return bookingContent ? { parent: bookingContent, before: bookingContent.firstChild } : null
   }
 
   function hideNativeRateCheckButton() {
