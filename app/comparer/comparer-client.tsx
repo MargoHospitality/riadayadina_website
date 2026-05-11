@@ -412,12 +412,7 @@ export function CompareClient() {
                 {otaBeatsDirect || usesCloudbedsFallback ? (
                   <div className="bg-primary text-primary-foreground p-6">
                     <p className="text-accent text-xs uppercase tracking-[0.2em] mb-3">Réserver en direct</p>
-                    <h3 className="font-serif text-2xl mb-4">Le prix n&apos;est pas le seul critère utile pour ce séjour.</h3>
-                    <p className="text-primary-foreground/75 text-sm mb-5">
-                      {usesCloudbedsFallback
-                        ? "Le tarif officiel est disponible. Nous affichons les avantages directs sans comparaison chiffrée tant que les prix des agences en ligne ne sont pas suffisamment fiables."
-                        : "Pour ces dates, nous mettons en avant les avantages inclus en direct plutôt qu'un comparatif de prix moins lisible."}
-                    </p>
+                    <h3 className="font-serif text-2xl mb-5">Profitez toujours d&apos;avantages exclusifs en réservant sur notre site.</h3>
                     <div className="flex flex-wrap gap-2">
                       {perks.slice(0, 4).map((perk) => (
                         <PerkBadge key={perk} variant="dark">{perk}</PerkBadge>
