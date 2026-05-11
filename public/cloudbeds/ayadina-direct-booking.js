@@ -83,7 +83,9 @@
   }
 
   function renderComparisonCard() {
-    if (state.renderedTop || !state.result) return
+    if (!state.result) return
+    if (document.querySelector(".margo-direct-card")) return
+    state.renderedTop = false
 
     const anchor = getTopCardAnchor()
     if (!anchor) {
