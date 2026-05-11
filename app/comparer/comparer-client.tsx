@@ -6,11 +6,13 @@ import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 import { BookingDateModal } from "@/components/booking-date-modal"
 import { trackDirectBookingEvent } from "@/lib/analytics"
 import { buildBookingEngineUrl, getNightCount, isValidBookingSearch, normalizeBookingCurrency, normalizeBookingLanguage } from "@/lib/booking-engine"
 import type { RateComparison, RateOffer } from "@/lib/rate-compare"
 import { cn } from "@/lib/utils"
+import { CreditCard, MailCheck, HandHeart } from "lucide-react"
 
 const loadingSteps = [
   { id: 1, label: "Recherche de l'offre officielle Ayadina" },
@@ -104,21 +106,24 @@ export function CompareClient() {
 
   if (!isValidBookingSearch(search)) {
     return (
-      <main className="min-h-screen bg-background">
-        <Header />
-        <section className="pt-32 pb-16">
-          <div className="container mx-auto px-4 max-w-2xl text-center">
-            <p className="text-accent text-sm uppercase tracking-[0.25em] mb-4">Réservation directe</p>
-            <h1 className="font-serif text-4xl md:text-5xl mb-6">Choisissez vos dates</h1>
-            <p className="text-muted-foreground mb-8">
-              Indiquez une date d&apos;arrivée et une date de départ pour vérifier l&apos;offre directe.
-            </p>
-            <Button asChild className="rounded-none px-8 py-6">
-              <Link href="/#booking">Retour au moteur</Link>
-            </Button>
-          </div>
-        </section>
-      </main>
+      <>
+        <main className="min-h-screen bg-background">
+          <Header />
+          <section className="pt-32 pb-16">
+            <div className="container mx-auto px-4 max-w-2xl text-center">
+              <p className="text-accent text-sm uppercase tracking-[0.25em] mb-4">Réservation directe</p>
+              <h1 className="font-serif text-4xl md:text-5xl mb-6">Choisissez vos dates</h1>
+              <p className="text-muted-foreground mb-8">
+                Indiquez une date d&apos;arrivée et une date de départ pour vérifier l&apos;offre directe.
+              </p>
+              <Button asChild className="rounded-none px-8 py-6">
+                <Link href="/#booking">Retour au moteur</Link>
+              </Button>
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </>
     )
   }
 
@@ -128,8 +133,9 @@ export function CompareClient() {
   // Loading State
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-background">
-        <Header />
+      <>
+        <main className="min-h-screen bg-background">
+          <Header />
 
         <section className="pt-32 md:pt-40 pb-16">
           <div className="container mx-auto px-4">
@@ -221,7 +227,9 @@ export function CompareClient() {
             </div>
           </div>
         </section>
-      </main>
+        </main>
+        <Footer />
+      </>
     )
   }
 
@@ -245,8 +253,9 @@ export function CompareClient() {
   const reservationEmailUrl = buildReservationEmailUrl(search)
 
   return (
-    <main className="min-h-screen bg-background">
-      <Header />
+    <>
+      <main className="min-h-screen bg-background">
+        <Header />
 
       {/* Hero Banner */}
       <section className="relative pt-28 md:pt-32 pb-8 bg-primary overflow-hidden">
@@ -467,17 +476,32 @@ export function CompareClient() {
 
             {/* Trust Section */}
             <div className="grid md:grid-cols-3 gap-6 py-8 border-t border-border">
-              <div>
-                <p className="font-medium text-foreground">Paiement sécurisé</p>
-                <p className="text-sm text-muted-foreground">Directement sur notre moteur officiel</p>
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                  <CreditCard className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="font-medium text-foreground">Pas de prépaiement</p>
+                  <p className="text-sm text-muted-foreground">Nous prenons juste une empreinte de carte bancaire</p>
+                </div>
               </div>
-              <div>
-                <p className="font-medium text-foreground">Confirmation instantanée</p>
-                <p className="text-sm text-muted-foreground">Email de confirmation immédiat</p>
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                  <MailCheck className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="font-medium text-foreground">Confirmation instantanée</p>
+                  <p className="text-sm text-muted-foreground">Email de confirmation immédiat</p>
+                </div>
               </div>
-              <div>
-                <p className="font-medium text-foreground">Accueil personnalisé</p>
-                <p className="text-sm text-muted-foreground">Thé de bienvenue et accompagnement</p>
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                  <HandHeart className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="font-medium text-foreground">Accueil personnalisé</p>
+                  <p className="text-sm text-muted-foreground">Pour tous nos clients directs</p>
+                </div>
               </div>
             </div>
               </>
@@ -495,7 +519,9 @@ export function CompareClient() {
         defaultCheckOut={search.checkOut}
         defaultAdults={Number(search.adults)}
       />
-    </main>
+      </main>
+      <Footer />
+    </>
   )
 }
 
