@@ -57,9 +57,15 @@ export async function GET(request: Request) {
           availability,
         }
 
-  cache.set(cacheKey, { expiresAt: Date.now() + CACHE_TTL_MS, value: comparison })
+  if (isCacheableComparison(comparison)) {
+    cache.set(cacheKey, { expiresAt: Date.now() + CACHE_TTL_MS, value: comparison })
+  }
 
   return json(comparison, "MISS", request)
+}
+
+function isCacheableComparison(comparison: RateComparison) {
+  return comparison.status !== "error" && comparison.status !== "timeout" && comparison.status !== "unconfigured"
 }
 
 function inferCurrencyFromRequest(request: Request) {

@@ -228,7 +228,7 @@ export function CompareClient() {
   // Results State
   const comparison = comparisonResult ?? createUnavailableComparison()
   const referenceOffer = chooseReferenceOffer(comparison.offers)
-  const cloudbedsFallbackOffer = getCloudbedsFallbackOffer(comparison)
+  const cloudbedsFallbackOffer = getCloudbedsFallbackOffer(comparison, nights)
   const directOffer = comparison.directOffer ?? cloudbedsFallbackOffer
   const usesCloudbedsFallback = !comparison.directOffer && Boolean(cloudbedsFallbackOffer)
   const hasNoAvailability = comparison.status === "no_availability"
@@ -534,7 +534,7 @@ function chooseReferenceOffer(offers: RateOffer[]) {
   return best
 }
 
-function getCloudbedsFallbackOffer(comparison: RateComparison): RateOffer | undefined {
+function getCloudbedsFallbackOffer(comparison: RateComparison, nights: number): RateOffer | undefined {
   if (comparison.directOffer || comparison.availability?.status !== "available") return undefined
 
   const pricedRooms = comparison.availability.rooms.filter(
@@ -545,7 +545,7 @@ function getCloudbedsFallbackOffer(comparison: RateComparison): RateOffer | unde
 
   return {
     title: "Riad Ayadina & Spa",
-    price: bestRoom.minRate,
+    price: bestRoom.minRate / Math.max(nights, 1),
     currency: bestRoom.currency || "MAD",
     conditions: "Tarif officiel Cloudbeds",
     officialSite: true,

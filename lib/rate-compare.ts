@@ -26,7 +26,7 @@ export type RateComparison = {
 const DATAFORSEO_ENDPOINT = "https://api.dataforseo.com/v3/business_data/google/hotel_info/live/advanced"
 const DEFAULT_LOCATION_CODE = 1009979 // Marrakesh,Morocco in DataForSEO business_data/google locations.
 const MAX_OFFERS = 6
-const TIMEOUT_MS = 8_000
+const TIMEOUT_MS = 12_000
 
 export async function getRateComparison(search: BookingSearch): Promise<RateComparison> {
   const authorization = getDataForSeoAuthorization()
