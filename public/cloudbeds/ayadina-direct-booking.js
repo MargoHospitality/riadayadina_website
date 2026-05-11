@@ -12,8 +12,14 @@
   const state = { renderedTop: false, renderedPackages: new WeakSet(), result: null }
   const debug = Boolean(window.MARGO_DIRECT_BOOKING_DEBUG)
 
-  const packageBenefits = [
+  const immersionBenefits = [
     "Transfert aéroport A/R",
+    "-10% sur les soins Spa",
+    "Cocktail de bienvenue",
+    "Surclassement & early check-in",
+  ]
+  const escapadeBenefits = [
+    "Transfert aéroport Aller",
     "-10% sur les soins Spa",
     "Cocktail de bienvenue",
     "Surclassement & early check-in",
@@ -174,7 +180,8 @@
   }
 
   function getBenefitsForRatePlan(title) {
-    if (/immersion|escapade/i.test(title)) return packageBenefits
+    if (/immersion/i.test(title)) return immersionBenefits
+    if (/escapade/i.test(title)) return escapadeBenefits
     if (/offre spéciale directe|special direct offer/i.test(title)) return directOfferBenefits
     return null
   }

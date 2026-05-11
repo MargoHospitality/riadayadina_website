@@ -558,14 +558,14 @@ function getDirectOfferBundle(nights: number) {
   if (nights >= 3) {
     return {
       label: "Package Immersion (3 nuits et plus)",
-      perks: getPackagePerks(),
+      perks: getImmersionPackagePerks(),
     }
   }
 
   if (nights >= 2) {
     return {
       label: "Package Escapade (2 nuits)",
-      perks: getPackagePerks(),
+      perks: getEscapadePackagePerks(),
     }
   }
 
@@ -575,9 +575,18 @@ function getDirectOfferBundle(nights: number) {
   }
 }
 
-function getPackagePerks() {
+function getImmersionPackagePerks() {
   return [
     "Transfert aéroport A/R",
+    "-10% sur les soins Spa",
+    "Cocktail de bienvenue",
+    "Surclassement & early check-in selon disponibilité",
+  ]
+}
+
+function getEscapadePackagePerks() {
+  return [
+    "Transfert aéroport Aller",
     "-10% sur les soins Spa",
     "Cocktail de bienvenue",
     "Surclassement & early check-in selon disponibilité",
