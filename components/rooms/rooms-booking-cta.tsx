@@ -145,9 +145,16 @@ export function RoomsBookingCta() {
                       <option value="3">3 adultes</option>
                     </select>
                   </div>
-                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                    Prix comparés pour une chambre. Si vous voyagez à plusieurs, vous pourrez sélectionner plusieurs chambres sur notre moteur de réservation.
-                  </p>
+                  <div className="mt-3 border border-accent/25 bg-accent/5 px-3 py-2.5">
+                    <div className="flex items-start gap-2.5">
+                      <span className="shrink-0 bg-accent text-accent-foreground px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider">
+                        1 chambre
+                      </span>
+                      <p className="text-xs leading-relaxed text-muted-foreground">
+                        Prix comparés pour une chambre. Si vous voyagez à plusieurs, vous pourrez sélectionner plusieurs chambres sur notre moteur de réservation.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
 

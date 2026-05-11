@@ -198,9 +198,16 @@ export function BookingDateModal({
               )}
             </div>
 
-            <p className="text-[11px] leading-relaxed text-muted-foreground mb-6">
-              Prix comparés pour une chambre. Si vous voyagez à plusieurs, vous pourrez sélectionner plusieurs chambres sur notre moteur de réservation.
-            </p>
+            <div className="mb-6 border border-accent/25 bg-accent/5 px-4 py-3">
+              <div className="flex items-start gap-3">
+                <span className="shrink-0 bg-accent text-accent-foreground px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider">
+                  1 chambre
+                </span>
+                <p className="text-xs leading-relaxed text-muted-foreground">
+                  Prix comparés pour une chambre. Si vous voyagez à plusieurs, vous pourrez sélectionner plusieurs chambres sur notre moteur de réservation.
+                </p>
+              </div>
+            </div>
 
             {/* Error message */}
             {error && (
