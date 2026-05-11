@@ -10,7 +10,7 @@
   const apiPath = window.MARGO_DIRECT_BOOKING_API_PATH || "/api/rate-compare"
   const contactUrl = window.MARGO_DIRECT_BOOKING_CONTACT_URL || `${apiOrigin}/contact`
   const mountId = "margo-direct-booking-mount"
-  const state = { renderedTop: false, renderedPackages: new WeakSet(), result: null }
+  const state = { renderedTop: false, renderedPackages: new WeakSet(), result: null, restoredTop: false }
   const debug = Boolean(window.MARGO_DIRECT_BOOKING_DEBUG)
 
   const copy = {
@@ -165,6 +165,7 @@
     card.dataset.margoDirectPlacement = anchor.placement || "cloudbeds"
     anchor.parent.insertBefore(card, anchor.before)
     state.renderedTop = true
+    restoreTopAfterCloudbedsAutoScroll()
     track("bke_direct_block_view", {
       outcome: state.result.status === "no_availability" ? "no_availability" : "direct_cheaper",
     })
@@ -217,6 +218,16 @@
     document.querySelectorAll(".margo-direct-card").forEach((card) => {
       if (!card.closest(`#${mountId}`) && !card.closest(".cb-accommodation-card")) card.remove()
     })
+  }
+
+  function restoreTopAfterCloudbedsAutoScroll() {
+    if (state.restoredTop || window.innerWidth > 768) return
+    state.restoredTop = true
+    window.setTimeout(() => {
+      const mount = document.getElementById(mountId)
+      const top = mount ? Math.max(mount.getBoundingClientRect().top + window.scrollY - 8, 0) : 0
+      window.scrollTo({ top, behavior: "auto" })
+    }, 250)
   }
 
   function hideNativeRateCheckButton() {

@@ -2,7 +2,7 @@
 const nextConfig = {
   // Touch this when a public Cloudbeds asset needs a forced Vercel production rebuild.
   env: {
-    NEXT_PUBLIC_CLOUDBEDS_SCRIPT_BUILD: "20260511-1653",
+    NEXT_PUBLIC_CLOUDBEDS_SCRIPT_BUILD: "20260511-2244",
   },
   typescript: {
     ignoreBuildErrors: true,

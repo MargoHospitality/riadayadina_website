@@ -341,7 +341,7 @@ export function CompareClient() {
             <div className="grid lg:grid-cols-5 gap-6 mb-10">
               
               {/* Direct Offer - Takes 3 columns */}
-              <div className="lg:col-span-3 bg-card border-2 border-accent shadow-lg relative overflow-hidden">
+              <div className="order-2 lg:order-1 lg:col-span-3 bg-card border-2 border-accent shadow-lg relative overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-accent" />
                 
                 <div className="p-6 md:p-8">
@@ -368,8 +368,8 @@ export function CompareClient() {
                   </div>
 
                   {shouldShowDirectPrice ? (
-                    <div className="flex items-end justify-between mb-6 pb-6 border-b border-border">
-                      <div>
+                    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 sm:gap-4 mb-6 pb-6 border-b border-border">
+                      <div className="min-w-0">
                         <p className="text-sm text-muted-foreground mb-1">Prix par nuit</p>
                         <div className="flex items-baseline gap-2">
                           <span className="font-serif text-4xl md:text-5xl text-foreground">
@@ -377,12 +377,13 @@ export function CompareClient() {
                           </span>
                         </div>
                         {totalSavings > 0 && (
-                          <p className="text-accent font-medium mt-2">
-                            Économie de {formatMoney(totalSavings, directOffer?.currency || "EUR")} sur votre séjour
+                          <p className="text-accent font-medium mt-2 leading-tight">
+                            <span className="block">Économie de {formatMoney(totalSavings, directOffer?.currency || "EUR")}</span>
+                            <span className="block">sur votre séjour</span>
                           </p>
                         )}
                       </div>
-                      <div className="text-right">
+                      <div className="text-right shrink-0">
                         <p className="text-sm text-muted-foreground mb-1">Total estimé</p>
                         <p className="font-serif text-2xl text-foreground">
                           {directOffer ? formatMoney(directOffer.price * nights, directOffer.currency) : "Sur Cloudbeds"}
@@ -431,7 +432,7 @@ export function CompareClient() {
               </div>
 
               {/* OTA Offers - Takes 2 columns */}
-              <div className="lg:col-span-2 space-y-4">
+              <div className="order-1 lg:order-2 lg:col-span-2 space-y-4">
                 {otaBeatsDirect || usesCloudbedsFallback ? (
                   <div className="bg-primary text-primary-foreground p-6">
                     <p className="text-accent text-xs uppercase tracking-[0.2em] mb-3">Réserver en direct</p>
