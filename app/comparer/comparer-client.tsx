@@ -519,10 +519,10 @@ function PerkBadge({ children, variant = "light" }: { children: ReactNode; varia
   return (
     <span
       className={cn(
-        "inline-flex rounded-full border px-3 py-1.5 text-xs font-medium leading-none",
+        "inline-flex rounded-full border bg-transparent px-3 py-1.5 text-xs font-medium leading-none",
         variant === "dark"
-          ? "border-primary-foreground/20 bg-primary-foreground/10 text-primary-foreground"
-          : "border-accent/25 bg-accent/10 text-foreground"
+          ? "border-primary-foreground/30 text-primary-foreground"
+          : "border-accent/35 text-foreground"
       )}
     >
       {children}
@@ -558,28 +558,17 @@ function getCloudbedsFallbackOffer(comparison: RateComparison): RateOffer | unde
 }
 
 function getDirectPerks(nights: number) {
-  if (nights >= 3) {
-    return [
-      "Tarif direct Ayadina",
-      "Transfert aéroport A/R offert",
-      "-10% sur les soins Spa",
-      "Cocktail de bienvenue",
-      "Surclassement si disponible",
-      "Early check-in si disponible",
-    ]
-  }
-  if (nights >= 2) {
-    return [
-      "Tarif exclusif direct",
-      "Transfert aéroport aller",
-      "-10% sur les soins Spa",
-      "Cocktail de bienvenue",
-    ]
-  }
+  if (nights >= 3) return getPackagePerks()
+  if (nights >= 2) return getPackagePerks()
+  return ["-10% sur les soins Spa", "Surclassement & early check-in selon disponibilité"]
+}
+
+function getPackagePerks() {
   return [
-    "Contact direct avec le riad",
-    "Confirmation immédiate",
-    "Avantages selon durée",
+    "Transfert aéroport A/R",
+    "-10% sur les soins Spa",
+    "Cocktail de bienvenue",
+    "Surclassement & early check-in selon disponibilité",
   ]
 }
 

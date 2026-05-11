@@ -9,15 +9,16 @@
   const apiOrigin = window.MARGO_DIRECT_BOOKING_API_ORIGIN || scriptOrigin
   const apiPath = window.MARGO_DIRECT_BOOKING_API_PATH || "/api/rate-compare"
   const contactUrl = window.MARGO_DIRECT_BOOKING_CONTACT_URL || `${apiOrigin}/contact`
-  const state = { renderedTop: false, renderedPackages: new WeakSet(), renderedRoomPackages: new WeakSet(), result: null }
+  const state = { renderedTop: false, renderedPackages: new WeakSet(), result: null }
   const debug = Boolean(window.MARGO_DIRECT_BOOKING_DEBUG)
 
-  const benefits = [
-    "Transfert aéroport offert selon la durée du séjour",
+  const packageBenefits = [
+    "Transfert aéroport A/R",
     "-10% sur les soins Spa",
     "Cocktail de bienvenue",
-    "Surclassement & early check-in selon disponibilité",
+    "Surclassement & early check-in",
   ]
+  const directOfferBenefits = ["-10% sur les soins Spa", "Surclassement & early check-in"]
 
   function parseBookingSearch() {
     const search = new URLSearchParams(window.location.search)
@@ -59,11 +60,10 @@
       .margo-direct-price{display:inline-flex;align-items:center;gap:8px;padding:7px 9px;background:#f7f8fa;border:1px solid #dde0e4;font-size:12px}
       .margo-direct-price strong{color:#0d479f;font-size:13px;white-space:nowrap}
       .margo-direct-saving{display:inline-flex;margin-top:9px;padding:6px 9px;background:#f3ead0;color:#1e2330;font-size:11px;font-weight:700}
-      .margo-direct-benefits{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
-      .margo-direct-chip{padding:6px 8px;background:#f7f8fa;border:1px solid #dde0e4;color:#1e2330;font-size:11px;line-height:1.2;border-radius:999px}
-      .margo-direct-package{margin:8px 0 0;padding:10px;background:#f7f8fa;border-left:3px solid #dbc584;color:#1e2330}
-      .margo-direct-package-title{margin:0 0 7px;color:#0d479f;font-size:12px;font-weight:700}
-      .margo-direct-package-inline{max-width:520px;margin-top:12px;background:#fffaf0;border:1px solid #eadfbf;border-left:3px solid #dbc584}
+      .margo-direct-benefits{display:flex;flex-wrap:wrap;gap:6px;margin-top:0}
+      .margo-direct-chip{padding:5px 8px;background:transparent;border:1px solid #dbc584;color:#1e2330;font-size:11px;line-height:1.2;border-radius:999px}
+      .margo-direct-package{margin:8px 0 0;padding:0;background:transparent;border:0;color:#1e2330}
+      .margo-direct-package-title{display:none}
     `
     document.head.appendChild(style)
   }
@@ -120,7 +120,7 @@
         <p class="margo-direct-kicker">Réservation directe Ayadina</p>
         <h2 class="margo-direct-title">Réservez en direct avec les attentions Ayadina.</h2>
         <p class="margo-direct-text">En réservant sur le moteur officiel, vous gardez un contact direct avec le riad et bénéficiez des avantages réservés aux clients directs.</p>
-        <div class="margo-direct-benefits">${benefits.map((benefit) => `<span class="margo-direct-chip">${benefit}</span>`).join("")}</div>
+        <div class="margo-direct-benefits">${packageBenefits.map((benefit) => `<span class="margo-direct-chip">${benefit}</span>`).join("")}</div>
       `
     }
 
@@ -168,38 +168,25 @@
     document.querySelectorAll(".cb-rate-plan").forEach((plan) => {
       if (state.renderedPackages.has(plan)) return
       const title = plan.querySelector(".cb-rate-plan-title-text")?.textContent || ""
-      if (!/offre spéciale directe|special direct offer|package escapade|immersion package/i.test(title)) return
+      const benefits = getBenefitsForRatePlan(title)
+      if (!benefits) return
 
-      const roomCard = plan.closest(".cb-accommodation-card")
-      const placedInRoomSummary = roomCard && renderRoomSummaryPackage(roomCard)
-      if (!placedInRoomSummary) plan.appendChild(createPackageBlock())
-
+      plan.appendChild(createPackageBlock(benefits))
       state.renderedPackages.add(plan)
-      track("bke_direct_package_view", { ratePlan: title.trim().slice(0, 80), placement: placedInRoomSummary ? "room_summary" : "rate_plan" })
+      track("bke_direct_package_view", { ratePlan: title.trim().slice(0, 80) })
     })
   }
 
-  function renderRoomSummaryPackage(roomCard) {
-    if (state.renderedRoomPackages.has(roomCard)) return true
-
-    const detailsLink = [...roomCard.querySelectorAll("button,a")].find((element) =>
-      /afficher les détails|show details/i.test(element.textContent || "")
-    )
-    if (!detailsLink) return false
-
-    const block = createPackageBlock("margo-direct-package-inline")
-    detailsLink.insertAdjacentElement("afterend", block)
-    state.renderedRoomPackages.add(roomCard)
-    return true
+  function getBenefitsForRatePlan(title) {
+    if (/immersion package|package immersion|escapade package|package escapade/i.test(title)) return packageBenefits
+    if (/offre spéciale directe|special direct offer/i.test(title)) return directOfferBenefits
+    return null
   }
 
-  function createPackageBlock(extraClass) {
+  function createPackageBlock(benefits) {
     const block = document.createElement("div")
-    block.className = ["margo-direct-package", extraClass].filter(Boolean).join(" ")
-    block.innerHTML = `
-      <p class="margo-direct-package-title">Inclus avec cette offre directe</p>
-      <div class="margo-direct-benefits">${benefits.map((benefit) => `<span class="margo-direct-chip">${benefit}</span>`).join("")}</div>
-    `
+    block.className = "margo-direct-package"
+    block.innerHTML = `<div class="margo-direct-benefits">${benefits.map((benefit) => `<span class="margo-direct-chip">${benefit}</span>`).join("")}</div>`
     return block
   }
 
@@ -218,16 +205,9 @@
 
   async function boot() {
     injectStyles()
-    try {
-      state.result = await loadComparison()
-    } catch {
-      state.result = null
-    }
-    renderTopCard()
     renderPackageBlocks()
     hideNativeRateCheckButton()
     const observer = new MutationObserver(() => {
-      renderTopCard()
       renderPackageBlocks()
       hideNativeRateCheckButton()
     })
