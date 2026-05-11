@@ -52,7 +52,7 @@
     const style = document.createElement("style")
     style.id = "margo-direct-booking-style"
     style.textContent = `
-      .margo-direct-card{box-sizing:border-box;margin:0 16px 12px;padding:12px 14px;background:#fff;border:1px solid #dde0e4;border-left:4px solid #dbc584;color:#1e2330;font-family:inherit}
+      .margo-direct-card{box-sizing:border-box;margin:12px 0 0;padding:12px 14px;background:#fff;border:1px solid #dde0e4;border-left:4px solid #dbc584;color:#1e2330;font-family:inherit}
       .margo-direct-kicker{margin:0 0 5px;color:#0d479f;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
       .margo-direct-title{margin:0 0 5px;color:#1e2330;font-size:16px;line-height:1.25;font-weight:650}
       .margo-direct-text{margin:0;color:#545b66;font-size:12px;line-height:1.4}
@@ -62,7 +62,7 @@
       .margo-direct-saving{display:inline-flex;margin-top:9px;padding:6px 9px;background:#f3ead0;color:#1e2330;font-size:11px;font-weight:700}
       .margo-direct-benefits{display:flex;flex-wrap:wrap;gap:6px;margin-top:0}
       .margo-direct-chip{padding:5px 8px;background:transparent;border:1px solid #dbc584;color:#1e2330;font-size:11px;line-height:1.2;border-radius:999px}
-      .margo-direct-package{margin:8px 0 0;padding:0;background:transparent;border:0;color:#1e2330}
+      .margo-direct-package{margin:7px 0 0;padding:0;background:transparent;border:0;color:#1e2330}
       .margo-direct-package-title{display:none}
     `
     document.head.appendChild(style)
@@ -81,12 +81,12 @@
     return offers.slice().sort((a, b) => Number(a.price || 0) - Number(b.price || 0))[0]
   }
 
-  function renderTopCard() {
+  function renderComparisonCard() {
     if (state.renderedTop || !state.result) return
 
-    const anchor = getTopCardAnchor()
-    if (!anchor.parent) {
-      log("No injection anchor found yet")
+    const anchor = getComparisonAnchor()
+    if (!anchor) {
+      log("No comparison anchor found yet")
       return
     }
 
@@ -94,6 +94,8 @@
     const reference = getReferenceOffer(state.result)
     const sameCurrency = direct && reference && direct.currency === reference.currency
     const directCheaper = sameCurrency && Number(direct.price) < Number(reference.price)
+    if (state.result.status !== "no_availability" && !directCheaper) return
+
     const card = document.createElement("section")
     card.className = "margo-direct-card"
 
@@ -101,58 +103,38 @@
       card.innerHTML = `
         <p class="margo-direct-kicker">Disponibilité officielle Ayadina</p>
         <h2 class="margo-direct-title">Nous n’avons plus de disponibilité en ligne pour ces dates.</h2>
-        <p class="margo-direct-text">Vous pouvez écrire au service réservation si vous souhaitez une confirmation directe ou proposer d’autres dates : booking@riadayadinamarrakech.net.</p>
+        <p class="margo-direct-text">Vous pouvez écrire au service réservation : booking@riadayadinamarrakech.net.</p>
       `
-    } else if (directCheaper) {
+    } else {
       const saving = Number(reference.price) - Number(direct.price)
       card.innerHTML = `
-        <p class="margo-direct-kicker">Réservation directe Ayadina</p>
+        <p class="margo-direct-kicker">Comparaison agence en ligne</p>
         <h2 class="margo-direct-title">Notre tarif direct est plus avantageux pour ces dates.</h2>
-        <p class="margo-direct-text">Comparaison indicative effectuée au moment de votre recherche. Si vous changez devise, dates ou occupation, n'hésitez pas à vérifier le total final.</p>
         <div class="margo-direct-grid">
           <div class="margo-direct-price"><span>Site officiel</span><strong>${formatMoney(direct.price, direct.currency)} / nuit</strong></div>
           <div class="margo-direct-price"><span>Meilleure agence en ligne</span><strong>${formatMoney(reference.price, reference.currency)} / nuit</strong></div>
         </div>
         <span class="margo-direct-saving">Economie : ${formatMoney(saving, direct.currency)} / nuit</span>
       `
-    } else {
-      card.innerHTML = `
-        <p class="margo-direct-kicker">Réservation directe Ayadina</p>
-        <h2 class="margo-direct-title">Réservez en direct avec les attentions Ayadina.</h2>
-        <p class="margo-direct-text">En réservant sur le moteur officiel, vous gardez un contact direct avec le riad et bénéficiez des avantages réservés aux clients directs.</p>
-        <div class="margo-direct-benefits">${packageBenefits.map((benefit) => `<span class="margo-direct-chip">${benefit}</span>`).join("")}</div>
-      `
     }
 
-    anchor.parent.insertBefore(card, anchor.before)
+    anchor.appendChild(card)
     state.renderedTop = true
     track("bke_direct_block_view", {
-      outcome: state.result.status === "no_availability" ? "no_availability" : directCheaper ? "direct_cheaper" : "benefits_only",
+      outcome: state.result.status === "no_availability" ? "no_availability" : "direct_cheaper",
     })
-    log("Top card rendered", state.result.status)
+    log("Comparison card rendered", state.result.status)
   }
 
-  function getTopCardAnchor() {
-    const firstCard = document.querySelector(".cb-accommodation-card")
-    if (firstCard?.parentElement) return { parent: firstCard.parentElement, before: firstCard }
+  function getComparisonAnchor() {
+    const labels = /aucun hébergement ajouté|no accommodation added|no accommodations added/i
+    const marker = [...document.querySelectorAll("div,section,aside")].find((element) =>
+      labels.test((element.textContent || "").trim())
+    )
+    const sidebar = marker?.closest("aside,section,div")
+    if (sidebar) return sidebar
 
-    const candidates = [
-      ".cb-results-container",
-      ".cb-accommodations-list",
-      ".cb-search-results",
-      ".cb-main-content",
-      ".cb-booking-engine",
-      "main",
-      "#root",
-      "#app",
-    ]
-
-    for (const selector of candidates) {
-      const element = document.querySelector(selector)
-      if (element) return { parent: element, before: element.firstChild }
-    }
-
-    return { parent: document.body, before: document.body.firstChild }
+    return document.querySelector("aside")
   }
 
   function hideNativeRateCheckButton() {
@@ -171,7 +153,12 @@
       const benefits = getBenefitsForRatePlan(title)
       if (!benefits) return
 
-      plan.appendChild(createPackageBlock(benefits))
+      const titleElement = plan.querySelector(".cb-rate-plan-title-text")
+      if (titleElement) {
+        titleElement.insertAdjacentElement("afterend", createPackageBlock(benefits))
+      } else {
+        plan.insertBefore(createPackageBlock(benefits), plan.firstChild?.nextSibling || null)
+      }
       state.renderedPackages.add(plan)
       track("bke_direct_package_view", { ratePlan: title.trim().slice(0, 80) })
     })
@@ -205,9 +192,16 @@
 
   async function boot() {
     injectStyles()
+    try {
+      state.result = await loadComparison()
+    } catch {
+      state.result = null
+    }
+    renderComparisonCard()
     renderPackageBlocks()
     hideNativeRateCheckButton()
     const observer = new MutationObserver(() => {
+      renderComparisonCard()
       renderPackageBlocks()
       hideNativeRateCheckButton()
     })
