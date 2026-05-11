@@ -187,7 +187,6 @@ export function BookingDateModal({
                     <option value={1}>1 personne</option>
                     <option value={2}>2 personnes</option>
                     <option value={3}>3 personnes</option>
-                    <option value={4}>4 personnes</option>
                   </select>
                 </div>
               </div>

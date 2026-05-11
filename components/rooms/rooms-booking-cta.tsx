@@ -143,7 +143,6 @@ export function RoomsBookingCta() {
                       <option value="1">1 adulte</option>
                       <option value="2">2 adultes</option>
                       <option value="3">3 adultes</option>
-                      <option value="4">4 adultes</option>
                     </select>
                   </div>
                 </div>
