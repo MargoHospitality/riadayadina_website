@@ -116,7 +116,7 @@
         <h2 class="margo-direct-title">Notre tarif direct est plus avantageux pour ces dates.</h2>
         <div class="margo-direct-grid">
           <div class="margo-direct-price"><span>Site officiel</span><strong>${formatMoney(direct.price, direct.currency)} / nuit</strong></div>
-          <div class="margo-direct-price"><span>Meilleure agence en ligne</span><strong>${formatMoney(reference.price, reference.currency)} / nuit</strong></div>
+          <div class="margo-direct-price"><span>Autres sites de réservation</span><strong>${formatMoney(reference.price, reference.currency)} / nuit</strong></div>
         </div>
         <span class="margo-direct-saving">Economie : ${formatMoney(saving, direct.currency)} / nuit</span>
       `
