@@ -29,9 +29,9 @@ export function CompareClient() {
   
   const searchParams = useSearchParams()
   const search = {
-    checkIn: searchParams.get("checkIn") || undefined,
-    checkOut: searchParams.get("checkOut") || undefined,
-    adults: searchParams.get("adults") || "2",
+    checkIn: searchParams.get("checkIn") || searchParams.get("checkin") || undefined,
+    checkOut: searchParams.get("checkOut") || searchParams.get("checkout") || undefined,
+    adults: searchParams.get("adults") || searchParams.get("guests") || "2",
     currency: searchParams.get("currency") ? normalizeBookingCurrency(searchParams.get("currency") || undefined) : undefined,
     language: normalizeBookingLanguage(searchParams.get("language") || "fr"),
   }
@@ -433,45 +433,30 @@ export function CompareClient() {
 
               {/* OTA Offers - Takes 2 columns */}
               <div className="order-1 lg:order-2 lg:col-span-2 space-y-4">
-                {otaBeatsDirect || usesCloudbedsFallback ? (
-                  <div className="bg-primary text-primary-foreground p-6">
-                    <p className="text-accent text-xs uppercase tracking-[0.2em] mb-3">Réserver en direct</p>
-                    <h3 className="font-serif text-2xl mb-2">Profitez toujours d&apos;avantages exclusifs en réservant sur notre site.</h3>
-                    <p className="text-sm text-primary-foreground/70 mb-5">{directOfferBundle.label}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {perks.slice(0, 4).map((perk) => (
-                        <PerkBadge key={perk} variant="dark">{perk}</PerkBadge>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
+                <p className="text-xs text-muted-foreground uppercase tracking-wider px-1">Comparaison “agence en ligne”</p>
+                {referenceOffer ? (
                   <>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider px-1">Comparaison “agence en ligne”</p>
-                    {referenceOffer ? (
-                      <>
-                        <OTACard offer={referenceOffer} nights={nights} isMain />
-                        {comparison.offers
-                          .filter(o => o.title !== referenceOffer.title)
-                          .slice(0, 2)
-                          .map((offer, index) => (
-                            <OTACard key={index} offer={offer} nights={nights} />
-                          ))}
-                      </>
-                    ) : (
-                      <div className="bg-muted/30 border border-border p-6 text-center">
-                        <p className="text-muted-foreground">
-                          {comparison.status === "empty"
-                            ? "Aucune offre d’agence en ligne disponible pour ces dates."
-                            : "Comparaison agence en ligne indisponible pour le moment."}
-                        </p>
-                      </div>
-                    )}
-
-                    <p className="text-xs text-muted-foreground text-center pt-2">
-                      Source : agences en ligne · Tarifs indicatifs
-                    </p>
+                    <OTACard offer={referenceOffer} nights={nights} isMain />
+                    {comparison.offers
+                      .filter(o => o.title !== referenceOffer.title)
+                      .slice(0, 2)
+                      .map((offer, index) => (
+                        <OTACard key={index} offer={offer} nights={nights} />
+                      ))}
                   </>
+                ) : (
+                  <div className="bg-muted/30 border border-border p-6 text-center">
+                    <p className="text-muted-foreground">
+                      {comparison.status === "empty"
+                        ? "Aucune offre d’agence en ligne disponible pour ces dates."
+                        : "Comparaison agence en ligne indisponible pour le moment."}
+                    </p>
+                  </div>
                 )}
+
+                <p className="text-xs text-muted-foreground text-center pt-2">
+                  Source : agences en ligne · Tarifs indicatifs
+                </p>
               </div>
             </div>
 

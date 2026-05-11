@@ -23,9 +23,9 @@ export async function OPTIONS(request: Request) {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const search: Search = {
-    checkIn: searchParams.get("checkIn") || undefined,
-    checkOut: searchParams.get("checkOut") || undefined,
-    adults: searchParams.get("adults") || "2",
+    checkIn: searchParams.get("checkIn") || searchParams.get("checkin") || undefined,
+    checkOut: searchParams.get("checkOut") || searchParams.get("checkout") || undefined,
+    adults: searchParams.get("adults") || searchParams.get("guests") || "2",
     currency: normalizeBookingCurrency(searchParams.get("currency") || inferCurrencyFromRequest(request)),
     language: normalizeBookingLanguage(searchParams.get("language") || request.headers.get("accept-language") || undefined),
   }
