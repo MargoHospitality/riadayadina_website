@@ -172,7 +172,7 @@ export function BookingDateModal({
             </div>
 
             {/* Adults and Nights summary */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-2 gap-3 mb-3">
               <div className="bg-secondary/50 border border-border/50 p-4">
                 <label className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
                   Voyageurs
@@ -197,6 +197,10 @@ export function BookingDateModal({
                 </div>
               )}
             </div>
+
+            <p className="text-[11px] leading-relaxed text-muted-foreground mb-6">
+              Prix comparés pour une chambre. Si vous voyagez à plusieurs, vous pourrez sélectionner plusieurs chambres sur notre moteur de réservation à l&apos;étape suivante.
+            </p>
 
             {/* Error message */}
             {error && (
