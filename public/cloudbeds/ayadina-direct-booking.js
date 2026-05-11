@@ -9,6 +9,7 @@
   const apiOrigin = window.MARGO_DIRECT_BOOKING_API_ORIGIN || scriptOrigin
   const apiPath = window.MARGO_DIRECT_BOOKING_API_PATH || "/api/rate-compare"
   const contactUrl = window.MARGO_DIRECT_BOOKING_CONTACT_URL || `${apiOrigin}/contact`
+  const mountId = "margo-direct-booking-mount"
   const state = { renderedTop: false, renderedPackages: new WeakSet(), result: null }
   const debug = Boolean(window.MARGO_DIRECT_BOOKING_DEBUG)
 
@@ -79,6 +80,7 @@
     const style = document.createElement("style")
     style.id = "margo-direct-booking-style"
     style.textContent = `
+      .margo-direct-booking-mount{box-sizing:border-box;width:100%;max-width:1120px;margin:16px auto 0;padding:0 16px}
       .margo-direct-card{box-sizing:border-box;width:100%;margin:0 0 18px;padding:18px 20px;background:#fff;border:1px solid #dde0e4;border-radius:10px;box-shadow:rgba(18,31,53,.08) 0 2px 10px;color:#1e2330;font-family:inherit;overflow:hidden}
       .margo-direct-kicker{margin:0 0 8px;color:#0d479f;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
       .margo-direct-title{margin:0 0 8px;color:#1e2330;font-size:20px;line-height:1.22;font-weight:650}
@@ -117,14 +119,18 @@
 
   function renderComparisonCard() {
     if (!state.result) return
-    if (document.querySelector(".margo-direct-card")) return
     state.renderedTop = false
 
     const anchor = getTopCardAnchor()
     if (!anchor) {
-      log("No top-card anchor found yet")
+      removePrematureCards()
+      log("No Cloudbeds anchor found yet")
       return
     }
+
+    const existingCard = document.querySelector(".margo-direct-card")
+    if (existingCard && existingCard.parentElement === anchor.parent) return
+    existingCard?.remove()
 
     const direct = state.result.directOffer
     const reference = getReferenceOffer(state.result)
@@ -156,6 +162,7 @@
       `
     }
 
+    card.dataset.margoDirectPlacement = anchor.placement || "cloudbeds"
     anchor.parent.insertBefore(card, anchor.before)
     state.renderedTop = true
     track("bke_direct_block_view", {
@@ -167,17 +174,49 @@
   function getTopCardAnchor() {
     const firstRoomCard = document.querySelector(".cb-accommodation-card")
     if (firstRoomCard?.parentElement) {
-      return { parent: firstRoomCard.parentElement, before: firstRoomCard }
+      return { parent: firstRoomCard.parentElement, before: firstRoomCard, placement: "room-card" }
     }
 
     const firstRatePlan = document.querySelector(".cb-rate-plan")
     const roomCard = firstRatePlan?.closest(".cb-accommodation-card")
     if (roomCard?.parentElement) {
-      return { parent: roomCard.parentElement, before: roomCard }
+      return { parent: roomCard.parentElement, before: roomCard, placement: "room-card" }
     }
 
-    const bookingContent = document.querySelector("main") || document.body
-    return bookingContent ? { parent: bookingContent, before: bookingContent.firstChild } : null
+    if (!isCloudbedsReady()) return null
+
+    const mount = getExternalMount()
+    return mount ? { parent: mount, before: mount.firstChild, placement: "external-mount" } : null
+  }
+
+  function isCloudbedsReady() {
+    const layout = document.querySelector("#cb-bookingengine-main-layout")
+    if (!layout) return false
+    if (layout.querySelector('[data-testid="root-loader"]')) return false
+
+    const hasRenderedCards = Boolean(layout.querySelector(".cb-card,.cb-title-text,[data-be-text],button,a"))
+    const hasMeaningfulText = (layout.textContent || "").replace(/\s+/g, " ").trim().length > 80
+    return hasRenderedCards || hasMeaningfulText
+  }
+
+  function getExternalMount() {
+    const root = document.getElementById("root")
+    if (!root?.parentElement) return null
+
+    let mount = document.getElementById(mountId)
+    if (!mount) {
+      mount = document.createElement("div")
+      mount.id = mountId
+      mount.className = "margo-direct-booking-mount"
+      root.parentElement.insertBefore(mount, root)
+    }
+    return mount
+  }
+
+  function removePrematureCards() {
+    document.querySelectorAll(".margo-direct-card").forEach((card) => {
+      if (!card.closest(`#${mountId}`) && !card.closest(".cb-accommodation-card")) card.remove()
+    })
   }
 
   function hideNativeRateCheckButton() {
@@ -245,12 +284,24 @@
     renderComparisonCard()
     renderPackageBlocks()
     hideNativeRateCheckButton()
-    const observer = new MutationObserver(() => {
+    const observer = new MutationObserver(throttleRender(() => {
       renderComparisonCard()
       renderPackageBlocks()
       hideNativeRateCheckButton()
-    })
+    }))
     observer.observe(document.body, { childList: true, subtree: true })
+  }
+
+  function throttleRender(callback) {
+    let scheduled = false
+    return () => {
+      if (scheduled) return
+      scheduled = true
+      window.requestAnimationFrame(() => {
+        scheduled = false
+        callback()
+      })
+    }
   }
 
   if (document.readyState === "loading") {
