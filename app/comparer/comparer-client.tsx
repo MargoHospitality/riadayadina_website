@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils"
 
 const loadingSteps = [
   { id: 1, label: "Recherche de l'offre officielle Ayadina" },
-  { id: 2, label: "Lecture des prix Booking.com et OTA" },
+  { id: 2, label: "Lecture des prix des agences en ligne" },
   { id: 3, label: "Vérification des conditions directes" },
 ]
 
@@ -83,7 +83,7 @@ export function CompareClient() {
           status: "error",
           offers: [],
           source: "DataForSEO Google Hotels",
-          message: "Comparaison momentanément indisponible. Vous pouvez continuer vers la réservation officielle.",
+          message: "Comparaison agence en ligne indisponible pour le moment.",
         })
         trackDirectBookingEvent("rate_compare_unavailable", {
           checkIn: search.checkIn,
@@ -141,7 +141,7 @@ export function CompareClient() {
 
               {/* Subtitle */}
               <p className="text-muted-foreground text-sm md:text-base mb-10 max-w-md mx-auto">
-                Comparaison en temps réel entre l&apos;offre officielle Ayadina et les prix publics observés sur Google Hotels.
+                Comparaison en temps réel entre l&apos;offre officielle Ayadina et les prix publics observés sur les agences en ligne.
               </p>
 
               {/* Date summary card */}
@@ -317,9 +317,9 @@ export function CompareClient() {
 
             {!hasLivePrices && !hasNoAvailability && (
               <div className="mb-6 border border-accent/30 bg-accent/10 p-4 text-sm text-foreground">
-                <p className="font-medium mb-1">Comparaison des prix momentanément indisponible.</p>
+                <p className="font-medium mb-1">La comparaison avec les agences en ligne n&apos;est pas disponible pour le moment.</p>
                 <p className="text-muted-foreground">
-                  {comparison.message || "Les tarifs Google Hotels ne sont pas remontés pour ces dates."} Vous pouvez continuer vers le moteur officiel Cloudbeds pour consulter le tarif en direct.
+                  Vous pouvez continuer vers la réservation directe Riad Ayadina & Spa. Les tarifs officiels, disponibilités et conditions détaillées seront affichés avant confirmation.
                 </p>
               </div>
             )}
@@ -415,7 +415,7 @@ export function CompareClient() {
                     <h3 className="font-serif text-2xl mb-4">Le prix n&apos;est pas le seul critère utile pour ce séjour.</h3>
                     <p className="text-primary-foreground/75 text-sm mb-5">
                       {usesCloudbedsFallback
-                        ? "L'offre officielle est disponible sur Cloudbeds. Nous évitons un comparatif chiffré tant que Google Hotels ne renvoie pas une offre officielle exploitable."
+                        ? "Le tarif officiel est disponible. Nous affichons les avantages directs sans comparaison chiffrée tant que les prix des agences en ligne ne sont pas suffisamment fiables."
                         : "Pour ces dates, nous mettons en avant les avantages inclus en direct plutôt qu'un comparatif de prix moins lisible."}
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -448,7 +448,7 @@ export function CompareClient() {
                     )}
 
                     <p className="text-xs text-muted-foreground text-center pt-2">
-                      Source : Google Hotels · Tarifs indicatifs
+                      Source : agences en ligne · Tarifs indicatifs
                     </p>
                   </>
                 )}
@@ -654,6 +654,6 @@ function createUnavailableComparison(): RateComparison {
     status: "error",
     offers: [],
     source: "DataForSEO Google Hotels",
-    message: "Comparaison momentanément indisponible.",
+    message: "Comparaison agence en ligne indisponible pour le moment.",
   }
 }
