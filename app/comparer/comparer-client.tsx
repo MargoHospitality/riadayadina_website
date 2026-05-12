@@ -28,13 +28,19 @@ export function CompareClient() {
   const [comparisonResult, setComparisonResult] = useState<RateComparison | null>(null)
   
   const searchParams = useSearchParams()
-  const search = {
+  const urlSearch = {
     checkIn: searchParams.get("checkIn") || searchParams.get("checkin") || undefined,
     checkOut: searchParams.get("checkOut") || searchParams.get("checkout") || undefined,
     adults: searchParams.get("adults") || searchParams.get("guests") || "2",
     currency: searchParams.get("currency") ? normalizeBookingCurrency(searchParams.get("currency") || undefined) : undefined,
     language: normalizeBookingLanguage(searchParams.get("language") || "fr"),
   }
+  const [submittedSearch, setSubmittedSearch] = useState<typeof urlSearch | null>(null)
+  const search = submittedSearch ?? urlSearch
+
+  useEffect(() => {
+    setSubmittedSearch(null)
+  }, [urlSearch.checkIn, urlSearch.checkOut, urlSearch.adults, urlSearch.currency, urlSearch.language])
 
   useEffect(() => {
     if (!isValidBookingSearch(search)) return
@@ -103,6 +109,28 @@ export function CompareClient() {
       clearTimeout(fallbackTimer)
     }
   }, [search.checkIn, search.checkOut, search.adults, search.currency, search.language])
+
+  const handleDateSearchSubmit = (nextSearch: { checkIn: string; checkOut: string; adults: string }) => {
+    const next = {
+      ...search,
+      ...nextSearch,
+    }
+    const params = new URLSearchParams({
+      checkIn: next.checkIn,
+      checkOut: next.checkOut,
+      adults: next.adults,
+      language: next.language,
+    })
+    if (next.currency) params.set("currency", next.currency)
+
+    setCurrentStep(1)
+    setShowFallback(false)
+    setComparisonResult(null)
+    setIsLoading(true)
+    setSubmittedSearch(next)
+    setIsModalOpen(false)
+    window.history.pushState(null, "", `/comparer?${params.toString()}`)
+  }
 
   if (!isValidBookingSearch(search)) {
     return (
@@ -504,6 +532,7 @@ export function CompareClient() {
         defaultCheckIn={search.checkIn}
         defaultCheckOut={search.checkOut}
         defaultAdults={Number(search.adults)}
+        onSearchSubmit={handleDateSearchSubmit}
       />
       </main>
       <Footer />

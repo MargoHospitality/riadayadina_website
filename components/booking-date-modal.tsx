@@ -9,12 +9,19 @@ import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
 
+interface BookingSearchSelection {
+  checkIn: string
+  checkOut: string
+  adults: string
+}
+
 interface BookingDateModalProps {
   isOpen: boolean
   onClose: () => void
   defaultCheckIn?: string
   defaultCheckOut?: string
   defaultAdults?: number
+  onSearchSubmit?: (search: BookingSearchSelection) => void
 }
 
 const displayDate = new Intl.DateTimeFormat("fr-FR", {
@@ -53,6 +60,7 @@ export function BookingDateModal({
   defaultCheckIn = "",
   defaultCheckOut = "",
   defaultAdults = 2,
+  onSearchSubmit,
 }: BookingDateModalProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -146,6 +154,12 @@ export function BookingDateModal({
     }
     setNavigatingFromPath(pathname)
     setIsNavigating(true)
+
+    if (onSearchSubmit) {
+      onSearchSubmit(target)
+      return
+    }
+
     router.push(`/comparer?checkIn=${target.checkIn}&checkOut=${target.checkOut}&adults=${target.adults}`)
 
     if (pathname === "/comparer") {
