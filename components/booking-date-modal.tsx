@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import type { DateRange } from "react-day-picker"
 import { fr } from "date-fns/locale"
 import { X, Calendar as CalendarIcon, Users, ShieldCheck, Sparkles, Gift, Star, ArrowRight } from "lucide-react"
@@ -55,10 +55,13 @@ export function BookingDateModal({
   defaultAdults = 2,
 }: BookingDateModalProps) {
   const router = useRouter()
+  const pathname = usePathname()
   const [checkIn, setCheckIn] = useState(defaultCheckIn)
   const [checkOut, setCheckOut] = useState(defaultCheckOut)
   const [adults, setAdults] = useState(defaultAdults)
   const [error, setError] = useState("")
+  const [isNavigating, setIsNavigating] = useState(false)
+  const [navigatingFromPath, setNavigatingFromPath] = useState<string | null>(null)
   const todayDate = getTodayDate()
   const [calendarMonth, setCalendarMonth] = useState(() => parseIsoDate(defaultCheckIn) || getTodayDate())
   const selectedCheckIn = checkIn ? parseIsoDate(checkIn) : undefined
@@ -86,6 +89,8 @@ export function BookingDateModal({
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
+      setIsNavigating(false)
+      setNavigatingFromPath(null)
       document.body.style.overflow = "hidden"
     } else {
       document.body.style.overflow = ""
@@ -94,6 +99,12 @@ export function BookingDateModal({
       document.body.style.overflow = ""
     }
   }, [isOpen])
+
+  useEffect(() => {
+    if (isNavigating && pathname === "/comparer" && navigatingFromPath !== "/comparer") {
+      onClose()
+    }
+  }, [isNavigating, navigatingFromPath, pathname, onClose])
 
   // Handle escape key
   useEffect(() => {
@@ -128,8 +139,18 @@ export function BookingDateModal({
       return
     }
 
-    onClose()
-    router.push(`/comparer?checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}`)
+    const target = {
+      checkIn,
+      checkOut,
+      adults: String(adults),
+    }
+    setNavigatingFromPath(pathname)
+    setIsNavigating(true)
+    router.push(`/comparer?checkIn=${target.checkIn}&checkOut=${target.checkOut}&adults=${target.adults}`)
+
+    if (pathname === "/comparer") {
+      window.setTimeout(onClose, 250)
+    }
   }
 
   const handleDateRangeChange = (range: DateRange | undefined) => {
@@ -160,6 +181,28 @@ export function BookingDateModal({
   }
 
   if (!isOpen) return null
+
+  if (isNavigating) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-background px-6">
+        <div className="max-w-xl text-center">
+          <p className="mb-4 text-accent text-sm uppercase tracking-[0.25em]">Réservation directe</p>
+          <h1 className="font-serif text-2xl md:text-3xl text-foreground mb-4">
+            Nous vérifions les meilleurs prix pour vos dates.
+          </h1>
+          <p className="text-sm text-muted-foreground mb-8">
+            Comparaison en temps réel entre l’offre officielle Ayadina et les agences en ligne.
+          </p>
+          <div className="mx-auto mb-6 h-1.5 max-w-xs overflow-hidden rounded-full bg-primary/10">
+            <div className="h-full w-1/2 animate-pulse rounded-full bg-primary" />
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Arrivée {formatDisplayDate(checkIn)} · Départ {formatDisplayDate(checkOut)}
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <>
