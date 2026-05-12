@@ -289,7 +289,7 @@ export function CompareClient() {
       <section className="relative pt-28 md:pt-32 pb-8 bg-primary overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <Image
-            src="/images/patio-fontaine.jpg"
+            src="/images/ayadina/patio-fontaine-nuit-01.jpg"
             alt=""
             fill
             className="object-cover"
@@ -442,7 +442,7 @@ export function CompareClient() {
 
                   {/* Conditions */}
                   <div className="text-sm text-muted-foreground mb-6 p-4 bg-secondary/50 rounded-sm">
-                    <p>Réservation Directe “Riad Ayadina & Spa” · Conditions détaillées affichées avant confirmation · Confirmation immédiate</p>
+                    <p>Réservation directe “Riad Ayadina & Spa” · Conditions détaillées affichées avant confirmation · Confirmation immédiate</p>
                   </div>
 
                   {/* CTA */}
@@ -611,21 +611,21 @@ function getCloudbedsFallbackOffer(comparison: RateComparison, nights: number): 
 function getDirectOfferBundle(nights: number) {
   if (nights >= 3) {
     return {
-      label: "Package Immersion (3 nuits et plus)",
+      label: "Privilèges Immersion (3 nuits et plus)",
       perks: getImmersionPackagePerks(),
     }
   }
 
   if (nights >= 2) {
     return {
-      label: "Package Escapade (2 nuits)",
+      label: "Privilèges Escapade (2 nuits)",
       perks: getEscapadePackagePerks(),
     }
   }
 
   return {
     label: "Offre Spéciale Directe",
-    perks: ["Annulation flexible", "Pas de prépaiement", "-10% sur les soins Spa", "Surclassement & early check-in selon disponibilité"],
+    perks: ["Annulation flexible", "Pas de prépaiement", "-10% sur les soins spa", "Surclassement et arrivée anticipée selon disponibilité"],
   }
 }
 
@@ -634,9 +634,9 @@ function getImmersionPackagePerks() {
     "Transfert aéroport A/R",
     "Annulation flexible",
     "Pas de prépaiement",
-    "-10% sur les soins Spa",
+    "-10% sur les soins spa",
     "Cocktail de bienvenue",
-    "Surclassement & early check-in selon disponibilité",
+    "Surclassement et arrivée anticipée selon disponibilité",
   ]
 }
 
@@ -645,9 +645,9 @@ function getEscapadePackagePerks() {
     "Transfert aéroport aller",
     "Annulation flexible",
     "Pas de prépaiement",
-    "-10% sur les soins Spa",
+    "-10% sur les soins spa",
     "Cocktail de bienvenue",
-    "Surclassement & early check-in selon disponibilité",
+    "Surclassement et arrivée anticipée selon disponibilité",
   ]
 }
 

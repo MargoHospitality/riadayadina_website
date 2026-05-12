@@ -17,13 +17,31 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Riad Ayadina & Spa | Boutique Hotel Marrakech',
-  description: 'Découvrez le Riad Ayadina & Spa, un havre de paix de 1200m² au cœur de la médina de Marrakech. Spa, piscine chauffée, restaurant avec licence alcool. Réservez en direct pour les meilleures offres.',
-  keywords: ['riad', 'marrakech', 'boutique hotel', 'médina', 'maroc', 'spa', 'hammam', 'piscine', 'restaurant', 'bar', 'ayadina'],
+  metadataBase: new URL('https://www.riadayadinamarrakech.com'),
+  title: {
+    default: 'Riad Ayadina & Spa | Riad boutique à Marrakech',
+    template: '%s | Riad Ayadina & Spa',
+  },
+  description: 'Une adresse paisible au cœur de la médina de Marrakech : spa de 250 m², piscine chauffée sur le toit, restaurant, bar et réservation directe.',
+  keywords: ['riad Marrakech', 'riad spa Marrakech', 'médina Marrakech', 'spa hammam Marrakech', 'restaurant riad Marrakech', 'Riad Ayadina'],
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: 'Riad Ayadina & Spa | Boutique Hotel Marrakech',
-    description: 'Votre havre de paix au cœur de la médina de Marrakech - Spa, Restaurant & Bar',
+    title: 'Riad Ayadina & Spa | Riad boutique à Marrakech',
+    description: 'Une adresse paisible au cœur de la médina de Marrakech — spa, piscine chauffée, restaurant et bar.',
+    url: '/',
+    siteName: 'Riad Ayadina & Spa',
     type: 'website',
+    locale: 'fr_FR',
+    images: [
+      {
+        url: '/images/ayadina-home/patio-jour-04.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Patio principal du Riad Ayadina à Marrakech',
+      },
+    ],
   },
 }
 

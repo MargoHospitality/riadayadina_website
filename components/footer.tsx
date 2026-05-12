@@ -8,13 +8,13 @@ import { useBookingModal } from "@/components/booking-modal-provider"
 const footerLinks = {
   decouvrir: [
     { name: "Le Riad", href: "/le-riad" },
-    { name: "Chambres & Suites", href: "/chambres-suites" },
-    { name: "Restaurant & Bar", href: "/restaurant" },
-    { name: "Spa & Bien-être", href: "/spa" },
+    { name: "Chambres et suites", href: "/chambres-suites" },
+    { name: "Restaurant et bar", href: "/restaurant" },
+    { name: "Spa et bien-être", href: "/spa" },
     { name: "Galerie", href: "/galerie" },
   ],
   reserver: [
-    { name: "Nos Offres Exclusives", href: "/offres" },
+    { name: "Offres en direct", href: "/offres" },
     { name: "Nous contacter", href: "/contact" },
   ],
 }
@@ -55,13 +55,13 @@ function GoogleIcon({ className }: { className?: string }) {
 
 export function Footer() {
   const { openBookingModal } = useBookingModal()
-  
+
   return (
     <footer className="bg-[#0a0a0a] text-white">
       {/* Main Footer */}
       <div className="container mx-auto px-4 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
-          
+
           {/* Brand & Contact - Takes more space */}
           <div className="lg:col-span-5">
             <Link href="/" className="inline-block mb-6">
@@ -73,10 +73,10 @@ export function Footer() {
                 className="h-16 md:h-20 w-auto"
               />
             </Link>
-            
+
             <p className="text-white/60 text-sm leading-relaxed mb-8 max-w-sm">
-              1200m² de sérénité au coeur de la médina de Marrakech. 
-              Spa, piscine chauffée sur le toit, restaurant avec licence alcool.
+              1 200 m² de calme au cœur de la médina de Marrakech.
+              Spa, piscine chauffée sur le toit, restaurant et bar autorisé.
             </p>
 
             {/* Contact rapide - WhatsApp en premier */}
@@ -95,7 +95,7 @@ export function Footer() {
                   <span className="text-xs text-white/50 block">Réponse rapide</span>
                 </div>
               </a>
-              
+
               <a
                 href="tel:+212524383881"
                 className="flex items-center gap-3 text-white/80 hover:text-white transition-colors"
@@ -105,7 +105,7 @@ export function Footer() {
                 </div>
                 <span className="text-sm">+212 524 38 38 81</span>
               </a>
-              
+
               <a
                 href="mailto:contact@riadayadina.com"
                 className="flex items-center gap-3 text-white/80 hover:text-white transition-colors"
@@ -203,7 +203,7 @@ export function Footer() {
           {/* Adresse & Accès */}
           <div className="lg:col-span-3">
             <h3 className="text-xs uppercase tracking-[0.2em] text-white/40 mb-6">Nous trouver</h3>
-            
+
             <div className="space-y-4">
               <a
                 href="https://maps.google.com/?q=35+Zaouia+El+Abassia+Marrakech"
@@ -218,7 +218,7 @@ export function Footer() {
                   Marrakech 40000
                 </span>
               </a>
-              
+
               <div className="flex items-start gap-3 text-white/60">
                 <Car className="h-5 w-5 flex-shrink-0 mt-0.5" />
                 <span className="text-sm leading-relaxed">
@@ -248,7 +248,7 @@ export function Footer() {
                 Membre du réseau Margo Hospitality
               </span>
             </div>
-            
+
             {/* Legal */}
             <div className="flex items-center gap-6 text-xs text-white/40">
               <Link href="/mentions-legales" className="hover:text-white/60 transition-colors">

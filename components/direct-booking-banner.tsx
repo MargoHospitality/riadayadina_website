@@ -17,7 +17,7 @@ export function DirectBookingBanner() {
             Privilèges réservation directe
           </p>
           <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">
-            Ce que vous gagnez en réservant ici
+            Les attentions réservées aux hôtes en direct
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             En réservant sur le site officiel, votre séjour inclut des attentions réservées aux hôtes Ayadina.
@@ -57,7 +57,7 @@ export function DirectBookingBanner() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent/60" />
-                    <span>-10% sur les soins Spa</span>
+                    <span>-10% sur les soins spa</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent/60" />
@@ -65,7 +65,7 @@ export function DirectBookingBanner() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-accent/40" />
-                    <span className="text-muted-foreground/70">Surclassement & early check-in si dispo.</span>
+                    <span className="text-muted-foreground/70">Surclassement et arrivée anticipée selon disponibilité</span>
                   </div>
                 </div>
 
@@ -123,7 +123,7 @@ export function DirectBookingBanner() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary-foreground/40" />
-                    <span>-10% sur les soins Spa</span>
+                    <span>-10% sur les soins spa</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary-foreground/40" />
@@ -131,7 +131,7 @@ export function DirectBookingBanner() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary-foreground/30" />
-                    <span className="text-primary-foreground/70">Surclassement & early check-in si dispo.</span>
+                    <span className="text-primary-foreground/70">Surclassement et arrivée anticipée selon disponibilité</span>
                   </div>
                 </div>
 

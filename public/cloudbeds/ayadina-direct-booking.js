@@ -25,9 +25,9 @@
       noAvailabilityTitle: "Nous n’avons plus de disponibilité en ligne pour ces dates.",
       noAvailabilityText: "Vous pouvez écrire au service réservation : booking@riadayadinamarrakech.net.",
       packages: {
-        immersion: ["Transfert aéroport A/R", "Annulation flexible", "Pas de prépaiement", "-10% sur les soins Spa", "Cocktail de bienvenue", "Surclassement & early check-in selon disponibilité"],
-        escapade: ["Transfert aéroport aller", "Annulation flexible", "Pas de prépaiement", "-10% sur les soins Spa", "Cocktail de bienvenue", "Surclassement & early check-in selon disponibilité"],
-        direct: ["Annulation flexible", "Pas de prépaiement", "-10% sur les soins Spa", "Surclassement & early check-in selon disponibilité"],
+        immersion: ["Transfert aéroport A/R", "Annulation flexible", "Pas de prépaiement", "-10% sur les soins spa", "Cocktail de bienvenue", "Surclassement et arrivée anticipée selon disponibilité"],
+        escapade: ["Transfert aéroport aller", "Annulation flexible", "Pas de prépaiement", "-10% sur les soins spa", "Cocktail de bienvenue", "Surclassement et arrivée anticipée selon disponibilité"],
+        direct: ["Annulation flexible", "Pas de prépaiement", "-10% sur les soins spa", "Surclassement et arrivée anticipée selon disponibilité"],
       },
     },
     en: {

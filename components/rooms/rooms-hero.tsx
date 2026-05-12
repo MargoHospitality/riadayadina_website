@@ -23,12 +23,10 @@ export function RoomsHero() {
           Nos hébergements
         </p>
         <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6 text-balance">
-          Chambres & Suites
+          Chambres et suites
         </h1>
         <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto text-pretty">
-          Neuf chambres uniques, chacune portant un nom commençant par A, 
-          signature d&apos;Ayadina. Des espaces où l&apos;artisanat marocain 
-          rencontre le confort contemporain.
+          Neuf chambres, chacune nommée d’un A. Zellige, bois peint, tissus choisis : l’artisanat marocain y trouve un confort simple et actuel.
         </p>
       </div>
     </section>

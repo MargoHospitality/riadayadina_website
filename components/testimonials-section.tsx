@@ -8,7 +8,7 @@ const testimonials = [
     location: "France",
     date: "2025",
     rating: 5,
-    text: "Un véritable coup de cœur ! Le spa est absolument divin, et pouvoir déguster un verre de vin sur la terrasse rooftop après une journée dans la médina, c'est un luxe rare à Marrakech.",
+    text: "Un véritable coup de cœur ! Le spa est absolument divin, et pouvoir déguster un verre de vin sur la terrasse sur le toit après une journée dans la médina, c'est un luxe rare à Marrakech.",
   },
   {
     name: "Elena",

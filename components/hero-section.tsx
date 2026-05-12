@@ -39,7 +39,7 @@ export function HeroSection() {
         >
           {/* Simple tagline */}
           <p className="text-white/70 text-sm uppercase tracking-[0.4em] mb-8">
-            Riad Boutique & Spa — Marrakech
+            Riad boutique et spa à Marrakech
           </p>
           
           {/* Main title - clean & impactful */}
@@ -49,7 +49,7 @@ export function HeroSection() {
           
           {/* Subtle descriptor */}
           <p className="text-white/80 text-lg md:text-xl font-light tracking-wide mb-12 max-w-xl mx-auto">
-            1200m² de sérénité au cœur de la médina
+            1 200 m² de calme au cœur de la médina
           </p>
 
           {/* CTA premium */}
@@ -68,7 +68,7 @@ export function HeroSection() {
             
             {/* Reassurance line */}
             <p className="text-white/60 text-sm mt-6 tracking-wide">
-              Confirmation rapide · Cocktail de bienvenue · Avantages dès 2 nuitées
+              Confirmation rapide · Cocktail de bienvenue · Privilèges dès 2 nuits
             </p>
           </div>
         </div>
@@ -82,11 +82,11 @@ export function HeroSection() {
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-center gap-6 md:gap-12 text-white/50 text-xs md:text-sm tracking-wider uppercase">
-            <span>Spa 250m²</span>
+            <span>Spa 250 m²</span>
             <span className="w-1 h-1 rounded-full bg-white/30" />
             <span>Piscine chauffée</span>
             <span className="hidden md:block w-1 h-1 rounded-full bg-white/30" />
-            <span className="hidden md:inline">Restaurant & Bar</span>
+            <span className="hidden md:inline">Restaurant et bar</span>
           </div>
         </div>
       </div>

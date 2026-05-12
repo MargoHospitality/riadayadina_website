@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { RoomsHero } from "@/components/rooms/rooms-hero"
@@ -5,20 +6,35 @@ import { RoomCategory } from "@/components/rooms/room-category"
 import { BookingWidget } from "@/components/booking-widget"
 import { TestimonialsSection } from "@/components/testimonials-section"
 
+export const metadata: Metadata = {
+  title: "Chambres et suites | Riad Ayadina Marrakech",
+  description:
+    "Découvrez les chambres doubles supérieures et suites junior du Riad Ayadina à Marrakech : 9 hébergements singuliers, petit-déjeuner inclus, confort contemporain et artisanat marocain.",
+  alternates: {
+    canonical: "/chambres-suites",
+  },
+  openGraph: {
+    title: "Chambres et suites | Riad Ayadina Marrakech",
+    description:
+      "Neuf chambres et suites dans un riad à Marrakech, entre artisanat marocain, confort actuel et petit-déjeuner inclus.",
+    url: "/chambres-suites",
+  },
+}
+
 const chambresDoubles = {
   title: "Chambres Doubles Supérieures",
   subtitle: "L'élégance marocaine dans un écrin de confort",
-  description: "Trois chambres de caractère, chacune avec sa personnalité unique. Un cocon de 17 à 22m² où l'artisanat marocain traditionnel rencontre le raffinement contemporain. L'endroit idéal pour un séjour en couple ou en solo.",
+  description: "Trois chambres de caractère, chacune avec sa personnalité. Un cocon de 17 à 22 m² où l'artisanat marocain rencontre un confort simple et actuel. L'adresse idéale pour un séjour en couple ou en solo.",
   forWho: "Idéal pour : couples en escapade romantique, voyageurs solo",
   roomCount: 3,
-  surfaceRange: "17-22m²",
+  surfaceRange: "17 à 22 m²",
   features: [
     "Lit double confort",
     "Salle de bain privative",
     "Climatisation réversible",
     "Wifi haut débit",
     "Coffre-fort",
-    "Produits d'accueil premium",
+    "Produits d’accueil de qualité",
     "Service en chambre",
     "Petit-déjeuner inclus",
   ],
@@ -39,11 +55,11 @@ const chambresDoubles = {
 
 const suitesJunior = {
   title: "Suites Junior",
-  subtitle: "L'espace et le luxe pour un séjour d'exception",
-  description: "Six suites spacieuses de 24 à 36m² avec salon privatif. Des espaces généreux pensés pour les voyageurs exigeants, où chaque détail invite à la contemplation et au repos absolu.",
+  subtitle: "Plus d’espace pour savourer le riad",
+  description: "Six suites spacieuses de 24 à 36 m² avec salon privatif. Des espaces généreux pour prendre son temps, entre repos, lecture et moments de vie au calme du riad.",
   forWho: "Idéal pour : séjours spa, couples, familles, longs séjours",
   roomCount: 6,
-  surfaceRange: "24-36m²",
+  surfaceRange: "24 à 36 m²",
   features: [
     "Lit king-size",
     "Salon privé",
@@ -52,7 +68,7 @@ const suitesJunior = {
     "Wifi haut débit",
     "Coffre-fort",
     "Minibar",
-    "Produits d'accueil premium",
+    "Produits d’accueil de qualité",
     "Peignoirs et chaussons",
     "Petit-déjeuner inclus",
   ],
@@ -63,7 +79,7 @@ const suitesJunior = {
     { src: "/images/ayadina/chambres-suites/suites/04-ambrosia-chambre-06.jpg", alt: "Ambrosia - chambre principale" },
     { src: "/images/ayadina/chambres-suites/suites/05-ambrosia-chambre-08.jpg", alt: "Ambrosia - détails" },
     { src: "/images/ayadina/chambres-suites/suites/06-ambrosia-sallebain-01.jpg", alt: "Ambrosia - salle de bain" },
-    { src: "/images/ayadina/chambres-suites/suites/07-adelina-salon-01.jpg", alt: "Suite - salon" },
+    { src: "/images/ayadina/chambres-suites/suites/07-adelina-salon-01.jpg", alt: "Salon privatif d’une suite junior du Riad Ayadina" },
     { src: "/images/ayadina/chambres-suites/suites/08-antinea-chambre-05.jpg", alt: "Antinea - chambre" },
     { src: "/images/ayadina/chambres-suites/suites/09-antinea-chambre-08.jpg", alt: "Antinea - détails" },
     { src: "/images/ayadina/chambres-suites/suites/10-antiqua-chambre-02.jpg", alt: "Antiqua - chambre" },

@@ -1,22 +1,35 @@
-"use client"
-
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { 
-  Wine, 
-  UtensilsCrossed, 
-  Sparkles, 
+import {
+  Wine,
+  UtensilsCrossed,
+  Sparkles,
   ChevronDown,
   Clock,
   MapPin,
   Phone,
-  Download,
   GlassWater,
   Cigarette
 } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "Restaurant & bar à Marrakech | Riad Ayadina",
+  description:
+    "Restaurant franco-marocain au Riad Ayadina à Marrakech : terrasse sur le toit, patios, bar autorisé en médina, vins, cocktails et réservation de table.",
+  alternates: {
+    canonical: "/restaurant",
+  },
+  openGraph: {
+    title: "Restaurant & bar à Marrakech | Riad Ayadina",
+    description:
+      "Une table franco-marocaine au calme de la médina, avec terrasse, patios et bar autorisé.",
+    url: "/restaurant",
+  },
+}
 
 export default function RestaurantPage() {
   return (
@@ -35,13 +48,13 @@ export default function RestaurantPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center">
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-4">
-              Restaurant & Bar
+              Restaurant et bar
             </h1>
             <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto">
-              Une expérience gastronomique unique au cœur de la médina
+              Une table franco-marocaine au calme de la médina
             </p>
           </div>
 
@@ -64,23 +77,23 @@ export default function RestaurantPage() {
                     Gastronomie
                   </span>
                 </div>
-                
+
                 <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
                   Cuisine franco-marocaine
                   <br />
-                  <span className="text-primary italic">d&apos;exception</span>
+                  <span className="text-primary italic">généreuse et soignée</span>
                 </h2>
-                
+
                 <div className="space-y-4 text-muted-foreground mb-8">
                   <p>
-                    Notre chef vous invite à un voyage culinaire entre la France et le Maroc. 
-                    Des tajines mijotés aux saveurs ancestrales - poulet aux olives et citron confit, 
-                    agneau aux pruneaux et amandes - aux classiques français comme l&apos;entrecôte 
+                    Notre chef vous invite à un voyage culinaire entre la France et le Maroc.
+                    Des tajines mijotés aux saveurs ancestrales - poulet aux olives et citron confit,
+                    agneau aux pruneaux et amandes - aux classiques français comme l&apos;entrecôte
                     sauce au poivre ou le pavé de saumon béarnaise.
                   </p>
                   <p>
-                    Couscous royal servi le vendredi, pastilla croustillante au safran, 
-                    gambas grillées au citron... Chaque plat raconte une histoire, 
+                    Couscous royal servi le vendredi, pastilla croustillante au safran,
+                    gambas grillées au citron... Chaque plat raconte une histoire,
                     préparé avec des produits frais du marché et le savoir-faire de notre équipe.
                   </p>
                 </div>
@@ -98,15 +111,14 @@ export default function RestaurantPage() {
                     <MapPin className="h-5 w-5 text-primary" />
                     <div>
                       <p className="text-sm text-muted-foreground">Lieu</p>
-                      <p className="font-medium text-foreground">Terrasse rooftop & Patios</p>
+                      <p className="font-medium text-foreground">Terrasse sur le toit et patios</p>
                     </div>
                   </div>
                 </div>
 
                 <Button asChild className="rounded-none px-8 py-6">
-                  <a href="/menus/carte-restaurant-2025.pdf" download>
-                    <Download className="h-4 w-4 mr-2" />
-                    Télécharger la carte
+                  <a href="https://wa.me/212524383881?text=Bonjour, je souhaiterais recevoir la carte du restaurant du Riad Ayadina." target="_blank" rel="noopener noreferrer">
+                    Demander la carte
                   </a>
                 </Button>
               </div>
@@ -144,7 +156,7 @@ export default function RestaurantPage() {
                 </div>
                 {/* Floating badge */}
                 <div className="absolute -top-4 -right-4 bg-accent text-accent-foreground px-6 py-3 shadow-xl">
-                  <span className="text-sm font-medium uppercase tracking-wider">Licence Alcool</span>
+                  <span className="text-sm font-medium uppercase tracking-wider">Bar autorisé</span>
                 </div>
               </div>
 
@@ -155,26 +167,26 @@ export default function RestaurantPage() {
                     <Wine className="h-6 w-6 text-primary-foreground" />
                   </div>
                   <span className="text-sm uppercase tracking-[0.2em] text-primary-foreground/70">
-                    Bar & Lounge
+                    Bar et salon
                   </span>
                 </div>
-                
+
                 <h2 className="font-serif text-3xl md:text-4xl text-primary-foreground mb-6">
                   Un privilège rare
                   <br />
                   <span className="text-accent italic">en médina</span>
                 </h2>
-                
+
                 <div className="space-y-4 text-primary-foreground/80 mb-8">
                   <p>
-                    Ayadina fait partie des très rares établissements de la médina à détenir 
-                    une licence alcool. Un privilège qui vous permet de profiter d&apos;un 
-                    apéritif au coucher du soleil sur notre terrasse, avec vue sur les toits 
+                    Ayadina fait partie des très rares établissements de la médina à détenir
+                    un bar autorisé en médina. Une rareté qui permet de profiter d&apos;un
+                    apéritif au coucher du soleil sur notre terrasse, avec vue sur les toits
                     de Marrakech et l&apos;Atlas en toile de fond.
                   </p>
                   <p>
-                    Vins marocains des terroirs de Meknès et Boulaouane, champagnes Mumm et 
-                    Veuve Clicquot, cocktails signature - du Mojito classique au Spritz rafraîchissant - 
+                    Vins marocains des terroirs de Meknès et Boulaouane, champagnes Mumm et
+                    Veuve Clicquot, cocktails signature - du Mojito classique au Spritz rafraîchissant -
                     whisky, cognac et une sélection de cigares cubains pour les amateurs.
                   </p>
                 </div>
@@ -191,8 +203,8 @@ export default function RestaurantPage() {
                   <div className="flex items-center gap-4 p-4 bg-primary-foreground/5 border border-primary-foreground/10">
                     <GlassWater className="h-5 w-5 text-accent flex-shrink-0" />
                     <div>
-                      <span className="block text-primary-foreground font-medium">Cocktails & Mocktails</span>
-                      <span className="text-sm text-primary-foreground/60">Créations maison & grands classiques</span>
+                      <span className="block text-primary-foreground font-medium">Cocktails avec ou sans alcool</span>
+                      <span className="text-sm text-primary-foreground/60">Créations maison et grands classiques</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 p-4 bg-primary-foreground/5 border border-primary-foreground/10">
@@ -204,13 +216,12 @@ export default function RestaurantPage() {
                   </div>
                 </div>
 
-                <Button 
-                  asChild 
+                <Button
+                  asChild
                   className="rounded-none px-8 py-6 bg-accent text-accent-foreground hover:bg-accent/90"
                 >
-                  <a href="/menus/carte-vins-cocktails-2025.pdf" download>
-                    <Download className="h-4 w-4 mr-2" />
-                    Carte des vins & cocktails
+                  <a href="https://wa.me/212524383881?text=Bonjour, je souhaiterais recevoir la carte des vins et cocktails du Riad Ayadina." target="_blank" rel="noopener noreferrer">
+                    Demander la carte des vins
                   </a>
                 </Button>
               </div>
@@ -227,7 +238,7 @@ export default function RestaurantPage() {
                 Réservez votre table
               </h2>
               <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-                Notre restaurant est ouvert aux clients du riad et aux visiteurs extérieurs. 
+                Notre restaurant est ouvert aux clients du riad et aux visiteurs extérieurs.
                 Réservation conseillée pour le dîner et les événements privatisés.
               </p>
 
@@ -240,20 +251,20 @@ export default function RestaurantPage() {
                 </div>
                 <div className="bg-card p-5 text-center">
                   <MapPin className="h-5 w-5 text-primary mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Terrasse rooftop</p>
+                  <p className="text-sm text-muted-foreground">Terrasse sur le toit</p>
                   <p className="text-sm text-muted-foreground">Vue sur l&apos;Atlas</p>
                 </div>
                 <div className="bg-card p-5 text-center">
                   <Sparkles className="h-5 w-5 text-primary mx-auto mb-2" />
                   <p className="text-sm text-muted-foreground">Privatisation</p>
-                  <p className="text-sm text-muted-foreground">Événements & groupes</p>
+                  <p className="text-sm text-muted-foreground">Événements et groupes</p>
                 </div>
               </div>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="rounded-none px-10 py-6">
-                  <a 
+                  <a
                     href="https://wa.me/212524383881?text=Bonjour, je souhaiterais réserver une table au restaurant."
                     target="_blank"
                     rel="noopener noreferrer"
@@ -261,10 +272,10 @@ export default function RestaurantPage() {
                     Réserver une table
                   </a>
                 </Button>
-                <Button 
-                  asChild 
-                  size="lg" 
-                  variant="outline" 
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
                   className="rounded-none px-10 py-6"
                 >
                   <Link href="/#booking">
@@ -274,7 +285,7 @@ export default function RestaurantPage() {
               </div>
 
               <p className="text-xs text-muted-foreground mt-6">
-                WhatsApp disponible sur ce numéro
+                Réponse rapide par WhatsApp
               </p>
             </div>
           </div>

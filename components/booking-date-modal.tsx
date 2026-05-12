@@ -301,7 +301,7 @@ export function BookingDateModal({
                       onClick={resetDates}
                       className="border border-border/70 px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:border-accent/60 hover:text-accent"
                     >
-                      Reset
+                      Recommencer
                     </button>
                   )}
                 </div>

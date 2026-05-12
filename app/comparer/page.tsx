@@ -1,9 +1,20 @@
+import type { Metadata } from "next"
 import { Suspense } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CompareClient } from "./comparer-client"
 
 export const dynamic = "force-dynamic"
+
+export const metadata: Metadata = {
+  title: "Comparer les tarifs | Réservation directe Riad Ayadina",
+  description:
+    "Comparez les tarifs publics et l’offre officielle du Riad Ayadina pour vos dates, puis réservez en direct avec les avantages Ayadina.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+}
 
 export default function ComparePage() {
   return (

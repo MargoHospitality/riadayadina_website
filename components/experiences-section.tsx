@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button"
 
 const experiences = [
   {
-    title: "Piscine & Terrasse Solarium",
+    title: "Piscine et terrasse solarium",
     subtitle: "Vue panoramique sur l'Atlas",
-    description: "Sur le toit du riad, une piscine chauffée de 7m x 3m avec jet de massage vous attend. Transats, parasols et vue imprenable sur les montagnes de l'Atlas. Petit-déjeuner, déjeuner léger et cocktails servis au bord de l'eau.",
+    description: "Sur le toit du riad, une piscine chauffée de 7 m x 3 m avec jet de massage vous attend. Transats, parasols et vue imprenable sur les montagnes de l'Atlas. Petit-déjeuner, déjeuner léger et cocktails servis au bord de l'eau.",
     image: "/images/ayadina-home/piscine-jour-01.jpg",
     objectPosition: "45% 50%",
     highlight: "Piscine chauffée",
@@ -16,20 +16,20 @@ const experiences = [
   },
   {
     title: "Les Bains d'Ayadina",
-    subtitle: "Spa & Bien-être",
-    description: "250m² dédiés à votre bien-être : hammam traditionnel, sauna, jacuzzi et deux salles de massage. Soins du corps, gommages au savon noir, massages relaxants à l'huile d'argan et soins esthétiques.",
+    subtitle: "Spa et bien-être",
+    description: "250 m² dédiés à votre bien-être : hammam traditionnel, sauna, jacuzzi et deux salles de massage. Soins du corps, gommages au savon noir, massages relaxants à l'huile d'argan et soins esthétiques.",
     image: "/images/ayadina-home/riad-103.jpg",
     objectPosition: "55% 50%",
-    highlight: "Spa de 250m²",
+    highlight: "Spa de 250 m²",
     link: "/spa",
   },
   {
-    title: "Restaurant & Bar",
-    subtitle: "Licence alcool",
-    description: "Une expérience gastronomique unique en médina avec notre licence alcool. Cuisine marocaine et française raffinée, carte des vins, cocktails signature et espace cigares. Service sur la terrasse rooftop avec vue panoramique.",
+    title: "Restaurant et bar",
+    subtitle: "Bar autorisé",
+    description: "Une table franco-marocaine au calme de la médina, prolongée par un véritable bar pour l’apéritif ou le dernier verre. Cuisine marocaine et française soignée, carte des vins, cocktails maison et espace cigares.",
     image: "/images/ayadina-home/bibliotheque-bar-jour-03.jpg",
     objectPosition: "55% 50%",
-    highlight: "Licence alcool",
+    highlight: "Bar autorisé",
     link: "/restaurant",
   },
   {
@@ -50,13 +50,13 @@ export function ExperiencesSection() {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">
-            Vivez l&apos;exception
+            Le riad, côté détente
           </p>
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-6">
-            Des expériences uniques
+            Les moments qui rythment le séjour
           </h2>
           <p className="text-muted-foreground text-lg">
-            Au-delà de l&apos;hébergement, Ayadina vous propose un spa haut de gamme, un restaurant avec licence alcool et des attentions exclusives.
+            Au fil du séjour : un spa de 250 m², une table franco-marocaine, un bar autorisé en médina et les attentions de la maison.
           </p>
         </div>
 

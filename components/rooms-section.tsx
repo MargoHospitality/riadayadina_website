@@ -12,7 +12,7 @@ const rooms = [
     description: "Trois alcôves de charme, chacune décorée avec soin. Parfaites pour une escapade romantique ou un voyageur solo en quête de tranquillité.",
     image: "/images/ayadina-home/adelina-chambre-04.jpg",
     objectPosition: "50% 50%",
-    size: "17-22m²",
+    size: "17 à 22 m²",
     capacity: "2 personnes",
     forWho: "Couples · Solo",
     count: 3,
@@ -23,7 +23,7 @@ const rooms = [
     description: "Six suites généreuses avec salon privatif. L'espace idéal pour savourer pleinement l'atmosphère du riad, entre repos et moments de vie.",
     image: "/images/ayadina-home/ambrosia-chambre-06.jpg",
     objectPosition: "55% 50%",
-    size: "24-36m²",
+    size: "24 à 36 m²",
     capacity: "2-3 personnes",
     forWho: "Couples · Familles · Séjours longs",
     count: 6,
@@ -37,10 +37,10 @@ export function RoomsSection() {
         {/* Header */}
         <AnimateOnScroll animation="fade-up" className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <p className="text-accent text-sm uppercase tracking-[0.25em] mb-3">
-            Chambres & Suites
+            Chambres et suites
           </p>
           <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">
-            9 chambres, 9 univers
+            9 chambres, 9 atmosphères
           </h2>
           <p className="text-muted-foreground">
             Chaque chambre porte un nom commençant par A, signature d&apos;Ayadina. 

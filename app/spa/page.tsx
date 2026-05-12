@@ -3,11 +3,10 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { 
-  Download, 
-  Phone, 
-  Droplets, 
-  Sparkles, 
+import {
+  Phone,
+  Droplets,
+  Sparkles,
   Heart,
   Clock,
   Users,
@@ -15,8 +14,16 @@ import {
 } from "lucide-react"
 
 export const metadata = {
-  title: "Spa & Bien-être | Riad Ayadina & Spa",
-  description: "Les Bains d'Ayadina : 250m² dédiés à votre bien-être. Hammam traditionnel, massages, soins du visage et du corps au cœur de la médina de Marrakech.",
+  title: "Spa Marrakech | Hammam & massages au Riad Ayadina",
+  description: "Les Bains d’Ayadina, spa de 250 m² à Marrakech : hammam traditionnel, massages, soins du visage, rituels marocains et réservation de soins au cœur de la médina.",
+  alternates: {
+    canonical: "/spa",
+  },
+  openGraph: {
+    title: "Spa Marrakech | Hammam & massages au Riad Ayadina",
+    description: "Hammam traditionnel, massages, soins du visage et rituels marocains dans un spa de 250 m² au calme du riad.",
+    url: "/spa",
+  },
 }
 
 const spaHighlights = [
@@ -27,8 +34,8 @@ const spaHighlights = [
   },
   {
     icon: Sparkles,
-    title: "Soins Signature",
-    description: "Rituels exclusifs aux produits marocains"
+    title: "Rituels de la maison",
+    description: "Soins inspirés des rituels marocains"
   },
   {
     icon: Heart,
@@ -86,10 +93,10 @@ export default function SpaPage() {
               Les Bains d&apos;Ayadina
             </p>
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-4">
-              Spa & Bien-être
+              Spa, hammam et massages
             </h1>
             <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto">
-              250m² dédiés à votre sérénité
+              250 m² dédiés à votre sérénité
             </p>
           </div>
         </section>
@@ -99,11 +106,11 @@ export default function SpaPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
-                Un sanctuaire de bien-être
+                Les Bains d’Ayadina, au calme du riad
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Au cœur du Riad Ayadina, découvrez un espace entièrement dédié à la détente 
-                et au ressourcement. Notre spa de 250m² perpétue les rituels ancestraux 
+                Au cœur du Riad Ayadina, découvrez un espace entièrement dédié à la détente
+                et au ressourcement. Notre spa de 250 m² perpétue les rituels ancestraux
                 du hammam marocain, sublimés par des soins contemporains aux produits naturels.
               </p>
             </div>
@@ -137,13 +144,13 @@ export default function SpaPage() {
                 </h2>
                 <div className="space-y-4 text-primary-foreground/80 mb-8">
                   <p>
-                    Vivez l&apos;authentique rituel du hammam marocain dans notre espace dédié. 
-                    Le savon noir enrichi aux huiles essentielles prépare votre peau, 
+                    Vivez l&apos;authentique rituel du hammam marocain dans notre espace dédié.
+                    Le savon noir enrichi aux huiles essentielles prépare votre peau,
                     le gant kessa exfolie en douceur, l&apos;enveloppement au ghassoul purifie en profondeur.
                   </p>
                   <p>
-                    Nos thérapeutes perpétuent les gestes transmis de génération en génération, 
-                    pour une expérience qui va bien au-delà du simple soin : un voyage sensoriel 
+                    Nos thérapeutes perpétuent les gestes transmis de génération en génération,
+                    pour une expérience qui va bien au-delà du simple soin : un voyage sensoriel
                     aux parfums de rose, de romarin et de lavande.
                   </p>
                 </div>
@@ -191,21 +198,21 @@ export default function SpaPage() {
           <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">
-                Expériences signature
+                Rituels de la maison
               </p>
               <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
                 Nos Rituels
               </h2>
               <p className="text-muted-foreground text-lg">
-                Des parcours de soins complets, pensés pour une immersion totale. 
+                Des parcours de soins complets, pensés pour une immersion totale.
                 Chaque rituel peut être vécu seul ou en duo.
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {rituals.map((ritual, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="bg-card p-8 shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-center gap-3 mb-4">
@@ -247,20 +254,20 @@ export default function SpaPage() {
               {/* Content */}
               <div className="order-1 lg:order-2">
                 <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">
-                  Beauté & Esthétique
+                  Beauté et soins du visage
                 </p>
                 <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
                   Soins complémentaires
                 </h2>
                 <div className="space-y-4 text-muted-foreground mb-8">
                   <p>
-                    Complétez votre expérience bien-être par nos soins esthétiques : 
-                    manucure et pédicure orientales, épilations, soins du visage par 
+                    Complétez votre expérience bien-être par nos soins esthétiques :
+                    manucure et pédicure orientales, épilations, soins du visage par
                     Natus Marrakech avec des produits 100% naturels et locaux.
                   </p>
                   <p>
-                    Nos soins du visage utilisent les trésors de la nature marocaine : 
-                    huile d&apos;argan, eau de rose, miel... Pour une peau éclatante et ressourcée.
+                    Nos soins du visage utilisent les trésors de la nature marocaine :
+                    huile d&apos;argan, eau de rose, miel... Pour retrouver une peau douce, lumineuse, apaisée.
                   </p>
                 </div>
 
@@ -296,7 +303,7 @@ export default function SpaPage() {
           </div>
         </section>
 
-        {/* CTA - Download & Reservation */}
+        {/* CTA - Reservation */}
         <section className="py-20 md:py-28 bg-accent/10">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
@@ -304,27 +311,24 @@ export default function SpaPage() {
                 Réservez votre moment de détente
               </h2>
               <p className="text-muted-foreground text-lg mb-8">
-                Nous vous recommandons de réserver vos soins 24 heures à l&apos;avance 
+                Nous vous recommandons de réserver vos soins 24 heures à l&apos;avance
                 auprès de la réception pour garantir votre créneau.
               </p>
 
-              {/* Download Card */}
               <div className="bg-card p-8 shadow-sm mb-8">
-                <Download className="h-8 w-8 text-primary mx-auto mb-4" />
                 <h3 className="font-serif text-xl text-foreground mb-2">
-                  Notre carte des soins
+                  Carte des soins
                 </h3>
                 <p className="text-muted-foreground text-sm mb-6">
-                  Découvrez l&apos;ensemble de nos soins, rituels et tarifs
+                  La réception vous confirme les soins disponibles, les durées et les tarifs selon votre créneau.
                 </p>
-                <Button 
+                <Button
                   asChild
-                  variant="outline" 
+                  variant="outline"
                   className="rounded-none px-8 py-5"
                 >
-                  <a href="/documents/carte-spa-ayadina.pdf" download>
-                    <Download className="h-4 w-4 mr-2" />
-                    Télécharger la carte du Spa (PDF)
+                  <a href="https://wa.me/212524383881?text=Bonjour, je souhaiterais recevoir la carte des soins du spa Ayadina." target="_blank" rel="noopener noreferrer">
+                    Demander la carte des soins
                   </a>
                 </Button>
               </div>
@@ -332,7 +336,7 @@ export default function SpaPage() {
               {/* Contact */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button asChild className="rounded-none px-8 py-6 text-base">
-                  <a 
+                  <a
                     href="https://wa.me/212524383881?text=Bonjour, je souhaiterais réserver un soin au spa."
                     target="_blank"
                     rel="noopener noreferrer"
@@ -340,9 +344,9 @@ export default function SpaPage() {
                     Réserver un soin
                   </a>
                 </Button>
-                <Button 
-                  asChild 
-                  variant="outline" 
+                <Button
+                  asChild
+                  variant="outline"
                   className="rounded-none px-8 py-6 text-base border-primary/20"
                 >
                   <a href="tel:+212524383881">
@@ -353,7 +357,7 @@ export default function SpaPage() {
               </div>
 
               <p className="text-sm text-muted-foreground mt-8">
-                Le port du maillot ou du slip est obligatoire lors des soins.
+                Pour votre confort, le port d’un maillot ou d’un sous-vêtement est demandé pendant les soins.
               </p>
             </div>
           </div>

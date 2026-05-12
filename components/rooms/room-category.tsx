@@ -95,7 +95,7 @@ export function RoomCategory({
                   "text-xs uppercase tracking-[0.2em] mb-4",
                   isDark ? "text-primary-foreground/50" : "text-muted-foreground"
                 )}>
-                  Équipements & Services
+                  Équipements et services
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {features.map((feature, index) => (
