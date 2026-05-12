@@ -152,6 +152,13 @@ export function BookingDateModal({
     }
   }
 
+  const resetDates = () => {
+    setError("")
+    setCheckIn("")
+    setCheckOut("")
+    setCalendarMonth(getTodayDate())
+  }
+
   if (!isOpen) return null
 
   return (
@@ -227,6 +234,20 @@ export function BookingDateModal({
               </div>
 
               <div className="border border-border/50 bg-background p-2">
+                <div className="flex items-center justify-between px-2 pt-1">
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                    Calendrier
+                  </span>
+                  {(checkIn || checkOut) && (
+                    <button
+                      type="button"
+                      onClick={resetDates}
+                      className="border border-border/70 px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:border-accent/60 hover:text-accent"
+                    >
+                      Reset
+                    </button>
+                  )}
+                </div>
                 <Calendar
                   mode="range"
                   min={1}
