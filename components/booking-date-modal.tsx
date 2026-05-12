@@ -2,8 +2,11 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { X, Calendar, Users, ShieldCheck, Sparkles, Gift, Star, ArrowRight } from "lucide-react"
+import type { DateRange } from "react-day-picker"
+import { fr } from "date-fns/locale"
+import { X, Calendar as CalendarIcon, Users, ShieldCheck, Sparkles, Gift, Star, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
 
 interface BookingDateModalProps {
@@ -12,6 +15,36 @@ interface BookingDateModalProps {
   defaultCheckIn?: string
   defaultCheckOut?: string
   defaultAdults?: number
+}
+
+const displayDate = new Intl.DateTimeFormat("fr-FR", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+})
+
+function parseIsoDate(value: string) {
+  const [year, month, day] = value.split("-").map(Number)
+  if (!year || !month || !day) return undefined
+  return new Date(year, month - 1, day)
+}
+
+function formatIsoDate(date: Date) {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, "0")
+  const day = String(date.getDate()).padStart(2, "0")
+  return `${year}-${month}-${day}`
+}
+
+function formatDisplayDate(value: string) {
+  const date = parseIsoDate(value)
+  return date ? displayDate.format(date) : value
+}
+
+function getTodayDate() {
+  const date = new Date()
+  date.setHours(0, 0, 0, 0)
+  return date
 }
 
 export function BookingDateModal({
@@ -26,15 +59,26 @@ export function BookingDateModal({
   const [checkOut, setCheckOut] = useState(defaultCheckOut)
   const [adults, setAdults] = useState(defaultAdults)
   const [error, setError] = useState("")
+  const todayDate = getTodayDate()
+  const [calendarMonth, setCalendarMonth] = useState(() => parseIsoDate(defaultCheckIn) || getTodayDate())
+  const selectedCheckIn = checkIn ? parseIsoDate(checkIn) : undefined
+  const selectedCheckOut = checkOut ? parseIsoDate(checkOut) : undefined
+
+  const selectedRange: DateRange | undefined = selectedCheckIn
+    ? { from: selectedCheckIn, to: selectedCheckOut }
+    : undefined
 
   // Calculate nights
-  const nights = checkIn && checkOut 
-    ? Math.ceil((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / 86400000)
+  const nights = selectedCheckIn && selectedCheckOut
+    ? Math.ceil((selectedCheckOut.getTime() - selectedCheckIn.getTime()) / 86400000)
     : 0
 
   // Update state when defaults change
   useEffect(() => {
-    if (defaultCheckIn) setCheckIn(defaultCheckIn)
+    if (defaultCheckIn) {
+      setCheckIn(defaultCheckIn)
+      setCalendarMonth(parseIsoDate(defaultCheckIn) || getTodayDate())
+    }
     if (defaultCheckOut) setCheckOut(defaultCheckOut)
     if (defaultAdults) setAdults(defaultAdults)
   }, [defaultCheckIn, defaultCheckOut, defaultAdults])
@@ -71,8 +115,13 @@ export function BookingDateModal({
       return
     }
 
-    const checkInDate = new Date(checkIn)
-    const checkOutDate = new Date(checkOut)
+    const checkInDate = parseIsoDate(checkIn)
+    const checkOutDate = parseIsoDate(checkOut)
+
+    if (!checkInDate || !checkOutDate) {
+      setError("Format de date invalide.")
+      return
+    }
 
     if (checkOutDate <= checkInDate) {
       setError("La date de départ doit être après la date d'arrivée.")
@@ -83,10 +132,25 @@ export function BookingDateModal({
     router.push(`/comparer?checkIn=${checkIn}&checkOut=${checkOut}&adults=${adults}`)
   }
 
-  const today = new Date().toISOString().split("T")[0]
-  const minCheckOut = checkIn
-    ? new Date(new Date(checkIn).getTime() + 86400000).toISOString().split("T")[0]
-    : today
+  const handleDateRangeChange = (range: DateRange | undefined) => {
+    setError("")
+
+    if (!range?.from) {
+      setCheckIn("")
+      setCheckOut("")
+      return
+    }
+
+    const nextCheckIn = formatIsoDate(range.from)
+    setCheckIn(nextCheckIn)
+    setCalendarMonth(range.from)
+
+    if (range.to) {
+      setCheckOut(formatIsoDate(range.to))
+    } else if (checkOut && parseIsoDate(checkOut)! <= range.from) {
+      setCheckOut("")
+    }
+  }
 
   if (!isOpen) return null
 
@@ -135,40 +199,53 @@ export function BookingDateModal({
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="p-6">
-            {/* Date inputs in elegant boxes */}
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              <label className="bg-secondary/50 border border-border/50 p-4 cursor-pointer hover:border-accent/50 transition-colors">
-                <span className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
-                  Arrivée
-                </span>
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-accent" />
-                  <input
-                    type="date"
-                    value={checkIn}
-                    onChange={(e) => setCheckIn(e.target.value)}
-                    min={today}
-                    className="flex-1 bg-transparent text-foreground text-sm focus:outline-none cursor-pointer"
-                    required
-                  />
+            {/* Date range calendar */}
+            <div className="mb-4 space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-secondary/50 border border-border/50 p-4">
+                  <span className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
+                    Arrivée
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <CalendarIcon className="h-4 w-4 text-accent" />
+                    <span className="text-sm text-foreground">
+                      {checkIn ? formatDisplayDate(checkIn) : "Choisir"}
+                    </span>
+                  </div>
                 </div>
-              </label>
-              <label className="bg-secondary/50 border border-border/50 p-4 cursor-pointer hover:border-accent/50 transition-colors">
-                <span className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
-                  Départ
-                </span>
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-accent" />
-                  <input
-                    type="date"
-                    value={checkOut}
-                    onChange={(e) => setCheckOut(e.target.value)}
-                    min={minCheckOut}
-                    className="flex-1 bg-transparent text-foreground text-sm focus:outline-none cursor-pointer"
-                    required
-                  />
+                <div className="bg-secondary/50 border border-border/50 p-4">
+                  <span className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
+                    Départ
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <CalendarIcon className="h-4 w-4 text-accent" />
+                    <span className="text-sm text-foreground">
+                      {checkOut ? formatDisplayDate(checkOut) : "Choisir"}
+                    </span>
+                  </div>
                 </div>
-              </label>
+              </div>
+
+              <div className="border border-border/50 bg-background p-2">
+                <Calendar
+                  mode="range"
+                  min={1}
+                  selected={selectedRange}
+                  month={calendarMonth}
+                  onMonthChange={setCalendarMonth}
+                  onSelect={handleDateRangeChange}
+                  disabled={{ before: todayDate }}
+                  locale={fr}
+                  className="mx-auto p-1 sm:p-3 [--cell-size:--spacing(9)] sm:[--cell-size:--spacing(10)]"
+                  classNames={{
+                    caption_label: "font-serif text-base text-foreground",
+                    day: "rounded-none",
+                  }}
+                />
+                <p className="px-2 pb-1 text-center text-[11px] text-muted-foreground">
+                  Sélectionnez l’arrivée puis le départ.
+                </p>
+              </div>
             </div>
 
             {/* Adults and Nights summary */}
