@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useBookingModal } from "@/components/booking-modal-provider"
+import { buildWhatsAppUrl } from "@/lib/whatsapp"
 import { 
   MapPin, 
   Phone, 
@@ -64,6 +65,7 @@ export default function ContactPage() {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             className="grayscale"
+            title="Carte d’accès au Riad Ayadina à Marrakech"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-transparent" />
           <div className="absolute inset-0 flex items-center justify-center">
@@ -86,7 +88,7 @@ export default function ContactPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto">
               <a 
-                href="https://wa.me/212663008344?text=Bonjour, je souhaiterais des informations sur le Riad Ayadina."
+                href={buildWhatsAppUrl("Bonjour, je souhaiterais des informations sur le Riad Ayadina.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between bg-[#25D366] text-white p-6 md:p-8 shadow-2xl hover:bg-[#22c55e] transition-all group"
@@ -185,10 +187,11 @@ export default function ContactPage() {
                   <form onSubmit={handleSubmit} className="bg-card p-8 shadow-lg">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
+                        <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-2">
                           Nom complet *
                         </label>
                         <Input
+                          id="contact-name"
                           type="text"
                           required
                           value={formData.name}
@@ -198,10 +201,11 @@ export default function ContactPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
+                        <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-2">
                           Email *
                         </label>
                         <Input
+                          id="contact-email"
                           type="email"
                           required
                           value={formData.email}
@@ -214,10 +218,11 @@ export default function ContactPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
+                        <label htmlFor="contact-phone" className="block text-sm font-medium text-foreground mb-2">
                           Téléphone
                         </label>
                         <Input
+                          id="contact-phone"
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -226,10 +231,11 @@ export default function ContactPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">
+                        <label htmlFor="contact-subject" className="block text-sm font-medium text-foreground mb-2">
                           Sujet *
                         </label>
                         <Input
+                          id="contact-subject"
                           type="text"
                           required
                           value={formData.subject}
@@ -241,10 +247,11 @@ export default function ContactPage() {
                     </div>
 
                     <div className="mb-6">
-                      <label className="block text-sm font-medium text-foreground mb-2">
+                      <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-2">
                         Message *
                       </label>
                       <Textarea
+                        id="contact-message"
                         required
                         rows={5}
                         value={formData.message}

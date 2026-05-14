@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import Image from "next/image"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -22,6 +22,9 @@ export function ImageGalleryModal({
   title,
 }: ImageGalleryModalProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     setCurrentIndex(initialIndex)
@@ -41,6 +44,22 @@ export function ImageGalleryModal({
       if (e.key === "Escape") onClose()
       if (e.key === "ArrowLeft") goToPrevious()
       if (e.key === "ArrowRight") goToNext()
+      if (e.key !== "Tab") return
+
+      const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+      )
+      if (!focusable?.length) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
     }
 
     document.addEventListener("keydown", handleKeyDown)
@@ -49,9 +68,12 @@ export function ImageGalleryModal({
 
   useEffect(() => {
     if (isOpen) {
+      previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
       document.body.style.overflow = "hidden"
+      window.setTimeout(() => closeButtonRef.current?.focus(), 0)
     } else {
       document.body.style.overflow = ""
+      previousFocusRef.current?.focus()
     }
     return () => {
       document.body.style.overflow = ""
@@ -61,11 +83,12 @@ export function ImageGalleryModal({
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center">
+    <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={title || "Galerie photo"} className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center">
       {/* Close button */}
       <Button
         variant="ghost"
         size="icon"
+        ref={closeButtonRef}
         onClick={onClose}
         className="absolute top-4 right-4 z-10 text-white hover:bg-white/10 h-12 w-12"
       >
@@ -122,6 +145,8 @@ export function ImageGalleryModal({
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
+            aria-label={`Afficher l’image ${index + 1} : ${image.alt}`}
+            aria-current={currentIndex === index ? "true" : undefined}
             className={cn(
               "relative w-16 h-16 flex-shrink-0 overflow-hidden transition-all duration-200",
               currentIndex === index

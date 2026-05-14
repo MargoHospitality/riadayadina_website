@@ -4,6 +4,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { BookingPopupButton } from "@/components/booking-popup-button"
+import { buildWhatsAppUrl } from "@/lib/whatsapp"
 import {
   Wine,
   UtensilsCrossed,
@@ -16,7 +17,6 @@ import {
   Cigarette
 } from "lucide-react"
 
-const WHATSAPP_NUMBER = "212663008344"
 const RESTAURANT_MENU_URL = "/docs/carte-menus-vins-cocktails-2025.pdf"
 
 export const metadata: Metadata = {
@@ -31,6 +31,17 @@ export const metadata: Metadata = {
     description:
       "Une table franco-marocaine au calme de la médina, avec terrasse, patios et bar autorisé.",
     url: "/restaurant",
+    siteName: "Riad Ayadina & Spa",
+    type: "website",
+    locale: "fr_FR",
+    images: [
+      {
+        url: "/images/ayadina-home/patio-jour-04.jpg",
+        width: 1200,
+        height: 800,
+        alt: "Patio principal du Riad Ayadina à Marrakech",
+      },
+    ],
   },
 }
 
@@ -48,6 +59,7 @@ export default function RestaurantPage() {
               fill
               className="object-cover"
               priority
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
           </div>
@@ -120,8 +132,8 @@ export default function RestaurantPage() {
                 </div>
 
                 <Button asChild className="rounded-none px-8 py-6">
-                  <a href={RESTAURANT_MENU_URL} target="_blank" rel="noopener noreferrer">
-                    Voir la carte
+                  <a href={RESTAURANT_MENU_URL} target="_blank" rel="noopener noreferrer" type="application/pdf">
+                    Voir la carte PDF, 3,7 Mo, nouvel onglet
                   </a>
                 </Button>
               </div>
@@ -223,8 +235,8 @@ export default function RestaurantPage() {
                   asChild
                   className="rounded-none px-8 py-6 bg-accent text-accent-foreground hover:bg-accent/90"
                 >
-                  <a href={RESTAURANT_MENU_URL} target="_blank" rel="noopener noreferrer">
-                    Voir la carte
+                  <a href={RESTAURANT_MENU_URL} target="_blank" rel="noopener noreferrer" type="application/pdf">
+                    Voir la carte PDF, 3,7 Mo, nouvel onglet
                   </a>
                 </Button>
               </div>
@@ -268,7 +280,7 @@ export default function RestaurantPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="rounded-none px-10 py-6">
                   <a
-                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=Bonjour, je souhaiterais réserver une table au restaurant.`}
+                    href={buildWhatsAppUrl("Bonjour, je souhaiterais réserver une table au restaurant.")}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

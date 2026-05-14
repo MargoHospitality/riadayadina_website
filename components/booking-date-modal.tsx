@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import type { DateRange } from "react-day-picker"
 import { fr } from "date-fns/locale"
@@ -70,6 +70,9 @@ export function BookingDateModal({
   const [error, setError] = useState("")
   const [isNavigating, setIsNavigating] = useState(false)
   const [navigatingFromPath, setNavigatingFromPath] = useState<string | null>(null)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
   const todayDate = getTodayDate()
   const [calendarMonth, setCalendarMonth] = useState(() => parseIsoDate(defaultCheckIn) || getTodayDate())
   const selectedCheckIn = checkIn ? parseIsoDate(checkIn) : undefined
@@ -84,24 +87,27 @@ export function BookingDateModal({
     ? Math.ceil((selectedCheckOut.getTime() - selectedCheckIn.getTime()) / 86400000)
     : 0
 
-  // Update state when defaults change
+  // Reset modal state from current defaults on each open to avoid stale dates.
   useEffect(() => {
-    if (defaultCheckIn) {
-      setCheckIn(defaultCheckIn)
-      setCalendarMonth(parseIsoDate(defaultCheckIn) || getTodayDate())
-    }
-    if (defaultCheckOut) setCheckOut(defaultCheckOut)
-    if (defaultAdults) setAdults(defaultAdults)
-  }, [defaultCheckIn, defaultCheckOut, defaultAdults])
+    if (!isOpen) return
+    setCheckIn(defaultCheckIn)
+    setCheckOut(defaultCheckOut)
+    setAdults(defaultAdults)
+    setCalendarMonth(parseIsoDate(defaultCheckIn) || getTodayDate())
+    setError("")
+  }, [isOpen, defaultCheckIn, defaultCheckOut, defaultAdults])
 
-  // Prevent body scroll when modal is open
+  // Prevent background interaction and restore focus when the modal closes.
   useEffect(() => {
     if (isOpen) {
+      previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
       setIsNavigating(false)
       setNavigatingFromPath(null)
       document.body.style.overflow = "hidden"
+      window.setTimeout(() => closeButtonRef.current?.focus(), 0)
     } else {
       document.body.style.overflow = ""
+      previousFocusRef.current?.focus()
     }
     return () => {
       document.body.style.overflow = ""
@@ -114,15 +120,31 @@ export function BookingDateModal({
     }
   }, [isNavigating, navigatingFromPath, pathname, onClose])
 
-  // Handle escape key
+  // Handle escape and keep keyboard focus inside the modal.
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose()
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose()
+      if (event.key !== "Tab") return
+
+      const focusable = modalRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      )
+      if (!focusable?.length) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
     }
     if (isOpen) {
-      window.addEventListener("keydown", handleEscape)
+      window.addEventListener("keydown", handleKeyDown)
     }
-    return () => window.removeEventListener("keydown", handleEscape)
+    return () => window.removeEventListener("keydown", handleKeyDown)
   }, [isOpen, onClose])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -229,6 +251,11 @@ export function BookingDateModal({
       {/* Modal */}
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 pointer-events-none">
         <div
+          ref={modalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="booking-modal-title"
+          aria-describedby={error ? "booking-modal-error" : undefined}
           className={cn(
             "bg-card w-full max-w-lg pointer-events-auto shadow-2xl overflow-hidden",
             "max-h-[90vh] overflow-y-auto",
@@ -240,6 +267,7 @@ export function BookingDateModal({
           <div className="bg-primary text-primary-foreground px-6 py-5 relative">
             {/* Close button */}
             <button
+              ref={closeButtonRef}
               onClick={onClose}
               className="absolute top-4 right-4 p-2 text-primary-foreground/60 hover:text-primary-foreground transition-colors"
               aria-label="Fermer"
@@ -249,7 +277,7 @@ export function BookingDateModal({
 
             {/* Title */}
             <div>
-              <h2 className="font-serif text-xl md:text-2xl">
+              <h2 id="booking-modal-title" className="font-serif text-xl md:text-2xl">
                 Réservez en direct
               </h2>
               <div className="flex items-center gap-1 mt-1">
@@ -329,12 +357,13 @@ export function BookingDateModal({
             {/* Adults and Nights summary */}
             <div className="grid grid-cols-2 gap-3 mb-3">
               <div className="bg-secondary/50 border border-border/50 p-4">
-                <label className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
+                <label htmlFor="booking-adults" className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
                   Voyageurs
                 </label>
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-accent" />
                   <select
+                    id="booking-adults"
                     value={adults}
                     onChange={(e) => setAdults(Number(e.target.value))}
                     className="flex-1 bg-transparent text-foreground text-sm focus:outline-none cursor-pointer appearance-none"
@@ -366,7 +395,7 @@ export function BookingDateModal({
 
             {/* Error message */}
             {error && (
-              <p className="text-sm text-red-600 bg-red-50 px-4 py-2 border border-red-200 mb-4">
+              <p id="booking-modal-error" aria-live="polite" className="text-sm text-red-600 bg-red-50 px-4 py-2 border border-red-200 mb-4">
                 {error}
               </p>
             )}

@@ -4,11 +4,31 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_CLOUDBEDS_SCRIPT_BUILD: "20260511-2311",
   },
-  typescript: {
-    ignoreBuildErrors: true,
+  async redirects() {
+    return [
+      { source: "/about-us", destination: "/le-riad", permanent: true },
+      { source: "/about-us/", destination: "/le-riad", permanent: true },
+      { source: "/rooms", destination: "/chambres-suites", permanent: true },
+      { source: "/rooms/", destination: "/chambres-suites", permanent: true },
+      { source: "/rooms/junior-suites", destination: "/chambres-suites", permanent: true },
+      { source: "/rooms/junior-suites/", destination: "/chambres-suites", permanent: true },
+      { source: "/rooms/superior-double-rooms", destination: "/chambres-suites", permanent: true },
+      { source: "/rooms/superior-double-rooms/", destination: "/chambres-suites", permanent: true },
+      { source: "/services", destination: "/le-riad", permanent: true },
+      { source: "/services/", destination: "/le-riad", permanent: true },
+      { source: "/events", destination: "/le-riad", permanent: true },
+      { source: "/events/", destination: "/le-riad", permanent: true },
+      { source: "/terms-and-conditions", destination: "/mentions-legales", permanent: true },
+      { source: "/terms-and-conditions/", destination: "/mentions-legales", permanent: true },
+    ]
   },
-  images: {
-    unoptimized: true,
+  async headers() {
+    return [
+      {
+        source: "/docs/:path*.pdf",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, follow" }],
+      },
+    ]
   },
 }
 

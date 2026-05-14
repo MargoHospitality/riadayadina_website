@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer"
 import { BookingWidget } from "@/components/booking-widget"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { useBookingModal } from "@/components/booking-modal-provider"
+import { buildWhatsAppUrl } from "@/lib/whatsapp"
 import { 
   Check, 
   Gift, 
@@ -22,8 +23,6 @@ import {
   CalendarCheck,
   CreditCard
 } from "lucide-react"
-
-const WHATSAPP_NUMBER = "212663008344"
 
 const offers = [
   {
@@ -248,7 +247,7 @@ export default function OffresPage() {
                 </Button>
                 <Button asChild variant="outline" className="rounded-none px-8 py-6">
                   <a
-                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=Bonjour, je souhaiterais comparer les offres directes du Riad Ayadina.`}
+                    href={buildWhatsAppUrl("Bonjour, je souhaiterais comparer les offres directes du Riad Ayadina.")}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ImageGalleryModal } from "@/components/image-gallery-modal"
@@ -108,7 +109,7 @@ export default function GaleriePage() {
   const [galleryIndex, setGalleryIndex] = useState(0)
   const { openBookingModal } = useBookingModal()
 
-  const filteredImages = selectedCategory 
+  const filteredImages = selectedCategory
     ? galleryCategories.find(cat => cat.id === selectedCategory)?.images || []
     : allImages
 
@@ -135,7 +136,7 @@ export default function GaleriePage() {
             />
             <div className="absolute inset-0 bg-black/50" />
           </div>
-          
+
           <div className="relative z-10 container mx-auto px-4 text-center">
             <AnimateOnScroll animation="fade-up">
               <p className="text-white/80 text-sm uppercase tracking-[0.3em] mb-4">
@@ -157,6 +158,7 @@ export default function GaleriePage() {
             <div className="flex items-center justify-center gap-2 md:gap-3 flex-wrap">
               <button
                 onClick={() => setSelectedCategory(null)}
+                aria-pressed={selectedCategory === null}
                 className={cn(
                   "px-4 py-2 text-sm transition-all duration-300",
                   selectedCategory === null
@@ -170,6 +172,7 @@ export default function GaleriePage() {
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
+                  aria-pressed={selectedCategory === category.id}
                   className={cn(
                     "px-4 py-2 text-sm transition-all duration-300 flex flex-col items-center",
                     selectedCategory === category.id
@@ -203,15 +206,15 @@ export default function GaleriePage() {
                     {galleryCategories.find(c => c.id === selectedCategory)?.description}
                   </p>
                 </div>
-                <a 
-                  href={galleryCategories.find(c => c.id === selectedCategory)?.cta.href}
+                <Link
+                  href={galleryCategories.find(c => c.id === selectedCategory)?.cta.href || "/"}
                   className="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground text-sm hover:bg-primary/90 transition-colors"
                 >
                   {galleryCategories.find(c => c.id === selectedCategory)?.cta.label}
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </section>
@@ -251,9 +254,9 @@ export default function GaleriePage() {
               // All images - masonry-style grid
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px] md:auto-rows-[250px]">
                 {allImages.map((image, index) => (
-                  <AnimateOnScroll 
-                    key={index} 
-                    animation="fade-up" 
+                  <AnimateOnScroll
+                    key={index}
+                    animation="fade-up"
                     delay={index * 30}
                     className={getGridSpan(index)}
                   >
@@ -296,10 +299,10 @@ export default function GaleriePage() {
                 Envie de voir le riad en vrai ?
               </h2>
               <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">
-                Les photos donnent le ton ; le calme du lieu se découvre sur place. 
+                Les photos donnent le ton ; le calme du lieu se découvre sur place.
                 Venez découvrir Ayadina par vous-même.
               </p>
-              <button 
+              <button
                 onClick={() => openBookingModal()}
                 className="inline-flex items-center justify-center px-8 py-4 bg-white text-primary font-medium hover:bg-white/90 transition-colors"
               >

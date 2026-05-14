@@ -32,6 +32,17 @@ export const metadata: Metadata = {
     description:
       "Trois patios, une piscine chauffée sur le toit, un accès voiture rare en médina et le calme d’une maison marocaine.",
     url: "/le-riad",
+    siteName: "Riad Ayadina & Spa",
+    type: "website",
+    locale: "fr_FR",
+    images: [
+      {
+        url: "/images/ayadina-home/patio-jour-04.jpg",
+        width: 1200,
+        height: 800,
+        alt: "Patio principal du Riad Ayadina à Marrakech",
+      },
+    ],
   },
 }
 

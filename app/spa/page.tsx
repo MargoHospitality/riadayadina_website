@@ -2,6 +2,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
+import { buildWhatsAppUrl } from "@/lib/whatsapp"
 import {
   Droplets,
   Sparkles,
@@ -11,7 +12,6 @@ import {
   Leaf
 } from "lucide-react"
 
-const WHATSAPP_NUMBER = "212663008344"
 const SPA_MENU_URL = "/docs/brochure-spa-2025.pdf"
 
 export const metadata = {
@@ -24,6 +24,17 @@ export const metadata = {
     title: "Spa Marrakech | Hammam & massages au Riad Ayadina",
     description: "Hammam traditionnel, massages, soins du visage et rituels marocains dans un spa de 250 m² au calme du riad.",
     url: "/spa",
+    siteName: "Riad Ayadina & Spa",
+    type: "website",
+    locale: "fr_FR",
+    images: [
+      {
+        url: "/images/ayadina-home/patio-jour-04.jpg",
+        width: 1200,
+        height: 800,
+        alt: "Patio principal du Riad Ayadina à Marrakech",
+      },
+    ],
   },
 }
 
@@ -328,8 +339,8 @@ export default function SpaPage() {
                   variant="outline"
                   className="rounded-none px-8 py-5"
                 >
-                  <a href={SPA_MENU_URL} target="_blank" rel="noopener noreferrer">
-                    Voir la carte des soins
+                  <a href={SPA_MENU_URL} target="_blank" rel="noopener noreferrer" type="application/pdf">
+                    Voir la carte des soins PDF, 2,7 Mo, nouvel onglet
                   </a>
                 </Button>
               </div>
@@ -338,7 +349,7 @@ export default function SpaPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button asChild className="rounded-none px-8 py-6 text-base">
                   <a
-                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=Bonjour, je souhaiterais réserver un soin au spa.`}
+                    href={buildWhatsAppUrl("Bonjour, je souhaiterais réserver un soin au spa.")}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

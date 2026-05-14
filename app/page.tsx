@@ -21,6 +21,17 @@ export const metadata: Metadata = {
     description:
       "Un riad boutique au calme de la médina, avec spa, piscine chauffée sur le toit, restaurant et bar.",
     url: "/",
+    siteName: "Riad Ayadina & Spa",
+    type: "website",
+    locale: "fr_FR",
+    images: [
+      {
+        url: "/images/ayadina-home/patio-jour-04.jpg",
+        width: 1200,
+        height: 800,
+        alt: "Patio principal du Riad Ayadina à Marrakech",
+      },
+    ],
   },
 }
 

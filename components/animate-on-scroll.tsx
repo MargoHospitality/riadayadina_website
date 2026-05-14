@@ -54,11 +54,11 @@ export function AnimateOnScroll({
       visible: "opacity-100",
     },
     "fade-left": {
-      initial: "opacity-0 translate-x-8",
+      initial: "opacity-0 translate-y-8 md:translate-y-0 md:translate-x-8",
       visible: "opacity-100 translate-x-0",
     },
     "fade-right": {
-      initial: "opacity-0 -translate-x-8",
+      initial: "opacity-0 translate-y-8 md:translate-y-0 md:-translate-x-8",
       visible: "opacity-100 translate-x-0",
     },
     "scale": {

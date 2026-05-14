@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
@@ -23,6 +23,7 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { openBookingModal } = useBookingModal()
+  const mobileNavigationRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +32,38 @@ export function Header() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMobileMenuOpen(false)
+      if (event.key !== "Tab") return
+
+      const focusable = mobileNavigationRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled])'
+      )
+      if (!focusable?.length) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.body.style.overflow = "hidden"
+    window.addEventListener("keydown", handleKeyDown)
+    window.setTimeout(() => mobileNavigationRef.current?.querySelector<HTMLElement>('a[href], button:not([disabled])')?.focus(), 0)
+    return () => {
+      document.body.style.overflow = ""
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [isMobileMenuOpen])
 
   return (
     <header
@@ -53,9 +86,9 @@ export function Header() {
               height={80}
               className={cn(
                 "w-auto transition-all duration-300",
-                isScrolled 
-                  ? "hidden" 
-                  : "block h-20 md:h-24 lg:h-28"
+                isScrolled
+                  ? "hidden"
+                  : "block h-20 md:h-24 lg:h-24 xl:h-28"
               )}
               priority
             />
@@ -67,16 +100,15 @@ export function Header() {
               height={80}
               className={cn(
                 "w-auto transition-all duration-300",
-                isScrolled 
-                  ? "block h-20 md:h-24 lg:h-28" 
+                isScrolled
+                  ? "block h-20 md:h-24 lg:h-24 xl:h-28"
                   : "hidden"
               )}
-              priority
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden xl:flex items-center gap-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -92,13 +124,13 @@ export function Header() {
           </nav>
 
           {/* CTA */}
-          <div className="hidden lg:flex items-center">
-            <Button 
+          <div className="hidden xl:flex items-center">
+            <Button
               onClick={() => openBookingModal()}
               className={cn(
                 "rounded-none px-6 py-5 text-sm tracking-wide transition-all duration-300",
-                isScrolled 
-                  ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                isScrolled
+                  ? "bg-primary text-primary-foreground hover:bg-primary/90"
                   : "bg-white text-foreground hover:bg-white/90"
               )}
             >
@@ -110,10 +142,12 @@ export function Header() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={cn(
-              "relative z-[62] lg:hidden p-2 transition-colors duration-300",
-              isScrolled ? "text-foreground" : "text-white"
+              "relative z-[62] xl:hidden p-2 transition-colors duration-300",
+              isMobileMenuOpen || isScrolled ? "text-foreground" : "text-white"
             )}
-            aria-label="Menu"
+            aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -122,8 +156,10 @@ export function Header() {
 
       {/* Mobile Menu */}
       <div
+        id="mobile-navigation"
+        ref={mobileNavigationRef}
         className={cn(
-          "lg:hidden fixed inset-0 top-0 z-[61] bg-background/98 pt-28 backdrop-blur-lg transition-all duration-300",
+          "xl:hidden fixed inset-0 top-0 z-[61] bg-background/98 pt-28 backdrop-blur-lg transition-all duration-300",
           isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         )}
       >
@@ -138,7 +174,7 @@ export function Header() {
               {item.name}
             </Link>
           ))}
-          <Button 
+          <Button
             onClick={() => {
               setIsMobileMenuOpen(false)
               openBookingModal()

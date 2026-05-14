@@ -13,6 +13,17 @@ export const metadata: Metadata = {
     description:
       "Patios, chambres, spa, piscine sur le toit, restaurant et terrasse : découvrez les lieux avant votre arrivée au Riad Ayadina.",
     url: "/galerie",
+    siteName: "Riad Ayadina & Spa",
+    type: "website",
+    locale: "fr_FR",
+    images: [
+      {
+        url: "/images/ayadina-home/patio-jour-04.jpg",
+        width: 1200,
+        height: 800,
+        alt: "Patio principal du Riad Ayadina à Marrakech",
+      },
+    ],
   },
 }
 

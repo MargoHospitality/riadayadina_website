@@ -12,6 +12,7 @@ export default function NotFound() {
           src="/images/patio-arbore.jpg"
           alt="Patio du Riad Ayadina"
           fill
+          sizes="100vw"
           className="object-cover opacity-20"
           priority
         />

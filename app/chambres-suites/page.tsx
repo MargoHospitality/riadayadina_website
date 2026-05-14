@@ -18,6 +18,17 @@ export const metadata: Metadata = {
     description:
       "Neuf chambres et suites dans un riad à Marrakech, entre artisanat marocain, confort actuel et petit-déjeuner inclus.",
     url: "/chambres-suites",
+    siteName: "Riad Ayadina & Spa",
+    type: "website",
+    locale: "fr_FR",
+    images: [
+      {
+        url: "/images/ayadina-home/patio-jour-04.jpg",
+        width: 1200,
+        height: 800,
+        alt: "Patio principal du Riad Ayadina à Marrakech",
+      },
+    ],
   },
 }
 

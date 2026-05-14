@@ -4,8 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { MapPin, Phone, Mail, Instagram, Facebook, MessageCircle, Car } from "lucide-react"
 import { useBookingModal } from "@/components/booking-modal-provider"
-
-const WHATSAPP_URL = "https://wa.me/212663008344"
+import { buildWhatsAppUrl } from "@/lib/whatsapp"
 
 const footerLinks = {
   decouvrir: [
@@ -84,7 +83,7 @@ export function Footer() {
             {/* Contact rapide - WhatsApp en premier */}
             <div className="space-y-3 mb-8">
               <a
-                href={WHATSAPP_URL}
+                href={buildWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-white hover:text-accent transition-colors group"
@@ -251,8 +250,14 @@ export function Footer() {
               </span>
             </div>
 
-            {/* Copyright */}
-            <div className="text-xs text-white/40">
+            {/* Legal links kept discreet while pages are finalized. */}
+            <div className="flex items-center gap-4 text-xs text-white/40">
+              <a href="#" className="hover:text-white/60 transition-colors">
+                Mentions légales
+              </a>
+              <a href="#" className="hover:text-white/60 transition-colors">
+                Confidentialité
+              </a>
               <span>© 2026 Riad Ayadina</span>
             </div>
           </div>

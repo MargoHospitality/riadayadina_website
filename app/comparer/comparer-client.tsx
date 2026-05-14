@@ -293,6 +293,7 @@ export function CompareClient() {
             alt=""
             fill
             className="object-cover"
+            sizes="100vw"
           />
         </div>
         <div className="relative container mx-auto px-4">
@@ -382,6 +383,7 @@ export function CompareClient() {
                           alt="Riad Ayadina"
                           fill
                           className="object-contain"
+                          sizes="64px"
                         />
                       </div>
                       <div>

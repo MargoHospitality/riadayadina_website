@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "Comparer les tarifs | Réservation directe Riad Ayadina",
   description:
     "Comparez les tarifs publics et l’offre officielle du Riad Ayadina pour vos dates, puis réservez en direct avec les avantages Ayadina.",
+  alternates: {
+    canonical: "/comparer",
+  },
   robots: {
     index: false,
     follow: true,
