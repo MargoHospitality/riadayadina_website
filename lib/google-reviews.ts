@@ -1,7 +1,7 @@
 import { defaultGoogleReviewSummary, type GuestReview, type ReviewsData } from "@/data/reviews"
 
 const GOOGLE_PLACE_DETAILS_ENDPOINT = "https://places.googleapis.com/v1/places"
-const REVIEWS_REVALIDATE_SECONDS = 60 * 60 * 12
+const REVIEWS_REVALIDATE_SECONDS = 60 * 60 * 24
 
 interface GoogleLocalizedText {
   text?: string
@@ -104,7 +104,9 @@ export async function getGoogleReviews(limit = 3): Promise<ReviewsData> {
       summary: {
         ...defaultGoogleReviewSummary,
         ratingLabel: formatRating(place.rating),
+        ratingValue: typeof place.rating === "number" ? place.rating : defaultGoogleReviewSummary.ratingValue,
         reviewCountLabel: formatReviewCount(place.userRatingCount),
+        reviewCount: place.userRatingCount,
         googleMapsUrl,
         isLive: true,
       },

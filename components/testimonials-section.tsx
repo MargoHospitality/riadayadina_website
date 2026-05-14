@@ -22,6 +22,7 @@ function StarRating({ rating, size = "h-4 w-4" }: { rating: number; size?: strin
 
 export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProps) {
   const { summary, reviews } = await getGoogleReviews(limit)
+  const ratingParts = summary.ratingValue.toLocaleString("fr-FR", { maximumFractionDigits: 1 }).split(",")
 
   return (
     <section className="py-20 md:py-32 bg-background">
@@ -31,16 +32,36 @@ export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProp
           <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">
             {summary.eyebrow}
           </p>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-6">
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-8">
             {summary.title}
           </h2>
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-3">
-            <StarRating rating={Number.parseFloat(summary.ratingLabel.replace(",", ".")) || 5} size="h-5 w-5" />
-            <span className="text-foreground font-medium">{summary.ratingLabel}</span>
-            <span className="text-muted-foreground">sur {summary.reviewCountLabel}</span>
-          </div>
+
+          <a
+            href={summary.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mx-auto mb-5 inline-flex items-center gap-5 border border-accent/25 bg-card px-6 py-5 text-left shadow-sm transition-all hover:border-accent/50 hover:shadow-md"
+            aria-label={`Voir les avis Google du Riad Ayadina, note moyenne ${summary.ratingLabel}`}
+          >
+            <span className="flex items-end font-serif text-5xl leading-none text-foreground">
+              {ratingParts[0]}
+              {ratingParts[1] && <span className="text-3xl text-accent">,{ratingParts[1]}</span>}
+              <span className="mb-1 ml-1 text-base font-sans text-muted-foreground">/5</span>
+            </span>
+            <span className="h-12 w-px bg-border" aria-hidden="true" />
+            <span>
+              <span className="mb-1 block text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                Note moyenne Google
+              </span>
+              <StarRating rating={summary.ratingValue} size="h-4 w-4" />
+              <span className="mt-1 block text-sm text-muted-foreground group-hover:text-foreground">
+                {summary.reviewCountLabel}
+              </span>
+            </span>
+          </a>
+
           <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground/80">
-            Source : {summary.sourcesLabel}
+            Source : {summary.sourcesLabel} · actualisation quotidienne
           </p>
         </div>
 
