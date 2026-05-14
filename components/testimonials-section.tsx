@@ -70,7 +70,7 @@ export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProp
             {reviews.map((review) => (
               <article
                 key={review.id}
-                className="bg-card border border-border p-8 hover:shadow-lg transition-shadow duration-300"
+                className="flex h-full flex-col bg-card border border-border p-8 hover:shadow-lg transition-shadow duration-300"
               >
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <StarRating rating={review.rating} />
@@ -84,13 +84,32 @@ export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProp
                   </a>
                 </div>
 
-                <blockquote className="text-foreground mb-6 leading-relaxed">
-                  &ldquo;{review.quote}&rdquo;
+                <blockquote className="relative mb-6 min-h-[9rem] flex-1 overflow-hidden text-foreground leading-relaxed">
+                  <span
+                    className="block"
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 6,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    &ldquo;{review.quote}&rdquo;
+                  </span>
                 </blockquote>
 
                 <div className="border-t border-border pt-4">
                   <p className="font-medium text-foreground">{review.authorLabel}</p>
                   <p className="text-sm text-muted-foreground">{review.dateLabel}</p>
+                  <a
+                    href={review.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex text-sm text-primary underline-offset-4 hover:underline"
+                    aria-label={`Lire l’avis complet de ${review.authorLabel} sur Google`}
+                  >
+                    Lire l’avis complet sur Google
+                  </a>
                 </div>
               </article>
             ))}
