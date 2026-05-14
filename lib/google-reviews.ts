@@ -43,7 +43,8 @@ function formatReviewCount(count?: number) {
 
 function normalizeReview(review: GoogleReview): GuestReview | null {
   const quote = review.text?.text || review.originalText?.text
-  if (!quote) return null
+  const rating = typeof review.rating === "number" ? review.rating : null
+  if (!quote || rating === null || rating < 4) return null
 
   return {
     id: review.name || `${review.authorAttribution?.displayName ?? "google"}-${review.publishTime ?? quote}`,
@@ -51,7 +52,7 @@ function normalizeReview(review: GoogleReview): GuestReview | null {
     authorLabel: review.authorAttribution?.displayName || "Hôte Google",
     dateLabel: review.relativePublishTimeDescription || "Avis Google",
     quote,
-    rating: typeof review.rating === "number" ? review.rating : 5,
+    rating,
   }
 }
 
