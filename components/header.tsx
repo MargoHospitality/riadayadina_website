@@ -35,7 +35,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-[60] transition-all duration-500",
         isScrolled
           ? "bg-background/95 backdrop-blur-md shadow-sm py-2"
           : "bg-gradient-to-b from-black/30 to-transparent py-4"
@@ -110,7 +110,7 @@ export function Header() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={cn(
-              "lg:hidden p-2 transition-colors duration-300",
+              "relative z-[62] lg:hidden p-2 transition-colors duration-300",
               isScrolled ? "text-foreground" : "text-white"
             )}
             aria-label="Menu"
@@ -123,7 +123,7 @@ export function Header() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "lg:hidden fixed inset-0 top-[72px] bg-background/98 backdrop-blur-lg transition-all duration-300",
+          "lg:hidden fixed inset-0 top-0 z-[61] bg-background/98 pt-28 backdrop-blur-lg transition-all duration-300",
           isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         )}
       >

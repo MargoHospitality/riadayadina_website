@@ -198,7 +198,7 @@ export function BookingDateModal({
 
   if (isNavigating) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-background px-6">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background px-6">
         <div className="max-w-xl text-center">
           <p className="mb-4 text-accent text-sm uppercase tracking-[0.25em]">Réservation directe</p>
           <h1 className="font-serif text-2xl md:text-3xl text-foreground mb-4">
@@ -222,12 +222,12 @@ export function BookingDateModal({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 transition-opacity"
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 pointer-events-none">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 pointer-events-none">
         <div
           className={cn(
             "bg-card w-full max-w-lg pointer-events-auto shadow-2xl overflow-hidden",

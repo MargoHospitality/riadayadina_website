@@ -287,7 +287,7 @@ export function CompareClient() {
 
       {/* Hero Banner */}
       <section className="relative pt-28 md:pt-32 pb-8 bg-primary overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+        <div className="pointer-events-none absolute inset-0 opacity-10">
           <Image
             src="/images/ayadina/patio-fontaine-nuit-01.jpg"
             alt=""
@@ -550,7 +550,12 @@ function OTACard({ offer, nights, isMain = false }: { offer: RateOffer; nights: 
       <div className="flex items-center justify-between mb-2">
         <p className="text-sm font-medium text-muted-foreground">{offer.title}</p>
         {isMain && (
-          <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5">Offre observée</span>
+          <div className="flex flex-wrap justify-end gap-1.5">
+            <span className="border border-red-200/70 bg-red-50/80 px-2 py-0.5 text-[11px] font-medium text-red-700">
+              Non remboursable
+            </span>
+            <span className="bg-muted px-2 py-0.5 text-xs text-muted-foreground">Offre observée</span>
+          </div>
         )}
       </div>
       <div className="flex items-end justify-between">

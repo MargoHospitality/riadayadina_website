@@ -83,9 +83,9 @@ export function TestimonialsSection() {
         <div className="text-center mt-12">
           <p className="text-sm text-muted-foreground">
             Retrouvez tous nos avis sur{" "}
-            <a href="#" className="text-primary underline hover:no-underline">TripAdvisor</a>
+            <a href="https://www.tripadvisor.com/Hotel_Review-g293734-d585332-Reviews-Riad_Ayadina_et_SPa-Marrakech_Marrakech_Safi.html" target="_blank" rel="noopener noreferrer" className="text-primary underline hover:no-underline">TripAdvisor</a>
             {" "}et{" "}
-            <a href="#" className="text-primary underline hover:no-underline">Google</a>
+            <a href="https://g.page/riad-ayadina-spa" target="_blank" rel="noopener noreferrer" className="text-primary underline hover:no-underline">Google</a>
           </p>
         </div>
       </div>

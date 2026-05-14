@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
+import { BookingPopupButton } from "@/components/booking-popup-button"
 import {
   Wine,
   UtensilsCrossed,
@@ -15,6 +15,9 @@ import {
   GlassWater,
   Cigarette
 } from "lucide-react"
+
+const WHATSAPP_NUMBER = "212663008344"
+const RESTAURANT_MENU_URL = "/docs/carte-menus-vins-cocktails-2025.pdf"
 
 export const metadata: Metadata = {
   title: "Restaurant & bar à Marrakech | Riad Ayadina",
@@ -117,8 +120,8 @@ export default function RestaurantPage() {
                 </div>
 
                 <Button asChild className="rounded-none px-8 py-6">
-                  <a href="https://wa.me/212524383881?text=Bonjour, je souhaiterais recevoir la carte du restaurant du Riad Ayadina." target="_blank" rel="noopener noreferrer">
-                    Demander la carte
+                  <a href={RESTAURANT_MENU_URL} target="_blank" rel="noopener noreferrer">
+                    Voir la carte
                   </a>
                 </Button>
               </div>
@@ -220,8 +223,8 @@ export default function RestaurantPage() {
                   asChild
                   className="rounded-none px-8 py-6 bg-accent text-accent-foreground hover:bg-accent/90"
                 >
-                  <a href="https://wa.me/212524383881?text=Bonjour, je souhaiterais recevoir la carte des vins et cocktails du Riad Ayadina." target="_blank" rel="noopener noreferrer">
-                    Demander la carte des vins
+                  <a href={RESTAURANT_MENU_URL} target="_blank" rel="noopener noreferrer">
+                    Voir la carte
                   </a>
                 </Button>
               </div>
@@ -265,23 +268,20 @@ export default function RestaurantPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="rounded-none px-10 py-6">
                   <a
-                    href="https://wa.me/212524383881?text=Bonjour, je souhaiterais réserver une table au restaurant."
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=Bonjour, je souhaiterais réserver une table au restaurant.`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     Réserver une table
                   </a>
                 </Button>
-                <Button
-                  asChild
+                <BookingPopupButton
                   size="lg"
                   variant="outline"
                   className="rounded-none px-10 py-6"
                 >
-                  <Link href="/#booking">
-                    Réserver en direct
-                  </Link>
-                </Button>
+                  Réserver en direct
+                </BookingPopupButton>
               </div>
 
               <p className="text-xs text-muted-foreground mt-6">

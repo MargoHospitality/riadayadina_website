@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.riadayadinamarrakech.com'),
+  metadataBase: new URL('https://www.riadayadinamarrakech.net'),
   title: {
     default: 'Riad Ayadina & Spa | Riad boutique à Marrakech',
     template: '%s | Riad Ayadina & Spa',

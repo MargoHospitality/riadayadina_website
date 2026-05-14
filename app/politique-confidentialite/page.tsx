@@ -52,7 +52,7 @@ export default function PolitiqueConfidentialitePage() {
               <section>
                 <h2 className="mb-3 font-serif text-2xl text-foreground">Contact</h2>
                 <p>
-                  Pour toute demande concernant vos données personnelles, contactez-nous à contact@riadayadina.com
+                  Pour toute demande concernant vos données personnelles, contactez-nous à booking@riadayadinamarrakech.net
                   ou par téléphone au +212 524 38 38 81.
                 </p>
               </section>

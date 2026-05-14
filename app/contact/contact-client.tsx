@@ -21,9 +21,11 @@ import {
   Plane
 } from "lucide-react"
 
+const CONTACT_EMAIL = "booking@riadayadinamarrakech.net"
+
 export default function ContactPage() {
   const { openBookingModal } = useBookingModal()
-  const [formState, setFormState] = useState<"idle" | "sending" | "sent">("idle")
+  const [formState, setFormState] = useState<"idle" | "sent">("idle")
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -34,11 +36,17 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setFormState("sending")
-    // Simulate sending
-    setTimeout(() => {
-      setFormState("sent")
-    }, 1500)
+    const subject = formData.subject.trim() || "Demande de contact - Riad Ayadina"
+    const body = [
+      `Nom : ${formData.name}`,
+      `Email : ${formData.email}`,
+      formData.phone ? `Téléphone : ${formData.phone}` : undefined,
+      "",
+      formData.message,
+    ].filter(Boolean).join("\n")
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setFormState("sent")
   }
 
   return (
@@ -78,7 +86,7 @@ export default function ContactPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto">
               <a 
-                href="https://wa.me/212524383881?text=Bonjour, je souhaiterais des informations sur le Riad Ayadina."
+                href="https://wa.me/212663008344?text=Bonjour, je souhaiterais des informations sur le Riad Ayadina."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between bg-[#25D366] text-white p-6 md:p-8 shadow-2xl hover:bg-[#22c55e] transition-all group"
@@ -118,12 +126,12 @@ export default function ContactPage() {
 
               {/* Email */}
               <a 
-                href="mailto:contact@riadayadina.com"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="bg-card p-6 border border-border/50 hover:border-accent/30 transition-all text-center group"
               >
                 <Mail className="h-6 w-6 text-primary mx-auto mb-3" />
                 <h3 className="font-medium text-foreground mb-1">Email</h3>
-                <p className="text-primary text-sm">contact@riadayadina.com</p>
+                <p className="text-primary text-sm">{CONTACT_EMAIL}</p>
               </a>
 
               {/* Hours */}
@@ -157,10 +165,10 @@ export default function ContactPage() {
                       <CheckCircle className="h-10 w-10 text-green-600" />
                     </div>
                     <h3 className="font-serif text-2xl text-foreground mb-3">
-                      Message envoyé
+                      Email préparé
                     </h3>
                     <p className="text-muted-foreground mb-6">
-                      Merci pour votre message. Notre équipe vous répondra dans les plus brefs délais.
+                      Votre email est prêt à être envoyé depuis votre messagerie. Si elle ne s&apos;est pas ouverte, écrivez-nous directement à {CONTACT_EMAIL}.
                     </p>
                     <Button 
                       variant="outline" 
@@ -249,16 +257,9 @@ export default function ContactPage() {
                     <Button 
                       type="submit" 
                       className="w-full rounded-none py-6 text-base"
-                      disabled={formState === "sending"}
                     >
-                      {formState === "sending" ? (
-                        "Envoi en cours..."
-                      ) : (
-                        <>
-                          <Send className="h-4 w-4 mr-2" />
-                          Envoyer le message
-                        </>
-                      )}
+                      <Send className="h-4 w-4 mr-2" />
+                      Préparer l&apos;email
                     </Button>
                   </form>
                 )}

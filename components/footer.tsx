@@ -5,6 +5,8 @@ import Image from "next/image"
 import { MapPin, Phone, Mail, Instagram, Facebook, MessageCircle, Car } from "lucide-react"
 import { useBookingModal } from "@/components/booking-modal-provider"
 
+const WHATSAPP_URL = "https://wa.me/212663008344"
+
 const footerLinks = {
   decouvrir: [
     { name: "Le Riad", href: "/le-riad" },
@@ -82,7 +84,7 @@ export function Footer() {
             {/* Contact rapide - WhatsApp en premier */}
             <div className="space-y-3 mb-8">
               <a
-                href="https://wa.me/212524383881"
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-white hover:text-accent transition-colors group"
@@ -107,13 +109,13 @@ export function Footer() {
               </a>
 
               <a
-                href="mailto:contact@riadayadina.com"
+                href="mailto:booking@riadayadinamarrakech.net"
                 className="flex items-center gap-3 text-white/80 hover:text-white transition-colors"
               >
                 <div className="w-10 h-10 bg-white/5 flex items-center justify-center">
                   <Mail className="h-5 w-5" />
                 </div>
-                <span className="text-sm">contact@riadayadina.com</span>
+                <span className="text-sm">booking@riadayadinamarrakech.net</span>
               </a>
             </div>
 
@@ -206,7 +208,7 @@ export function Footer() {
 
             <div className="space-y-4">
               <a
-                href="https://maps.google.com/?q=35+Zaouia+El+Abassia+Marrakech"
+                href="https://g.page/riad-ayadina-spa"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-3 text-white/70 hover:text-white transition-colors group"
@@ -249,15 +251,9 @@ export function Footer() {
               </span>
             </div>
 
-            {/* Legal */}
-            <div className="flex items-center gap-6 text-xs text-white/40">
-              <Link href="/mentions-legales" className="hover:text-white/60 transition-colors">
-                Mentions légales
-              </Link>
-              <Link href="/politique-confidentialite" className="hover:text-white/60 transition-colors">
-                Confidentialité
-              </Link>
-              <span>© 2025 Riad Ayadina</span>
+            {/* Copyright */}
+            <div className="text-xs text-white/40">
+              <span>© 2026 Riad Ayadina</span>
             </div>
           </div>
         </div>

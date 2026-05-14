@@ -1,5 +1,4 @@
 import Image from "next/image"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
@@ -12,6 +11,9 @@ import {
   Users,
   Leaf
 } from "lucide-react"
+
+const WHATSAPP_NUMBER = "212663008344"
+const SPA_MENU_URL = "/docs/brochure-spa-2025.pdf"
 
 export const metadata = {
   title: "Spa Marrakech | Hammam & massages au Riad Ayadina",
@@ -242,8 +244,8 @@ export default function SpaPage() {
               {/* Image */}
               <div className="aspect-[4/3] relative order-2 lg:order-1">
                 <Image
-                  src="/images/ayadina/gallery-sallemassages-01.jpg"
-                  alt="Salle de massage du Spa Ayadina"
+                  src="/images/ayadina/spa-soins-complementaires.jpg"
+                  alt="Salle de soins complémentaires du Spa Ayadina"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -327,8 +329,8 @@ export default function SpaPage() {
                   variant="outline"
                   className="rounded-none px-8 py-5"
                 >
-                  <a href="https://wa.me/212524383881?text=Bonjour, je souhaiterais recevoir la carte des soins du spa Ayadina." target="_blank" rel="noopener noreferrer">
-                    Demander la carte des soins
+                  <a href={SPA_MENU_URL} target="_blank" rel="noopener noreferrer">
+                    Voir la carte des soins
                   </a>
                 </Button>
               </div>
@@ -337,7 +339,7 @@ export default function SpaPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button asChild className="rounded-none px-8 py-6 text-base">
                   <a
-                    href="https://wa.me/212524383881?text=Bonjour, je souhaiterais réserver un soin au spa."
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=Bonjour, je souhaiterais réserver un soin au spa.`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -349,9 +351,13 @@ export default function SpaPage() {
                   variant="outline"
                   className="rounded-none px-8 py-6 text-base border-primary/20"
                 >
-                  <a href="tel:+212524383881">
+                  <a
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=Bonjour, je souhaiterais échanger avec le spa Ayadina.`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Phone className="h-4 w-4 mr-2" />
-                    Nous appeler
+                    WhatsApp
                   </a>
                 </Button>
               </div>

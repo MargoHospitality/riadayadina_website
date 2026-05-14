@@ -30,7 +30,7 @@ export default function MentionsLegalesPage() {
                 <p>Site officiel du Riad Ayadina & Spa.</p>
                 <p>35 Zaouia El Abassia, Bab El Khemis, Médina, Marrakech 40000, Maroc.</p>
                 <p>Téléphone : +212 524 38 38 81</p>
-                <p>Email : contact@riadayadina.com</p>
+                <p>Email : booking@riadayadinamarrakech.net</p>
               </section>
 
               <section>

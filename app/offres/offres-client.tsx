@@ -23,6 +23,8 @@ import {
   CreditCard
 } from "lucide-react"
 
+const WHATSAPP_NUMBER = "212663008344"
+
 const offers = [
   {
     nights: 2,
@@ -245,8 +247,12 @@ export default function OffresPage() {
                   Vérifier les disponibilités
                 </Button>
                 <Button asChild variant="outline" className="rounded-none px-8 py-6">
-                  <a href="tel:+212524383881">
-                    Appeler : +212 524 38 38 81
+                  <a
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=Bonjour, je souhaiterais comparer les offres directes du Riad Ayadina.`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Écrire sur WhatsApp
                   </a>
                 </Button>
               </div>

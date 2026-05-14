@@ -297,7 +297,7 @@ export default function LeRiadPage() {
               <p className="text-primary-foreground/80 text-lg mb-8">
                 Mariages, anniversaires, réunions d&apos;entreprise ou retrouvailles entre amis...
                 Ayadina se privatise entièrement pour accueillir vos moments les plus précieux.
-                Jusqu&apos;à 18 convives hébergés et une configuration adaptée à votre réception.
+                Jusqu&apos;à 21 convives hébergés et une configuration adaptée à votre réception.
               </p>
 
               <div className="grid sm:grid-cols-3 gap-6 mb-10">
@@ -309,7 +309,7 @@ export default function LeRiadPage() {
                 <div className="bg-primary-foreground/10 p-6">
                   <Users className="h-6 w-6 mx-auto mb-3" />
                   <p className="font-medium">Capacité hébergement</p>
-                  <p className="text-sm text-primary-foreground/70">18 personnes</p>
+                  <p className="text-sm text-primary-foreground/70">21 personnes</p>
                 </div>
                 <div className="bg-primary-foreground/10 p-6">
                   <Utensils className="h-6 w-6 mx-auto mb-3" />
