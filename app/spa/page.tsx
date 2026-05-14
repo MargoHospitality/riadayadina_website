@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import {
-  Phone,
   Droplets,
   Sparkles,
   Heart,
@@ -344,20 +343,6 @@ export default function SpaPage() {
                     rel="noopener noreferrer"
                   >
                     Réserver un soin
-                  </a>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="rounded-none px-8 py-6 text-base border-primary/20"
-                >
-                  <a
-                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=Bonjour, je souhaiterais échanger avec le spa Ayadina.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Phone className="h-4 w-4 mr-2" />
-                    WhatsApp
                   </a>
                 </Button>
               </div>
