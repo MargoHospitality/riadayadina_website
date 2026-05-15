@@ -1,7 +1,9 @@
 import Script from "next/script"
 
+const DEFAULT_MEASUREMENT_ID = "G-DEMTJEFBPP"
+
 export function GoogleAnalytics() {
-  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || DEFAULT_MEASUREMENT_ID
 
   if (!measurementId) return null
 
