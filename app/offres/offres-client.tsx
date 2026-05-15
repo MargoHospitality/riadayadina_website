@@ -38,14 +38,14 @@ const copy = {
     offers: [
       {
         nights: 2,
-        title: "Séjour Patio",
+        title: "Escapade",
         subtitle: "À partir de 2 nuitées",
-        description: "Les attentions directes pour profiter d'Ayadina dès les premières nuits",
+        description: "Les attentions directes pour une escapade Ayadina dès 2 nuits",
         benefits: [
           { icon: BadgePercent, text: "Tarif direct Ayadina", highlight: true },
           { icon: CalendarCheck, text: "Annulation flexible", highlight: true },
           { icon: CreditCard, text: "Pas de prépaiement", highlight: true },
-          { icon: Sparkles, text: "Surclassement offert (selon disponibilité)" },
+          { icon: Sparkles, text: "Surclassement et arrivée anticipée selon disponibilité" },
           { icon: Car, text: "Transfert aéroport aller" },
           { icon: Gift, text: "-10% sur les soins au Spa" },
           { icon: Wine, text: "Cocktail de bienvenue" },
@@ -54,15 +54,15 @@ const copy = {
       },
       {
         nights: 3,
-        title: "Séjour Ayadina",
+        title: "Immersion",
         subtitle: "À partir de 3 nuitées",
-        description: "Le séjour le plus complet, avec transfert aller-retour inclus",
+        description: "L’expérience directe la plus complète, avec transfert aller-retour inclus",
         featured: true,
         benefits: [
           { icon: BadgePercent, text: "Tarif direct Ayadina", highlight: true },
           { icon: CalendarCheck, text: "Annulation flexible", highlight: true },
           { icon: CreditCard, text: "Pas de prépaiement", highlight: true },
-          { icon: Sparkles, text: "Surclassement offert (selon disponibilité)" },
+          { icon: Sparkles, text: "Surclassement et arrivée anticipée selon disponibilité" },
           { icon: Car, text: "Transfert aéroport aller-retour" },
           { icon: Gift, text: "-10% sur les soins au Spa" },
           { icon: Wine, text: "Cocktail de bienvenue" },
@@ -104,7 +104,7 @@ const copy = {
           { icon: BadgePercent, text: "Official Ayadina direct rate", highlight: true },
           { icon: CalendarCheck, text: "Flexible cancellation", highlight: true },
           { icon: CreditCard, text: "No prepayment", highlight: true },
-          { icon: Sparkles, text: "Complimentary upgrade (subject to availability)" },
+          { icon: Sparkles, text: "Upgrade and early check-in subject to availability" },
           { icon: Car, text: "One-way airport transfer" },
           { icon: Gift, text: "10% off spa treatments" },
           { icon: Wine, text: "Welcome cocktail" },
@@ -121,7 +121,7 @@ const copy = {
           { icon: BadgePercent, text: "Official Ayadina direct rate", highlight: true },
           { icon: CalendarCheck, text: "Flexible cancellation", highlight: true },
           { icon: CreditCard, text: "No prepayment", highlight: true },
-          { icon: Sparkles, text: "Complimentary upgrade (subject to availability)" },
+          { icon: Sparkles, text: "Upgrade and early check-in subject to availability" },
           { icon: Car, text: "Return airport transfer" },
           { icon: Gift, text: "10% off spa treatments" },
           { icon: Wine, text: "Welcome cocktail" },
@@ -200,7 +200,7 @@ export default function OffresPage({ locale = "fr" }: { locale?: Locale }) {
                           )
                         })}
                       </div>
-                      <Button onClick={() => openBookingModal()} className={`w-full rounded-none py-5 ${featured ? "bg-white text-primary hover:bg-white/90" : "border-foreground/15 hover:bg-foreground/5 hover:border-accent/40"}`} variant={featured ? "default" : "outline"}>
+                      <Button type="button" onClick={() => openBookingModal()} className={`w-full rounded-none py-5 ${featured ? "bg-white text-primary hover:bg-white/90" : "border-foreground/15 hover:bg-foreground/5 hover:border-accent/40"}`} variant={featured ? "default" : "outline"}>
                         {t.bookCta}
                       </Button>
                     </div>
@@ -218,7 +218,7 @@ export default function OffresPage({ locale = "fr" }: { locale?: Locale }) {
               <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">{t.compareTitle}</h2>
               <p className="text-muted-foreground mb-8">{t.compareText}</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button onClick={() => openBookingModal()} className="rounded-none px-8 py-6">{t.availability}</Button>
+                <Button type="button" onClick={() => openBookingModal()} className="rounded-none px-8 py-6">{t.availability}</Button>
                 <Button asChild variant="outline" className="rounded-none px-8 py-6">
                   <a href={buildWhatsAppUrl(t.whatsappMessage)} target="_blank" rel="noopener noreferrer">{t.whatsapp}</a>
                 </Button>

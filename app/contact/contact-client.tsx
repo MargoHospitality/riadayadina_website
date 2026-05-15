@@ -17,7 +17,6 @@ const CONTACT_EMAIL = "booking@riadayadinamarrakech.net"
 const copy = {
   fr: {
     mapTitle: "Carte d’accès au Riad Ayadina à Marrakech",
-    mapButton: "Afficher la carte interactive",
     eyebrow: "Nous contacter",
     title: "Contact et accès",
     subtitle: "Notre équipe vous répond pour une réservation, un transfert ou une demande particulière",
@@ -56,7 +55,6 @@ const copy = {
   },
   en: {
     mapTitle: "Access map for Riad Ayadina in Marrakech",
-    mapButton: "Show interactive map",
     eyebrow: "Contact us",
     title: "Contact and access",
     subtitle: "Our team will reply for bookings, transfers, restaurant tables, spa treatments or special requests",
@@ -98,7 +96,6 @@ const copy = {
 export default function ContactPage({ locale = "fr" }: { locale?: Locale }) {
   const { openBookingModal } = useBookingModal()
   const [formState, setFormState] = useState<"idle" | "sent">("idle")
-  const [mapLoaded, setMapLoaded] = useState(false)
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", subject: "", message: "" })
   const t = copy[locale]
 
@@ -123,22 +120,8 @@ export default function ContactPage({ locale = "fr" }: { locale?: Locale }) {
     <>
       <Header locale={locale} />
       <main>
-        <section className="relative h-[50vh] min-h-[400px] overflow-hidden bg-primary">
-          {mapLoaded ? (
-            <iframe src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d850!2d-7.9910599518011445!3d31.643761241168207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdafee43a9d5b5e7%3A0xriadayadina!2sRiad%20Ayadina%20%26%20Spa!5e0!3m2!1s${locale}!2sma!4v1700000000000!5m2!1s${locale}!2sma`} width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="grayscale" title={t.mapTitle} />
-          ) : (
-            <button
-              type="button"
-              onClick={() => setMapLoaded(true)}
-              className="absolute inset-0 flex w-full items-center justify-center bg-[radial-gradient(circle_at_50%_20%,rgba(255,255,255,0.18),transparent_24%),linear-gradient(135deg,rgba(47,38,34,0.95),rgba(122,91,66,0.82))] text-white"
-              aria-label={t.mapButton}
-            >
-              <span className="mt-56 inline-flex items-center gap-2 border border-white/30 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.22em] backdrop-blur transition-colors hover:bg-white/20">
-                <MapPin className="h-4 w-4" />
-                {t.mapButton}
-              </span>
-            </button>
-          )}
+        <section className="relative h-[50vh] min-h-[400px]">
+          <iframe src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d850!2d-7.9910599518011445!3d31.643761241168207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdafee43a9d5b5e7%3A0xriadayadina!2sRiad%20Ayadina%20%26%20Spa!5e0!3m2!1s${locale}!2sma!4v1700000000000!5m2!1s${locale}!2sma`} width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="grayscale" title={t.mapTitle} />
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/60 via-black/30 to-transparent" />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white px-4">

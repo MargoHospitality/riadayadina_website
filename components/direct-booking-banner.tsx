@@ -127,6 +127,7 @@ export function DirectBookingBanner({ locale = "fr" }: { locale?: Locale }) {
                       ))}
                     </div>
                     <Button
+                      type="button"
                       onClick={() => openBookingModal()}
                       variant={featured ? "default" : "outline"}
                       className={featured ? "w-full rounded-none py-5 bg-white text-primary hover:bg-white/90 transition-all" : "w-full rounded-none py-5 border-foreground/20 hover:bg-foreground/5 hover:border-accent/50 transition-all"}
