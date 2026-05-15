@@ -82,19 +82,21 @@ export default function ChambresEtSuitesPage() {
     <>
       <Header locale="fr" />
       <main>
-        <RoomsHero />
+        <RoomsHero locale="fr" />
         
         <RoomCategory 
           {...chambresDoubles} 
           variant="light"
+          locale="fr"
         />
         
         <RoomCategory 
           {...suitesJunior} 
           variant="dark"
+          locale="fr"
         />
         
-        <BookingWidget />
+        <BookingWidget locale="fr" />
         <TestimonialsSection locale="fr" />
       </main>
       <Footer locale="fr" />

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { ImageGalleryModal } from "@/components/image-gallery-modal"
 import { useBookingModal } from "@/components/booking-modal-provider"
 import { cn } from "@/lib/utils"
+import type { Locale } from "@/lib/i18n/routing"
 
 interface RoomCategoryProps {
   title: string
@@ -18,6 +19,7 @@ interface RoomCategoryProps {
   features: string[]
   images: { src: string; alt: string }[]
   variant?: "light" | "dark"
+  locale?: Locale
 }
 
 export function RoomCategory({
@@ -30,11 +32,15 @@ export function RoomCategory({
   features,
   images,
   variant = "light",
+  locale = "fr",
 }: RoomCategoryProps) {
   const [galleryOpen, setGalleryOpen] = useState(false)
   const { openBookingModal } = useBookingModal()
 
   const isDark = variant === "dark"
+  const labels = locale === "en"
+    ? { rooms: roomCount === 1 ? "room" : "rooms", amenities: "Amenities and services", book: "Book direct", gallery: `View the ${title} gallery`, photos: "photos" }
+    : { rooms: "chambres", amenities: "Équipements et services", book: "Réserver en direct", gallery: `Voir la galerie des ${title}`, photos: "photos" }
 
   return (
     <>
@@ -53,7 +59,7 @@ export function RoomCategory({
                 "inline-flex items-center gap-2 px-3 py-1.5 text-xs uppercase tracking-wider mb-6",
                 isDark ? "bg-accent/20 text-accent" : "bg-primary/10 text-primary"
               )}>
-                <span>{roomCount} chambres</span>
+                <span>{roomCount} {labels.rooms}</span>
                 <span className="opacity-50">•</span>
                 <span>{surfaceRange}</span>
               </div>
@@ -95,7 +101,7 @@ export function RoomCategory({
                   "text-xs uppercase tracking-[0.2em] mb-4",
                   isDark ? "text-primary-foreground/50" : "text-muted-foreground"
                 )}>
-                  Équipements et services
+                  {labels.amenities}
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {features.map((feature, index) => (
@@ -131,7 +137,7 @@ export function RoomCategory({
                     : "bg-primary text-primary-foreground hover:bg-primary/90"
                 )}
               >
-                Réserver en direct
+                {labels.book}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </div>
@@ -141,7 +147,7 @@ export function RoomCategory({
               <button
                 onClick={() => setGalleryOpen(true)}
                 className="group relative w-full cursor-pointer"
-                aria-label={`Voir la galerie des ${title}`}
+                aria-label={labels.gallery}
               >
                 {/* Bento Grid Layout */}
                 <div className="grid grid-cols-3 grid-rows-2 gap-2 md:gap-3">
@@ -185,7 +191,7 @@ export function RoomCategory({
                     )}>
                       <Images className="h-6 w-6 md:h-8 md:w-8 text-white mb-1 md:mb-2" />
                       <span className="text-white text-xs md:text-sm font-medium">
-                        +{images.length} photos
+                        +{images.length} {labels.photos}
                       </span>
                     </div>
                   </div>

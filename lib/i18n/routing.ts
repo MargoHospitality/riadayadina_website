@@ -13,6 +13,8 @@ export const localizedPaths = {
   gallery: { fr: "/galerie", en: "/en/gallery" },
   contact: { fr: "/contact", en: "/en/contact" },
   comparer: { fr: "/comparer", en: "/comparer" },
+  legal: { fr: "/mentions-legales", en: "/en/legal-notice" },
+  privacy: { fr: "/politique-confidentialite", en: "/en/privacy-policy" },
 } as const
 
 export type RouteKey = keyof typeof localizedPaths

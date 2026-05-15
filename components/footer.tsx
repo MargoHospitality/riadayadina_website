@@ -135,8 +135,8 @@ export function Footer({ locale = "fr" }: { locale?: Locale }) {
               <span className="text-white/40 text-xs">{dict.footer.margo}</span>
             </div>
             <div className="flex items-center gap-4 text-xs text-white/40">
-              <Link href="/mentions-legales" className="hover:text-white/60 transition-colors">{dict.footer.legal}</Link>
-              <Link href="/politique-confidentialite" className="hover:text-white/60 transition-colors">{dict.footer.privacy}</Link>
+              <Link href={getLocalizedPath("legal", locale)} className="hover:text-white/60 transition-colors">{dict.footer.legal}</Link>
+              <Link href={getLocalizedPath("privacy", locale)} className="hover:text-white/60 transition-colors">{dict.footer.privacy}</Link>
               <span>© 2026 Riad Ayadina</span>
             </div>
           </div>

@@ -26,7 +26,8 @@ function StarRating({ rating, size = "h-4 w-4" }: { rating: number; size?: strin
 export async function TestimonialsSection({ limit = 3, locale = "fr" }: TestimonialsSectionProps) {
   const dict = getDictionary(locale)
   const { summary, reviews } = await getGoogleReviews(limit, locale)
-  const ratingParts = summary.ratingValue.toLocaleString("fr-FR", { maximumFractionDigits: 1 }).split(",")
+  const ratingSeparator = locale === "fr" ? "," : "."
+  const ratingParts = summary.ratingValue.toLocaleString(locale === "fr" ? "fr-FR" : "en-US", { maximumFractionDigits: 1 }).split(ratingSeparator)
 
   return (
     <section className="py-20 md:py-32 bg-background">
@@ -45,11 +46,11 @@ export async function TestimonialsSection({ limit = 3, locale = "fr" }: Testimon
             target="_blank"
             rel="noopener noreferrer"
             className="group mx-auto mb-5 inline-flex items-center gap-5 border border-accent/25 bg-card px-6 py-5 text-left shadow-sm transition-all hover:border-accent/50 hover:shadow-md"
-            aria-label={`Voir les avis Google du Riad Ayadina, note moyenne ${summary.ratingLabel}`}
+            aria-label={locale === "fr" ? `Voir les avis Google du Riad Ayadina, note moyenne ${summary.ratingLabel}` : `View Riad Ayadina Google reviews, average rating ${summary.ratingLabel}`}
           >
             <span className="flex items-end font-serif text-5xl leading-none text-foreground">
               {ratingParts[0]}
-              {ratingParts[1] && <span className="text-3xl text-accent">,{ratingParts[1]}</span>}
+              {ratingParts[1] && <span className="text-3xl text-accent">{ratingSeparator}{ratingParts[1]}</span>}
               <span className="mb-1 ml-1 text-base font-sans text-muted-foreground">/5</span>
             </span>
             <span className="h-12 w-px bg-border" aria-hidden="true" />
@@ -110,7 +111,7 @@ export async function TestimonialsSection({ limit = 3, locale = "fr" }: Testimon
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-3 inline-flex text-sm text-primary underline-offset-4 hover:underline"
-                    aria-label={`Lire l’avis complet de ${review.authorLabel} sur Google`}
+                    aria-label={locale === "fr" ? `Lire l’avis complet de ${review.authorLabel} sur Google` : `Read ${review.authorLabel}’s full review on Google`}
                   >
                     {dict.common.completeReview}
                   </a>

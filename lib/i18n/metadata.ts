@@ -49,6 +49,14 @@ const pageMeta: Record<RouteKey, Record<Locale, { title: string; description: st
     fr: { title: "Comparer les tarifs | Réservation directe Riad Ayadina", description: "Comparez les tarifs publics et l’offre officielle du Riad Ayadina pour vos dates." },
     en: { title: "Compare rates | Direct booking Riad Ayadina", description: "Compare public rates and Riad Ayadina’s official offer for your dates." },
   },
+  legal: {
+    fr: { title: "Mentions légales | Riad Ayadina Marrakech", description: "Mentions légales du site officiel du Riad Ayadina & Spa à Marrakech." },
+    en: { title: "Legal notice | Riad Ayadina Marrakech", description: "Legal notice for the official Riad Ayadina & Spa website in Marrakech." },
+  },
+  privacy: {
+    fr: { title: "Politique de confidentialité | Riad Ayadina Marrakech", description: "Politique de confidentialité du site officiel du Riad Ayadina & Spa à Marrakech." },
+    en: { title: "Privacy policy | Riad Ayadina Marrakech", description: "Privacy policy for the official Riad Ayadina & Spa website in Marrakech." },
+  },
 }
 
 export function createPageMetadata(key: RouteKey, locale: Locale): Metadata {

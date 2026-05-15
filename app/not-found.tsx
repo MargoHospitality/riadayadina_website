@@ -1,16 +1,44 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Home, ArrowLeft } from "lucide-react"
 
+const copy = {
+  fr: {
+    imageAlt: "Patio du Riad Ayadina",
+    title: "Page introuvable",
+    text: "Il semble que vous vous soyez perdu dans les ruelles de la médina. Laissez-nous vous guider vers le riad.",
+    home: "Retour à l'accueil",
+    contact: "Nous contacter",
+    homeHref: "/",
+    contactHref: "/contact",
+  },
+  en: {
+    imageAlt: "Riad Ayadina patio",
+    title: "Page not found",
+    text: "It looks like you took a wrong turn in the Medina. Let us guide you back to the riad.",
+    home: "Back to home",
+    contact: "Contact us",
+    homeHref: "/en",
+    contactHref: "/en/contact",
+  },
+} as const
+
 export default function NotFound() {
+  const pathname = usePathname()
+  const locale = pathname?.startsWith("/en") ? "en" : "fr"
+  const t = copy[locale]
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Background image with overlay */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/patio-arbore.jpg"
-          alt="Patio du Riad Ayadina"
+          alt={t.imageAlt}
           fill
           sizes="100vw"
           className="object-cover opacity-20"
@@ -22,7 +50,7 @@ export default function NotFound() {
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-4">
         <div className="text-center max-w-lg">
           {/* Logo */}
-          <Link href="/" className="inline-block mb-12">
+          <Link href={t.homeHref} className="inline-block mb-12">
             <Image
               src="/images/logo-ayadina.png"
               alt="Riad Ayadina"
@@ -36,26 +64,25 @@ export default function NotFound() {
           <h1 className="font-serif text-8xl md:text-9xl text-primary mb-4">404</h1>
           
           <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">
-            Page introuvable
+            {t.title}
           </h2>
           
           <p className="text-muted-foreground mb-10">
-            Il semble que vous vous soyez perdu dans les ruelles de la médina. 
-            Laissez-nous vous guider vers le riad.
+            {t.text}
           </p>
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild className="rounded-none px-8 py-6">
-              <Link href="/">
+              <Link href={t.homeHref}>
                 <Home className="mr-2 h-4 w-4" />
-                Retour à l&apos;accueil
+                {t.home}
               </Link>
             </Button>
             <Button asChild variant="outline" className="rounded-none px-8 py-6">
-              <Link href="/contact">
+              <Link href={t.contactHref}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Nous contacter
+                {t.contact}
               </Link>
             </Button>
           </div>

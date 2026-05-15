@@ -16,12 +16,12 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       <Header locale="fr" />
-      <HeroSection />
-      <StorytellingSection />
-      <DirectBookingBanner />
-      <RoomsSection />
-      <ExperiencesSection />
-      <BookingWidget />
+      <HeroSection locale="fr" />
+      <StorytellingSection locale="fr" />
+      <DirectBookingBanner locale="fr" />
+      <RoomsSection locale="fr" />
+      <ExperiencesSection locale="fr" />
+      <BookingWidget locale="fr" />
       <TestimonialsSection locale="fr" />
       <Footer locale="fr" />
     </main>
