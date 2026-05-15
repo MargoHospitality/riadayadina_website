@@ -3,10 +3,10 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { BookingWidget } from "@/components/booking-widget"
-import { TestimonialsSection } from "@/components/testimonials-section"
 import { useBookingModal } from "@/components/booking-modal-provider"
 import { buildWhatsAppUrl } from "@/lib/whatsapp"
 import type { Locale } from "@/lib/i18n/routing"
+import type { ReactNode } from "react"
 import { Gift, Car, Sparkles, Clock, Wine, ShieldCheck, BadgePercent, Star, CalendarCheck, CreditCard } from "lucide-react"
 
 const copy = {
@@ -130,7 +130,7 @@ const copy = {
   },
 } as const
 
-export default function OffresPage({ locale = "fr" }: { locale?: Locale }) {
+export default function OffresPage({ locale = "fr", testimonials }: { locale?: Locale; testimonials?: ReactNode }) {
   const { openBookingModal } = useBookingModal()
   const t = copy[locale]
   
@@ -224,7 +224,7 @@ export default function OffresPage({ locale = "fr" }: { locale?: Locale }) {
         </section>
 
         <BookingWidget locale={locale} />
-        <TestimonialsSection locale={locale} />
+        {testimonials}
 
         <section className="py-12 border-t border-border">
           <div className="container mx-auto px-4"><div className="max-w-3xl mx-auto"><p className="text-xs text-muted-foreground text-center">{t.finePrint}</p></div></div>
