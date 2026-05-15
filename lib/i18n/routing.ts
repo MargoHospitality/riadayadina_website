@@ -12,7 +12,7 @@ export const localizedPaths = {
   restaurant: { fr: "/restaurant", en: "/en/restaurant" },
   gallery: { fr: "/galerie", en: "/en/gallery" },
   contact: { fr: "/contact", en: "/en/contact" },
-  comparer: { fr: "/comparer", en: "/comparer" },
+  comparer: { fr: "/comparer", en: "/en/compare" },
   legal: { fr: "/mentions-legales", en: "/en/legal-notice" },
   privacy: { fr: "/politique-confidentialite", en: "/en/privacy-policy" },
 } as const
@@ -27,7 +27,7 @@ for (const key of Object.keys(localizedPaths) as RouteKey[]) {
 }
 
 export function getLocaleFromPath(pathname: string): Locale {
-  return pathname === "/en" || pathname.startsWith("/en/") ? "en" : "fr"
+  return pathname === "/en" || pathname.startsWith("/en/") || pathname === "/compare" ? "en" : "fr"
 }
 
 export function getRouteKeyFromPath(pathname: string): RouteKey | undefined {
@@ -41,7 +41,7 @@ export function getLocalizedPath(key: RouteKey, locale: Locale) {
 export function switchLocalePath(pathname: string, targetLocale: Locale) {
   const route = pathToRoute.get(pathname)
   if (route) return localizedPaths[route.key][targetLocale]
-  if (pathname === "/comparer") return "/comparer"
+  if (pathname === "/comparer" || pathname === "/compare") return targetLocale === "en" ? "/en/compare" : "/comparer"
   return targetLocale === "en" ? "/en" : "/"
 }
 

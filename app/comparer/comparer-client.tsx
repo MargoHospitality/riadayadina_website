@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect, type ReactNode } from "react"
+import { useState, useEffect, useMemo, type ReactNode } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
@@ -14,11 +14,162 @@ import type { RateComparison, RateOffer } from "@/lib/rate-compare"
 import { cn } from "@/lib/utils"
 import { CreditCard, MailCheck, HandHeart } from "lucide-react"
 
-const loadingSteps = [
-  { id: 1, label: "Recherche de l'offre officielle Ayadina" },
-  { id: 2, label: "Lecture des prix des agences en ligne" },
-  { id: 3, label: "Vérification des conditions directes" },
-]
+const compareCopy = {
+  fr: {
+    loadingSteps: [
+      "Recherche de l'offre officielle Ayadina",
+      "Lecture des prix des agences en ligne",
+      "Vérification des conditions directes",
+    ],
+    invalidEyebrow: "Réservation directe",
+    invalidTitle: "Choisissez vos dates",
+    invalidText: "Indiquez une date d'arrivée et une date de départ pour vérifier l'offre directe.",
+    backToBooking: "Retour au moteur",
+    loadingTitle: "Nous vérifions les meilleurs prix pour vos dates.",
+    loadingText: "Comparaison en temps réel entre l'offre officielle Ayadina et les prix publics observés sur les agences en ligne.",
+    arrival: "Arrivée",
+    departure: "Départ",
+    travelers: "Voyageurs",
+    night: "nuit",
+    nights: "nuits",
+    person: "personne",
+    people: "personnes",
+    usuallySeconds: "Cela prend généralement quelques secondes.",
+    continueOfficial: "Continuer directement vers la réservation officielle",
+    heroEyebrow: "Comparaison des tarifs",
+    stayFromTo: (from: string, to: string) => `Votre séjour du ${from} au ${to}`,
+    edit: "Modifier",
+    onlineAvailability: "Disponibilité en ligne",
+    noAvailabilityTitle: "Nous n'avons plus de disponibilité en ligne pour ces dates.",
+    noAvailabilityText: (from: string, to: string) =>
+      `Pour votre séjour du ${from} au ${to}, aucune chambre n'est disponible à la réservation en ligne actuellement. Vous pouvez écrire au service réservation si vous souhaitez une confirmation directe ou proposer d'autres dates.`,
+    writeReservation: "Écrire au service réservation",
+    compareUnavailableTitle: "La comparaison avec les agences en ligne n'est pas disponible pour le moment.",
+    compareUnavailableText: "Vous pouvez continuer vers la réservation directe Riad Ayadina & Spa. Les tarifs officiels, disponibilités et conditions détaillées seront affichés avant confirmation.",
+    officialSite: "Site officiel",
+    directBooking: "Réservation directe",
+    bestDirectPrice: "Meilleur prix direct",
+    official: "Officiel",
+    directBenefits: "Avantages directs",
+    nightlyPrice: "Prix par nuit",
+    totalEstimate: "Total estimé",
+    cloudbedsPrice: "Sur Cloudbeds",
+    savingsStay: (amount: string) => `Économie de ${amount}`,
+    onYourStay: "sur votre séjour",
+    officialBooking: "Réservation officielle",
+    benefitsTitle: "Les avantages directs restent réservés aux clients du site officiel.",
+    benefitsText: "Les tarifs, disponibilités et conditions finales seront affichés sur le moteur sécurisé Ayadina avant confirmation. Nous n'affichons pas de comparaison prix lorsqu'une agence est moins chère ou lorsque la comparaison n'est pas strictement comparable.",
+    conditions: "Réservation directe “Riad Ayadina & Spa” · Conditions détaillées affichées avant confirmation · Confirmation immédiate",
+    bookBest: "Réserver au meilleur prix",
+    bookDirect: "Réserver en direct",
+    seeOfficialAvailability: "Voir les disponibilités officielles",
+    otaComparison: "Comparaison “agence en ligne”",
+    noOtaOffer: "Aucune offre d'agence en ligne disponible pour ces dates.",
+    otaUnavailable: "Comparaison agence en ligne indisponible pour le moment.",
+    source: "Source : agences en ligne · Tarifs indicatifs",
+    nonRefundable: "Non remboursable",
+    observedOffer: "Offre observée",
+    perNight: "/ nuit",
+    total: "Total",
+    noPrepayment: "Pas de prépaiement",
+    noPrepaymentText: "Nous prenons juste une empreinte de carte bancaire",
+    instantConfirmation: "Confirmation instantanée",
+    instantConfirmationText: "Email de confirmation immédiat",
+    personalWelcome: "Accueil personnalisé",
+    personalWelcomeText: "Pour tous nos clients directs",
+    packages: {
+      immersion: "Privilèges Immersion (3 nuits et plus)",
+      escapade: "Privilèges Escapade (2 nuits)",
+      direct: "Offre Spéciale Directe",
+    },
+    perks: {
+      airportReturn: "Transfert aéroport A/R",
+      airportOneWay: "Transfert aéroport aller",
+      flexible: "Annulation flexible",
+      noPrepayment: "Pas de prépaiement",
+      spaDiscount: "-10% sur les soins spa",
+      cocktail: "Cocktail de bienvenue",
+      upgrade: "Surclassement et arrivée anticipée selon disponibilité",
+    },
+  },
+  en: {
+    loadingSteps: [
+      "Checking Ayadina’s official offer",
+      "Reading online agency rates",
+      "Verifying direct-booking conditions",
+    ],
+    invalidEyebrow: "Direct booking",
+    invalidTitle: "Choose your dates",
+    invalidText: "Enter an arrival and departure date to check the direct offer.",
+    backToBooking: "Back to booking",
+    loadingTitle: "We are checking the best rates for your dates.",
+    loadingText: "Real-time comparison between Ayadina’s official offer and public rates found on online travel agencies.",
+    arrival: "Arrival",
+    departure: "Departure",
+    travelers: "Guests",
+    night: "night",
+    nights: "nights",
+    person: "guest",
+    people: "guests",
+    usuallySeconds: "This usually takes a few seconds.",
+    continueOfficial: "Continue directly to the official booking engine",
+    heroEyebrow: "Rate comparison",
+    stayFromTo: (from: string, to: string) => `Your stay from ${from} to ${to}`,
+    edit: "Edit",
+    onlineAvailability: "Online availability",
+    noAvailabilityTitle: "No rooms are currently available online for these dates.",
+    noAvailabilityText: (from: string, to: string) =>
+      `For your stay from ${from} to ${to}, no room is currently available through online booking. You can contact reservations directly if you would like a manual confirmation or alternative dates.`,
+    writeReservation: "Contact reservations",
+    compareUnavailableTitle: "Online agency comparison is not available right now.",
+    compareUnavailableText: "You can continue to Riad Ayadina & Spa’s official booking engine. Official rates, availability and detailed conditions will be shown before confirmation.",
+    officialSite: "Official site",
+    directBooking: "Direct booking",
+    bestDirectPrice: "Best direct rate",
+    official: "Official",
+    directBenefits: "Direct benefits",
+    nightlyPrice: "Price per night",
+    totalEstimate: "Estimated total",
+    cloudbedsPrice: "On Cloudbeds",
+    savingsStay: (amount: string) => `Save ${amount}`,
+    onYourStay: "on your stay",
+    officialBooking: "Official booking",
+    benefitsTitle: "Direct benefits remain reserved for guests booking on the official site.",
+    benefitsText: "Final rates, availability and conditions will be shown on Ayadina’s secure booking engine before confirmation. We do not display a price comparison when an agency is cheaper or when rates are not strictly comparable.",
+    conditions: "Direct booking “Riad Ayadina & Spa” · Detailed conditions shown before confirmation · Instant confirmation",
+    bookBest: "Book the best direct rate",
+    bookDirect: "Book direct",
+    seeOfficialAvailability: "See official availability",
+    otaComparison: "Online agency comparison",
+    noOtaOffer: "No online agency offer is available for these dates.",
+    otaUnavailable: "Online agency comparison is not available right now.",
+    source: "Source: online agencies · Indicative rates",
+    nonRefundable: "Non-refundable",
+    observedOffer: "Observed offer",
+    perNight: "/ night",
+    total: "Total",
+    noPrepayment: "No prepayment",
+    noPrepaymentText: "Only a card imprint is required",
+    instantConfirmation: "Instant confirmation",
+    instantConfirmationText: "Immediate confirmation email",
+    personalWelcome: "Personalized welcome",
+    personalWelcomeText: "For all direct guests",
+    packages: {
+      immersion: "Immersion privileges (3 nights or more)",
+      escapade: "Escapade privileges (2 nights)",
+      direct: "Special direct offer",
+    },
+    perks: {
+      airportReturn: "Return airport transfer",
+      airportOneWay: "One-way airport transfer",
+      flexible: "Flexible cancellation",
+      noPrepayment: "No prepayment",
+      spaDiscount: "-10% on spa treatments",
+      cocktail: "Welcome cocktail",
+      upgrade: "Upgrade and early check-in subject to availability",
+    },
+  },
+} as const
 
 export function CompareClient() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -28,16 +179,20 @@ export function CompareClient() {
   const [comparisonResult, setComparisonResult] = useState<RateComparison | null>(null)
   
   const searchParams = useSearchParams()
-  const urlSearch = {
+  const pathname = usePathname()
+  const pathLocale = pathname?.startsWith("/en") || pathname === "/compare" ? "en" : "fr"
+  const urlSearch = useMemo(() => ({
     checkIn: searchParams.get("checkIn") || searchParams.get("checkin") || undefined,
     checkOut: searchParams.get("checkOut") || searchParams.get("checkout") || undefined,
     adults: searchParams.get("adults") || searchParams.get("guests") || "2",
     currency: searchParams.get("currency") ? normalizeBookingCurrency(searchParams.get("currency") || undefined) : undefined,
-    language: normalizeBookingLanguage(searchParams.get("language") || "fr"),
-  }
+    language: normalizeBookingLanguage(searchParams.get("language") || pathLocale),
+  }), [pathLocale, searchParams])
   const [submittedSearch, setSubmittedSearch] = useState<typeof urlSearch | null>(null)
-  const search = submittedSearch ?? urlSearch
+  const search = useMemo(() => submittedSearch ?? urlSearch, [submittedSearch, urlSearch])
   const locale = search.language === "en" ? "en" : "fr"
+  const t = compareCopy[locale]
+  const loadingSteps = t.loadingSteps.map((label, index) => ({ id: index + 1, label }))
 
   useEffect(() => {
     setSubmittedSearch(null)
@@ -109,7 +264,7 @@ export function CompareClient() {
       clearTimeout(step3Timer)
       clearTimeout(fallbackTimer)
     }
-  }, [search.checkIn, search.checkOut, search.adults, search.currency, search.language])
+  }, [search])
 
   const handleDateSearchSubmit = (nextSearch: { checkIn: string; checkOut: string; adults: string }) => {
     const next = {
@@ -130,7 +285,7 @@ export function CompareClient() {
     setIsLoading(true)
     setSubmittedSearch(next)
     setIsModalOpen(false)
-    window.history.pushState(null, "", `/comparer?${params.toString()}`)
+    window.history.pushState(null, "", `${locale === "en" ? "/en/compare" : "/comparer"}?${params.toString()}`)
   }
 
   if (!isValidBookingSearch(search)) {
@@ -140,13 +295,13 @@ export function CompareClient() {
           <Header locale={locale} />
           <section className="pt-32 pb-16">
             <div className="container mx-auto px-4 max-w-2xl text-center">
-              <p className="text-accent text-sm uppercase tracking-[0.25em] mb-4">Réservation directe</p>
-              <h1 className="font-serif text-4xl md:text-5xl mb-6">Choisissez vos dates</h1>
+              <p className="text-accent text-sm uppercase tracking-[0.25em] mb-4">{t.invalidEyebrow}</p>
+              <h1 className="font-serif text-4xl md:text-5xl mb-6">{t.invalidTitle}</h1>
               <p className="text-muted-foreground mb-8">
-                Indiquez une date d&apos;arrivée et une date de départ pour vérifier l&apos;offre directe.
+                {t.invalidText}
               </p>
               <Button asChild className="rounded-none px-8 py-6">
-                <Link href="/#booking">Retour au moteur</Link>
+                <Link href={locale === "en" ? "/en#booking" : "/#booking"}>{t.backToBooking}</Link>
               </Button>
             </div>
           </section>
@@ -171,33 +326,33 @@ export function CompareClient() {
             <div className="max-w-xl mx-auto text-center">
               {/* Main title */}
               <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground mb-4 text-balance">
-                Nous vérifions les meilleurs prix pour vos dates.
+                {t.loadingTitle}
               </h1>
 
               {/* Subtitle */}
               <p className="text-muted-foreground text-sm md:text-base mb-10 max-w-md mx-auto">
-                Comparaison en temps réel entre l&apos;offre officielle Ayadina et les prix publics observés sur les agences en ligne.
+                {t.loadingText}
               </p>
 
               {/* Date summary card */}
               <div className="bg-secondary/50 border border-border/50 p-5 mb-8">
                 <div className="flex items-center justify-center gap-6 md:gap-10">
                   <div className="text-center">
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Arrivée</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{t.arrival}</p>
                     <p className="font-serif text-lg text-foreground">{formatLongDate(search.checkIn!, locale)}</p>
                   </div>
                   <div className="flex flex-col items-center gap-1">
                     <div className="w-8 h-px bg-accent" />
-                    <span className="text-xs text-accent font-medium">{nights} nuit{nights > 1 ? "s" : ""}</span>
+                    <span className="text-xs text-accent font-medium">{nights} {nights > 1 ? t.nights : t.night}</span>
                   </div>
                   <div className="text-center">
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Départ</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{t.departure}</p>
                     <p className="font-serif text-lg text-foreground">{formatLongDate(search.checkOut!, locale)}</p>
                   </div>
                   <div className="h-8 w-px bg-border mx-2 hidden sm:block" />
                   <div className="text-center hidden sm:block">
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Voyageurs</p>
-                    <p className="font-serif text-lg text-foreground">{search.adults} personne{Number(search.adults) > 1 ? "s" : ""}</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{t.travelers}</p>
+                    <p className="font-serif text-lg text-foreground">{search.adults} {Number(search.adults) > 1 ? t.people : t.person}</p>
                   </div>
                 </div>
               </div>
@@ -234,7 +389,7 @@ export function CompareClient() {
 
               {/* Reassurance text */}
               <p className="text-xs text-muted-foreground mb-6">
-                Cela prend généralement quelques secondes.
+                {t.usuallySeconds}
               </p>
 
               {/* Fallback CTA - appears after 5 seconds */}
@@ -250,7 +405,7 @@ export function CompareClient() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm text-primary hover:text-accent transition-colors"
                 >
-                  Continuer directement vers la réservation officielle
+                  {t.continueOfficial}
                 </a>
               </div>
             </div>
@@ -276,7 +431,7 @@ export function CompareClient() {
   const showPriceComparison = shouldShowDirectPrice
   const savingsPerNight = showPriceComparison && directOffer && referenceOffer ? Math.max(referenceOffer.price - directOffer.price, 0) : 0
   const totalSavings = savingsPerNight * nights
-  const directOfferBundle = getDirectOfferBundle(nights)
+  const directOfferBundle = getDirectOfferBundle(nights, t)
   const perks = directOfferBundle.perks
   const bookingUrl = buildBookingEngineUrl({ ...search, currency: getResolvedCurrency(comparison, search.currency) })
   const reservationEmailUrl = buildReservationEmailUrl(search)
@@ -299,29 +454,29 @@ export function CompareClient() {
         </div>
         <div className="relative container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <p className="text-accent text-sm uppercase tracking-[0.2em] mb-2">Comparaison des tarifs</p>
+            <p className="text-accent text-sm uppercase tracking-[0.2em] mb-2">{t.heroEyebrow}</p>
             
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
               <div className="flex items-center gap-4 flex-wrap">
                 <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-primary-foreground">
-                  Votre séjour du {formatLongDate(search.checkIn!, locale)} au {formatLongDate(search.checkOut!, locale)}
+                  {t.stayFromTo(formatLongDate(search.checkIn!, locale), formatLongDate(search.checkOut!, locale))}
                 </h1>
                 <button 
                   onClick={() => setIsModalOpen(true)}
                   className="inline-flex items-center gap-1.5 text-xs text-primary-foreground/50 hover:text-primary-foreground border border-primary-foreground/20 hover:border-primary-foreground/40 px-3 py-1.5 transition-colors"
                 >
-                  Modifier
+                  {t.edit}
                 </button>
               </div>
               <div className="flex items-center gap-6 text-primary-foreground">
                 <div className="text-center">
                   <p className="font-serif text-4xl lg:text-5xl">{nights}</p>
-                  <p className="text-sm text-primary-foreground/60">nuit{nights > 1 ? "s" : ""}</p>
+                  <p className="text-sm text-primary-foreground/60">{nights > 1 ? t.nights : t.night}</p>
                 </div>
                 <div className="w-px h-12 bg-primary-foreground/20" />
                 <div className="text-center">
                   <p className="font-serif text-4xl lg:text-5xl">{search.adults}</p>
-                  <p className="text-sm text-primary-foreground/60">personne{Number(search.adults) > 1 ? "s" : ""}</p>
+                  <p className="text-sm text-primary-foreground/60">{Number(search.adults) > 1 ? t.people : t.person}</p>
                 </div>
               </div>
             </div>
@@ -337,10 +492,10 @@ export function CompareClient() {
             {hasNoAvailability && (
               <div className="bg-card border border-accent/40 shadow-sm p-6 md:p-8 mb-8">
                 <div className="max-w-3xl">
-                  <p className="text-accent text-sm uppercase tracking-[0.2em] mb-3">Disponibilité en ligne</p>
-                  <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Nous n&apos;avons plus de disponibilité en ligne pour ces dates.</h2>
+                  <p className="text-accent text-sm uppercase tracking-[0.2em] mb-3">{t.onlineAvailability}</p>
+                  <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">{t.noAvailabilityTitle}</h2>
                   <p className="text-muted-foreground mb-6">
-                    Pour votre séjour du {formatLongDate(search.checkIn!, locale)} au {formatLongDate(search.checkOut!, locale)}, aucune chambre n&apos;est disponible à la réservation en ligne actuellement. Vous pouvez écrire au service réservation si vous souhaitez une confirmation directe ou proposer d&apos;autres dates.
+                    {t.noAvailabilityText(formatLongDate(search.checkIn!, locale), formatLongDate(search.checkOut!, locale))}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button asChild size="lg" className="rounded-none px-8 py-6">
@@ -348,7 +503,7 @@ export function CompareClient() {
                         href={reservationEmailUrl}
                         onClick={() => trackDirectBookingEvent("rate_compare_click_contact", { checkIn: search.checkIn, checkOut: search.checkOut, reason: "no_availability_email" })}
                       >
-                        Écrire au service réservation
+                        {t.writeReservation}
                       </a>
                     </Button>
                   </div>
@@ -358,9 +513,9 @@ export function CompareClient() {
 
             {!hasLivePrices && !hasNoAvailability && (
               <div className="mb-6 border border-accent/30 bg-accent/10 p-4 text-sm text-foreground">
-                <p className="font-medium mb-1">La comparaison avec les agences en ligne n&apos;est pas disponible pour le moment.</p>
+                <p className="font-medium mb-1">{t.compareUnavailableTitle}</p>
                 <p className="text-muted-foreground">
-                  Vous pouvez continuer vers la réservation directe Riad Ayadina & Spa. Les tarifs officiels, disponibilités et conditions détaillées seront affichés avant confirmation.
+                  {t.compareUnavailableText}
                 </p>
               </div>
             )}
@@ -388,47 +543,47 @@ export function CompareClient() {
                         />
                       </div>
                       <div>
-                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Site officiel</p>
+                        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">{t.officialSite}</p>
                         <h2 className="font-serif text-xl md:text-2xl text-foreground">Riad Ayadina & Spa</h2>
-                        <p className="text-xs text-muted-foreground mt-1">Réservation directe</p>
+                        <p className="text-xs text-muted-foreground mt-1">{t.directBooking}</p>
                       </div>
                     </div>
                     <div className="bg-accent text-accent-foreground text-xs uppercase tracking-wider px-3 py-1.5 font-medium self-start">
-                      {totalSavings > 0 ? "Meilleur prix direct" : shouldShowDirectPrice ? "Officiel" : "Avantages directs"}
+                      {totalSavings > 0 ? t.bestDirectPrice : shouldShowDirectPrice ? t.official : t.directBenefits}
                     </div>
                   </div>
 
                   {shouldShowDirectPrice ? (
                     <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 sm:gap-4 mb-6 pb-6 border-b border-border">
                       <div className="min-w-0">
-                        <p className="text-sm text-muted-foreground mb-1">Prix par nuit</p>
+                        <p className="text-sm text-muted-foreground mb-1">{t.nightlyPrice}</p>
                         <div className="flex items-baseline gap-2">
                           <span className="font-serif text-4xl md:text-5xl text-foreground">
-                            {directOffer ? formatMoney(directOffer.price, directOffer.currency) : "Sur Cloudbeds"}
+                            {directOffer ? formatMoney(directOffer.price, directOffer.currency, locale) : t.cloudbedsPrice}
                           </span>
                         </div>
                         {totalSavings > 0 && (
                           <p className="text-accent font-medium mt-2 leading-tight">
-                            <span className="block">Économie de {formatMoney(totalSavings, directOffer?.currency || "EUR")}</span>
-                            <span className="block">sur votre séjour</span>
+                            <span className="block">{t.savingsStay(formatMoney(totalSavings, directOffer?.currency || "EUR", locale))}</span>
+                            <span className="block">{t.onYourStay}</span>
                           </p>
                         )}
                       </div>
                       <div className="text-right shrink-0">
-                        <p className="text-sm text-muted-foreground mb-1">Total estimé</p>
+                        <p className="text-sm text-muted-foreground mb-1">{t.totalEstimate}</p>
                         <p className="font-serif text-2xl text-foreground">
-                          {directOffer ? formatMoney(directOffer.price * nights, directOffer.currency) : "Sur Cloudbeds"}
+                          {directOffer ? formatMoney(directOffer.price * nights, directOffer.currency, locale) : t.cloudbedsPrice}
                         </p>
                       </div>
                     </div>
                   ) : (
                     <div className="mb-6 pb-6 border-b border-border">
-                      <p className="text-sm text-muted-foreground mb-2">Réservation officielle</p>
+                      <p className="text-sm text-muted-foreground mb-2">{t.officialBooking}</p>
                       <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3">
-                        Les avantages directs restent réservés aux clients du site officiel.
+                        {t.benefitsTitle}
                       </h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">
-                        Les tarifs, disponibilités et conditions finales seront affichés sur le moteur sécurisé Ayadina avant confirmation. Nous n&apos;affichons pas de comparaison prix lorsqu&apos;une agence est moins chère ou lorsque la comparaison n&apos;est pas strictement comparable.
+                        {t.benefitsText}
                       </p>
                     </div>
                   )}
@@ -445,7 +600,7 @@ export function CompareClient() {
 
                   {/* Conditions */}
                   <div className="text-sm text-muted-foreground mb-6 p-4 bg-secondary/50 rounded-sm">
-                    <p>Réservation directe “Riad Ayadina & Spa” · Conditions détaillées affichées avant confirmation · Confirmation immédiate</p>
+                    <p>{t.conditions}</p>
                   </div>
 
                   {/* CTA */}
@@ -456,7 +611,7 @@ export function CompareClient() {
                       rel="noreferrer"
                       onClick={() => trackDirectBookingEvent("rate_compare_click_cloudbeds", { checkIn: search.checkIn, checkOut: search.checkOut, adults: String(search.adults || 2), outcome: getComparisonOutcome(comparison) })}
                     >
-                      {totalSavings > 0 ? "Réserver au meilleur prix" : shouldShowDirectPrice ? "Réserver en direct" : "Voir les disponibilités officielles"}
+                      {totalSavings > 0 ? t.bookBest : shouldShowDirectPrice ? t.bookDirect : t.seeOfficialAvailability}
                     </a>
                   </Button>
                 </div>
@@ -464,29 +619,29 @@ export function CompareClient() {
 
               {/* OTA Offers - Takes 2 columns */}
               <div className="order-1 lg:order-2 lg:col-span-2 space-y-4">
-                <p className="text-xs text-muted-foreground uppercase tracking-wider px-1">Comparaison “agence en ligne”</p>
+                <p className="text-xs text-muted-foreground uppercase tracking-wider px-1">{t.otaComparison}</p>
                 {referenceOffer ? (
                   <>
-                    <OTACard offer={referenceOffer} nights={nights} isMain />
+                    <OTACard offer={referenceOffer} nights={nights} locale={locale} copy={t} isMain />
                     {comparison.offers
                       .filter(o => o.title !== referenceOffer.title)
                       .slice(0, 2)
                       .map((offer, index) => (
-                        <OTACard key={index} offer={offer} nights={nights} />
+                        <OTACard key={index} offer={offer} nights={nights} locale={locale} copy={t} />
                       ))}
                   </>
                 ) : (
                   <div className="bg-muted/30 border border-border p-6 text-center">
                     <p className="text-muted-foreground">
                       {comparison.status === "empty"
-                        ? "Aucune offre d’agence en ligne disponible pour ces dates."
-                        : "Comparaison agence en ligne indisponible pour le moment."}
+                        ? t.noOtaOffer
+                        : t.otaUnavailable}
                     </p>
                   </div>
                 )}
 
                 <p className="text-xs text-muted-foreground text-center pt-2">
-                  Source : agences en ligne · Tarifs indicatifs
+                  {t.source}
                 </p>
               </div>
             </div>
@@ -498,8 +653,8 @@ export function CompareClient() {
                   <CreditCard className="h-5 w-5" />
                 </span>
                 <div>
-                  <p className="font-medium text-foreground">Pas de prépaiement</p>
-                  <p className="text-sm text-muted-foreground">Nous prenons juste une empreinte de carte bancaire</p>
+                  <p className="font-medium text-foreground">{t.noPrepayment}</p>
+                  <p className="text-sm text-muted-foreground">{t.noPrepaymentText}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -507,8 +662,8 @@ export function CompareClient() {
                   <MailCheck className="h-5 w-5" />
                 </span>
                 <div>
-                  <p className="font-medium text-foreground">Confirmation instantanée</p>
-                  <p className="text-sm text-muted-foreground">Email de confirmation immédiat</p>
+                  <p className="font-medium text-foreground">{t.instantConfirmation}</p>
+                  <p className="text-sm text-muted-foreground">{t.instantConfirmationText}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -516,8 +671,8 @@ export function CompareClient() {
                   <HandHeart className="h-5 w-5" />
                 </span>
                 <div>
-                  <p className="font-medium text-foreground">Accueil personnalisé</p>
-                  <p className="text-sm text-muted-foreground">Pour tous nos clients directs</p>
+                  <p className="font-medium text-foreground">{t.personalWelcome}</p>
+                  <p className="text-sm text-muted-foreground">{t.personalWelcomeText}</p>
                 </div>
               </div>
             </div>
@@ -548,7 +703,19 @@ function getResolvedCurrency(comparison: RateComparison, fallback?: string) {
   return comparison.directOffer?.currency || comparison.availability?.rooms.find((room) => room.currency)?.currency || fallback
 }
 
-function OTACard({ offer, nights, isMain = false }: { offer: RateOffer; nights: number; isMain?: boolean }) {
+function OTACard({
+  offer,
+  nights,
+  locale,
+  copy,
+  isMain = false,
+}: {
+  offer: RateOffer
+  nights: number
+  locale: "fr" | "en"
+  copy: (typeof compareCopy)["fr"] | (typeof compareCopy)["en"]
+  isMain?: boolean
+}) {
   return (
     <div className={`bg-muted/30 border border-border p-4 ${isMain ? "" : "opacity-70"}`}>
       <div className="flex items-center justify-between mb-2">
@@ -556,19 +723,19 @@ function OTACard({ offer, nights, isMain = false }: { offer: RateOffer; nights: 
         {isMain && (
           <div className="flex flex-wrap justify-end gap-1.5">
             <span className="border border-red-200/70 bg-red-50/80 px-2 py-0.5 text-[11px] font-medium text-red-700">
-              Non remboursable
+              {copy.nonRefundable}
             </span>
-            <span className="bg-muted px-2 py-0.5 text-xs text-muted-foreground">Offre observée</span>
+            <span className="bg-muted px-2 py-0.5 text-xs text-muted-foreground">{copy.observedOffer}</span>
           </div>
         )}
       </div>
       <div className="flex items-end justify-between">
         <div>
-          <span className="font-serif text-2xl text-muted-foreground">{formatMoney(offer.price, offer.currency)}</span>
-          <span className="text-muted-foreground/60 text-sm ml-1">/ nuit</span>
+          <span className="font-serif text-2xl text-muted-foreground">{formatMoney(offer.price, offer.currency, locale)}</span>
+          <span className="text-muted-foreground/60 text-sm ml-1">{copy.perNight}</span>
         </div>
         <p className="text-sm text-muted-foreground">
-          Total : {formatMoney(offer.price * nights, offer.currency)}
+          {copy.total} : {formatMoney(offer.price * nights, offer.currency, locale)}
         </p>
       </div>
     </div>
@@ -617,47 +784,39 @@ function getCloudbedsFallbackOffer(comparison: RateComparison, nights: number): 
   }
 }
 
-function getDirectOfferBundle(nights: number) {
+function getDirectOfferBundle(nights: number, copy: (typeof compareCopy)["fr"] | (typeof compareCopy)["en"]) {
   if (nights >= 3) {
     return {
-      label: "Privilèges Immersion (3 nuits et plus)",
-      perks: getImmersionPackagePerks(),
+      label: copy.packages.immersion,
+      perks: [
+        copy.perks.airportReturn,
+        copy.perks.flexible,
+        copy.perks.noPrepayment,
+        copy.perks.spaDiscount,
+        copy.perks.cocktail,
+        copy.perks.upgrade,
+      ],
     }
   }
 
   if (nights >= 2) {
     return {
-      label: "Privilèges Escapade (2 nuits)",
-      perks: getEscapadePackagePerks(),
+      label: copy.packages.escapade,
+      perks: [
+        copy.perks.airportOneWay,
+        copy.perks.flexible,
+        copy.perks.noPrepayment,
+        copy.perks.spaDiscount,
+        copy.perks.cocktail,
+        copy.perks.upgrade,
+      ],
     }
   }
 
   return {
-    label: "Offre Spéciale Directe",
-    perks: ["Annulation flexible", "Pas de prépaiement", "-10% sur les soins spa", "Surclassement et arrivée anticipée selon disponibilité"],
+    label: copy.packages.direct,
+    perks: [copy.perks.flexible, copy.perks.noPrepayment, copy.perks.spaDiscount, copy.perks.upgrade],
   }
-}
-
-function getImmersionPackagePerks() {
-  return [
-    "Transfert aéroport A/R",
-    "Annulation flexible",
-    "Pas de prépaiement",
-    "-10% sur les soins spa",
-    "Cocktail de bienvenue",
-    "Surclassement et arrivée anticipée selon disponibilité",
-  ]
-}
-
-function getEscapadePackagePerks() {
-  return [
-    "Transfert aéroport aller",
-    "Annulation flexible",
-    "Pas de prépaiement",
-    "-10% sur les soins spa",
-    "Cocktail de bienvenue",
-    "Surclassement et arrivée anticipée selon disponibilité",
-  ]
 }
 
 function formatLongDate(value: string, locale: "fr" | "en" = "fr") {
@@ -672,18 +831,30 @@ function formatMoney(value: number, currency: string, locale: "fr" | "en" = "fr"
   }).format(value)
 }
 
-function buildReservationEmailUrl(search: { checkIn?: string; checkOut?: string; adults?: string }) {
-  const subject = "Demande de disponibilité - Riad Ayadina"
-  const body = [
-    "Bonjour,",
-    "",
-    "Je souhaite vérifier les disponibilités pour le séjour suivant :",
-    `- Arrivée : ${search.checkIn || ""}`,
-    `- Départ : ${search.checkOut || ""}`,
-    `- Voyageurs : ${search.adults || 2}`,
-    "",
-    "Merci par avance.",
-  ].join("\n")
+function buildReservationEmailUrl(search: { checkIn?: string; checkOut?: string; adults?: string; language?: string }) {
+  const isEnglish = search.language === "en"
+  const subject = isEnglish ? "Availability request - Riad Ayadina" : "Demande de disponibilité - Riad Ayadina"
+  const body = (isEnglish
+    ? [
+        "Hello,",
+        "",
+        "I would like to check availability for the following stay:",
+        `- Arrival: ${search.checkIn || ""}`,
+        `- Departure: ${search.checkOut || ""}`,
+        `- Guests: ${search.adults || 2}`,
+        "",
+        "Thank you.",
+      ]
+    : [
+        "Bonjour,",
+        "",
+        "Je souhaite vérifier les disponibilités pour le séjour suivant :",
+        `- Arrivée : ${search.checkIn || ""}`,
+        `- Départ : ${search.checkOut || ""}`,
+        `- Voyageurs : ${search.adults || 2}`,
+        "",
+        "Merci par avance.",
+      ]).join("\n")
 
   return `mailto:booking@riadayadinamarrakech.net?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }

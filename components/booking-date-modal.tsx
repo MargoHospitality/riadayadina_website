@@ -123,7 +123,7 @@ export function BookingDateModal({
   }, [isOpen])
 
   useEffect(() => {
-    if (isNavigating && pathname === "/comparer" && navigatingFromPath !== "/comparer") {
+    if (isNavigating && (pathname === "/comparer" || pathname === "/en/compare" || pathname === "/compare") && navigatingFromPath !== pathname) {
       onClose()
     }
   }, [isNavigating, navigatingFromPath, pathname, onClose])
@@ -190,9 +190,9 @@ export function BookingDateModal({
       return
     }
 
-    router.push(`/comparer?checkIn=${target.checkIn}&checkOut=${target.checkOut}&adults=${target.adults}&language=${getBookingLanguage(locale)}`)
+    router.push(`${locale === "en" ? "/en/compare" : "/comparer"}?checkIn=${target.checkIn}&checkOut=${target.checkOut}&adults=${target.adults}&language=${getBookingLanguage(locale)}`)
 
-    if (pathname === "/comparer") {
+    if (pathname === "/comparer" || pathname === "/en/compare" || pathname === "/compare") {
       window.setTimeout(onClose, 250)
     }
   }

@@ -18,7 +18,7 @@ export function proxy(request: NextRequest) {
 
   if (isAsset) return NextResponse.next()
 
-  const locale = pathname === "/en" || pathname.startsWith("/en/") || (pathname === "/comparer" && request.nextUrl.searchParams.get("language") === "en") ? "en" : "fr"
+  const locale = pathname === "/en" || pathname.startsWith("/en/") || pathname === "/compare" || (pathname === "/comparer" && request.nextUrl.searchParams.get("language") === "en") ? "en" : "fr"
 
   if (pathname === "/" && !request.cookies.get(LOCALE_COOKIE) && !isBot(request.headers.get("user-agent") || "") && !prefersFrench(request.headers.get("accept-language") || "")) {
     const url = request.nextUrl.clone()
