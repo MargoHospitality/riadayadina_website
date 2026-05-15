@@ -424,7 +424,7 @@ export function CompareClient() {
   const directOffer = comparison.directOffer ?? cloudbedsFallbackOffer
   const usesCloudbedsFallback = !comparison.directOffer && Boolean(cloudbedsFallbackOffer)
   const hasNoAvailability = comparison.status === "no_availability"
-  const hasLivePrices = comparison.status === "available" && Boolean(directOffer)
+  const hasLivePrices = !hasNoAvailability && Boolean(directOffer)
   const sameCurrency = Boolean(directOffer && referenceOffer && directOffer.currency === referenceOffer.currency)
   const otaBeatsDirect = Boolean(sameCurrency && directOffer && referenceOffer && referenceOffer.price < directOffer.price)
   const shouldShowDirectPrice = hasLivePrices && !otaBeatsDirect && !usesCloudbedsFallback
