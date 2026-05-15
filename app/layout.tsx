@@ -6,6 +6,7 @@ import { ScrollToTop } from '@/components/scroll-to-top'
 import { BookingModalProvider } from '@/components/booking-modal-provider'
 import type { Locale } from '@/lib/i18n/routing'
 import { HotelJsonLd } from '@/components/hotel-json-ld'
+import { GoogleAnalytics } from '@/components/google-analytics'
 import './globals.css'
 
 const cormorant = Cormorant_Garamond({ 
@@ -81,6 +82,7 @@ export default async function RootLayout({
           <ScrollToTop />
         </BookingModalProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
+        {process.env.NODE_ENV === 'production' && <GoogleAnalytics />}
       </body>
     </html>
   )
