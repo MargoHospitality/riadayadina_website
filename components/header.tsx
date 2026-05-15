@@ -41,6 +41,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
   const targetLanguageLabel = targetLocale === "fr" ? "Français" : "English"
   const mobileNavigationRef = useRef<HTMLDivElement>(null)
   const isComparePath = pathname === "/comparer" || pathname === "/en/compare" || pathname === "/compare"
+  const isOffersPath = pathname === "/offres" || pathname === "/en/offers"
 
   const handleHeaderNavigation = (event: MouseEvent<HTMLElement>) => {
     if (!isComparePath) return
@@ -57,6 +58,14 @@ export function Header({ locale = "fr" }: HeaderProps) {
     // there so header links cannot be swallowed by client-side routing state.
     event.preventDefault()
     window.location.assign(href)
+  }
+
+  const handleBookingClick = () => {
+    openBookingModal()
+  }
+
+  const handleBookingPointerDown = () => {
+    if (isOffersPath) openBookingModal()
   }
 
   useEffect(() => {
@@ -103,7 +112,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
     <header
       onClickCapture={handleHeaderNavigation}
       className={cn(
-        "fixed top-0 left-0 right-0 z-[1000] pointer-events-auto transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-[3000] pointer-events-auto transition-all duration-500",
         isScrolled
           ? "bg-background/95 backdrop-blur-md shadow-sm py-2"
           : "bg-gradient-to-b from-black/30 to-transparent py-4"
@@ -175,7 +184,9 @@ export function Header({ locale = "fr" }: HeaderProps) {
           {/* CTA */}
           <div className="relative z-10 hidden xl:flex items-center">
             <Button
-              onClick={() => openBookingModal()}
+              type="button"
+              onPointerDown={handleBookingPointerDown}
+              onClick={handleBookingClick}
               className={cn(
                 "rounded-none px-6 py-5 text-sm tracking-wide transition-all duration-300",
                 isScrolled
@@ -191,7 +202,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={cn(
-              "relative z-[102] xl:hidden p-2 transition-all duration-300",
+              "relative z-[3002] xl:hidden p-2 transition-all duration-300",
               isMobileMenuOpen ? "pointer-events-none opacity-0" : isScrolled ? "text-foreground" : "text-white"
             )}
             aria-label={isMobileMenuOpen ? dict.nav.closeMenu : dict.nav.openMenu}
@@ -208,7 +219,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
       <div
         id="mobile-navigation"
         ref={mobileNavigationRef}
-        className="xl:hidden fixed inset-0 z-[1001]"
+        className="xl:hidden fixed inset-0 z-[3001]"
       >
         <button
           type="button"
@@ -271,9 +282,11 @@ export function Header({ locale = "fr" }: HeaderProps) {
 
           <div className="border-t border-border/70 bg-secondary/35 p-5">
             <Button
+              type="button"
+              onPointerDown={handleBookingPointerDown}
               onClick={() => {
                 setIsMobileMenuOpen(false)
-                openBookingModal()
+                handleBookingClick()
               }}
               className="w-full rounded-none py-5 text-sm tracking-wide"
             >
