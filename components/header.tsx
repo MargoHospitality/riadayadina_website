@@ -42,6 +42,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
   const mobileNavigationRef = useRef<HTMLDivElement>(null)
   const isComparePath = pathname === "/comparer" || pathname === "/en/compare" || pathname === "/compare"
   const isOffersPath = pathname === "/offres" || pathname === "/en/offers"
+  const offersBookingHref = locale === "en" ? "/en/offers#booking" : "/offres#booking"
 
   const handleHeaderNavigation = (event: MouseEvent<HTMLElement>) => {
     if (!isComparePath) return
@@ -64,9 +65,6 @@ export function Header({ locale = "fr" }: HeaderProps) {
     openBookingModal()
   }
 
-  const handleBookingPointerDown = () => {
-    if (isOffersPath) openBookingModal()
-  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -183,19 +181,32 @@ export function Header({ locale = "fr" }: HeaderProps) {
 
           {/* CTA */}
           <div className="relative z-10 hidden xl:flex items-center">
-            <Button
-              type="button"
-              onPointerDown={handleBookingPointerDown}
-              onClick={handleBookingClick}
-              className={cn(
-                "rounded-none px-6 py-5 text-sm tracking-wide transition-all duration-300",
-                isScrolled
-                  ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                  : "bg-white text-foreground hover:bg-white/90"
-              )}
-            >
-              {dict.nav.book}
-            </Button>
+            {isOffersPath ? (
+              <Button
+                asChild
+                className={cn(
+                  "rounded-none px-6 py-5 text-sm tracking-wide transition-all duration-300",
+                  isScrolled
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                    : "bg-white text-foreground hover:bg-white/90"
+                )}
+              >
+                <a href={offersBookingHref}>{dict.nav.book}</a>
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                onClick={handleBookingClick}
+                className={cn(
+                  "rounded-none px-6 py-5 text-sm tracking-wide transition-all duration-300",
+                  isScrolled
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                    : "bg-white text-foreground hover:bg-white/90"
+                )}
+              >
+                {dict.nav.book}
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -281,17 +292,22 @@ export function Header({ locale = "fr" }: HeaderProps) {
           </div>
 
           <div className="border-t border-border/70 bg-secondary/35 p-5">
-            <Button
-              type="button"
-              onPointerDown={handleBookingPointerDown}
-              onClick={() => {
-                setIsMobileMenuOpen(false)
-                handleBookingClick()
-              }}
-              className="w-full rounded-none py-5 text-sm tracking-wide"
-            >
-              {dict.nav.bookNow}
-            </Button>
+            {isOffersPath ? (
+              <Button asChild className="w-full rounded-none py-5 text-sm tracking-wide">
+                <a href={offersBookingHref} onClick={() => setIsMobileMenuOpen(false)}>{dict.nav.bookNow}</a>
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                onClick={() => {
+                  setIsMobileMenuOpen(false)
+                  handleBookingClick()
+                }}
+                className="w-full rounded-none py-5 text-sm tracking-wide"
+              >
+                {dict.nav.bookNow}
+              </Button>
+            )}
           </div>
         </nav>
       </div>
