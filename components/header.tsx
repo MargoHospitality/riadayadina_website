@@ -85,7 +85,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-[90] pointer-events-auto transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-[1000] pointer-events-auto transition-all duration-500",
         isScrolled
           ? "bg-background/95 backdrop-blur-md shadow-sm py-2"
           : "bg-gradient-to-b from-black/30 to-transparent py-4"
@@ -125,7 +125,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden xl:flex items-center gap-6">
+          <nav className="relative z-10 hidden xl:flex items-center gap-6">
             {navigation.map((item) => (
               <Link
                 key={item.key}
@@ -143,6 +143,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
           <Link
             href={languageSwitchHref}
             className={cn(
+              "relative z-10",
               "hidden xl:inline-flex h-8 w-8 items-center justify-center rounded-full border text-base leading-none shadow-sm transition-all hover:scale-105",
               isScrolled ? "border-border bg-background/80 text-foreground" : "border-white/30 bg-white/10 text-white"
             )}
@@ -153,7 +154,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
           </Link>
 
           {/* CTA */}
-          <div className="hidden xl:flex items-center">
+          <div className="relative z-10 hidden xl:flex items-center">
             <Button
               onClick={() => openBookingModal()}
               className={cn(
@@ -184,13 +185,11 @@ export function Header({ locale = "fr" }: HeaderProps) {
       </div>
 
       {/* Mobile Menu */}
+      {isMobileMenuOpen && (
       <div
         id="mobile-navigation"
         ref={mobileNavigationRef}
-        className={cn(
-          "xl:hidden fixed inset-0 z-[101] transition-all duration-300",
-          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
-        )}
+        className="xl:hidden fixed inset-0 z-[1001]"
       >
         <button
           type="button"
@@ -264,6 +263,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
           </div>
         </nav>
       </div>
+      )}
     </header>
   )
 }
