@@ -97,9 +97,9 @@ const copy = {
     offers: [
       {
         nights: 2,
-        title: "Patio Stay",
+        title: "Getaway",
         subtitle: "From 2 nights",
-        description: "Direct-booking attentions from your first nights at Ayadina",
+        description: "Direct-booking attentions for a short Ayadina escape",
         benefits: [
           { icon: BadgePercent, text: "Official Ayadina direct rate", highlight: true },
           { icon: CalendarCheck, text: "Flexible cancellation", highlight: true },
@@ -113,9 +113,9 @@ const copy = {
       },
       {
         nights: 3,
-        title: "Ayadina Stay",
+        title: "Immersion",
         subtitle: "From 3 nights",
-        description: "The most complete stay, including return airport transfer",
+        description: "The most complete immersion, including return airport transfer",
         featured: true,
         benefits: [
           { icon: BadgePercent, text: "Official Ayadina direct rate", highlight: true },

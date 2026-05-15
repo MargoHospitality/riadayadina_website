@@ -156,7 +156,7 @@ const compareCopy = {
     personalWelcomeText: "For all direct guests",
     packages: {
       immersion: "Immersion privileges (3 nights or more)",
-      escapade: "Escapade privileges (2 nights)",
+      escapade: "Getaway privileges (2 nights)",
       direct: "Special direct offer",
     },
     perks: {

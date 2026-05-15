@@ -80,7 +80,7 @@ export async function TestimonialsSection({ limit = 3, locale = "fr" }: Testimon
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <StarRating rating={review.rating} />
                   <a
-                    href={review.sourceUrl}
+                    href={summary.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-xs text-primary underline-offset-4 hover:underline"
@@ -106,15 +106,17 @@ export async function TestimonialsSection({ limit = 3, locale = "fr" }: Testimon
                 <div className="border-t border-border pt-4">
                   <p className="font-medium text-foreground">{review.authorLabel}</p>
                   <p className="text-sm text-muted-foreground">{review.dateLabel}</p>
-                  <a
-                    href={review.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 inline-flex text-sm text-primary underline-offset-4 hover:underline"
-                    aria-label={locale === "fr" ? `Lire l’avis complet de ${review.authorLabel} sur Google` : `Read ${review.authorLabel}’s full review on Google`}
-                  >
-                    {dict.common.completeReview}
-                  </a>
+                  <details className="group mt-3">
+                    <summary
+                      className="cursor-pointer list-none text-sm text-primary underline-offset-4 hover:underline"
+                      aria-label={locale === "fr" ? `Lire l’avis complet de ${review.authorLabel}` : `Read ${review.authorLabel}’s full review`}
+                    >
+                      {dict.common.completeReview}
+                    </summary>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      “{review.quote}”
+                    </p>
+                  </details>
                 </div>
               </article>
             ))}

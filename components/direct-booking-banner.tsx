@@ -56,7 +56,7 @@ const copy = {
       {
         nights: "2",
         subtitle: "From 2 nights",
-        title: "Patio Stay",
+        title: "Getaway",
         benefits: [
           ["Official Ayadina direct rate", true],
           ["Flexible cancellation", true],
@@ -70,7 +70,7 @@ const copy = {
       {
         nights: "3",
         subtitle: "From 3 nights",
-        title: "Ayadina Stay",
+        title: "Immersion",
         benefits: [
           ["Official Ayadina direct rate", true],
           ["Flexible cancellation", true],

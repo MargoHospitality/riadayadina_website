@@ -36,6 +36,10 @@ export function Header({ locale = "fr" }: HeaderProps) {
   const targetLocale: Locale = locale === "fr" ? "en" : "fr"
   const switchedPath = switchLocalePath(pathname || getLocalizedPath("home", locale), targetLocale)
   const languageSwitchHref = searchParams.size > 0 ? `${switchedPath}?${searchParams.toString()}` : switchedPath
+  const currentFlag = locale === "fr" ? "🇫🇷" : "🇬🇧"
+  const targetFlag = targetLocale === "fr" ? "🇫🇷" : "🇬🇧"
+  const currentLanguageLabel = locale === "fr" ? "Français" : "English"
+  const targetLanguageLabel = targetLocale === "fr" ? "Français" : "English"
   const mobileNavigationRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -54,7 +58,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
       if (event.key !== "Tab") return
 
       const focusable = mobileNavigationRef.current?.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled])'
+        'a[href], button:not([disabled]):not([tabindex="-1"])'
       )
       if (!focusable?.length) return
 
@@ -71,7 +75,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
 
     document.body.style.overflow = "hidden"
     window.addEventListener("keydown", handleKeyDown)
-    window.setTimeout(() => mobileNavigationRef.current?.querySelector<HTMLElement>('a[href], button:not([disabled])')?.focus(), 0)
+    window.setTimeout(() => mobileNavigationRef.current?.querySelector<HTMLElement>('a[href], button:not([disabled]):not([tabindex="-1"])')?.focus(), 0)
     return () => {
       document.body.style.overflow = ""
       window.removeEventListener("keydown", handleKeyDown)
@@ -81,7 +85,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-[60] transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-[90] pointer-events-auto transition-all duration-500",
         isScrolled
           ? "bg-background/95 backdrop-blur-md shadow-sm py-2"
           : "bg-gradient-to-b from-black/30 to-transparent py-4"
@@ -139,12 +143,13 @@ export function Header({ locale = "fr" }: HeaderProps) {
           <Link
             href={languageSwitchHref}
             className={cn(
-              "hidden xl:inline-flex text-xs uppercase tracking-[0.18em] transition-colors hover:opacity-70",
-              isScrolled ? "text-muted-foreground" : "text-white/80"
+              "hidden xl:inline-flex h-8 w-8 items-center justify-center rounded-full border text-base leading-none shadow-sm transition-all hover:scale-105",
+              isScrolled ? "border-border bg-background/80 text-foreground" : "border-white/30 bg-white/10 text-white"
             )}
-            aria-label={dict.nav.languageLabel}
+            aria-label={`${dict.nav.languageLabel} · ${targetLanguageLabel}`}
+            title={targetLanguageLabel}
           >
-            {dict.nav.switchTo}
+            <span aria-hidden="true">{targetFlag}</span>
           </Link>
 
           {/* CTA */}
@@ -166,7 +171,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={cn(
-              "relative z-[62] xl:hidden p-2 transition-colors duration-300",
+              "relative z-[102] xl:hidden p-2 transition-colors duration-300",
               isMobileMenuOpen || isScrolled ? "text-foreground" : "text-white"
             )}
             aria-label={isMobileMenuOpen ? dict.nav.closeMenu : dict.nav.openMenu}
@@ -183,38 +188,67 @@ export function Header({ locale = "fr" }: HeaderProps) {
         id="mobile-navigation"
         ref={mobileNavigationRef}
         className={cn(
-          "xl:hidden fixed inset-0 top-0 z-[61] bg-background/98 pt-28 backdrop-blur-lg transition-all duration-300",
+          "xl:hidden fixed inset-0 z-[101] transition-all duration-300",
           isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         )}
       >
-        <nav className="flex h-full flex-col items-center justify-center gap-6 overflow-y-auto pb-20">
-          {navigation.map((item) => (
-            <Link
-              key={item.key}
-              href={getLocalizedPath(item.key, locale)}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="font-serif text-2xl text-foreground hover:text-primary transition-colors"
+        <button
+          type="button"
+          tabIndex={-1}
+          className="absolute inset-0 bg-primary/25 backdrop-blur-[2px]"
+          aria-label={dict.nav.closeMenu}
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+        <nav className="absolute bottom-3 right-3 top-3 flex w-[min(88vw,390px)] flex-col overflow-hidden border border-border/70 bg-background shadow-2xl">
+          <div className="flex items-center justify-between border-b border-border/70 px-5 py-4">
+            <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Menu</p>
+            <div className="flex items-center gap-2" aria-label={dict.nav.languageLabel}>
+              <span
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-accent/50 bg-accent/10 text-base"
+                title={currentLanguageLabel}
+                aria-label={currentLanguageLabel}
+              >
+                {currentFlag}
+              </span>
+              <Link
+                href={languageSwitchHref}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-base transition-all hover:border-accent hover:bg-accent/10"
+                aria-label={`${dict.nav.languageLabel} · ${targetLanguageLabel}`}
+                title={targetLanguageLabel}
+              >
+                {targetFlag}
+              </Link>
+            </div>
+          </div>
+
+          <div className="flex-1 overflow-y-auto px-5 py-5">
+            <div className="divide-y divide-border/60">
+              {navigation.map((item) => (
+                <Link
+                  key={item.key}
+                  href={getLocalizedPath(item.key, locale)}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="group flex items-center justify-between py-3.5 font-serif text-xl text-foreground transition-colors hover:text-primary"
+                >
+                  <span>{dict.nav[item.labelKey]}</span>
+                  <span className="text-xs text-muted-foreground transition-transform group-hover:translate-x-1">→</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="border-t border-border/70 bg-secondary/35 p-5">
+            <Button
+              onClick={() => {
+                setIsMobileMenuOpen(false)
+                openBookingModal()
+              }}
+              className="w-full rounded-none py-5 text-sm tracking-wide"
             >
-              {dict.nav[item.labelKey]}
-            </Link>
-          ))}
-          <Link
-            href={languageSwitchHref}
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-primary"
-            aria-label={dict.nav.languageLabel}
-          >
-            {dict.nav.switchTo}
-          </Link>
-          <Button
-            onClick={() => {
-              setIsMobileMenuOpen(false)
-              openBookingModal()
-            }}
-            className="rounded-none px-8 py-6 text-base mt-8"
-          >
-            {dict.nav.bookNow}
-          </Button>
+              {dict.nav.bookNow}
+            </Button>
+          </div>
         </nav>
       </div>
     </header>

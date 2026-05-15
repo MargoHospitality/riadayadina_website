@@ -132,13 +132,23 @@ export default function ContactPage({ locale = "fr" }: { locale?: Locale }) {
           </div>
         </section>
 
-        <section className="relative z-10 -mt-16 pb-16">
-          <div className="container mx-auto px-4"><div className="max-w-2xl mx-auto">
-            <a href={buildWhatsAppUrl(t.whatsappMessage)} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between bg-[#25D366] text-white p-6 md:p-8 shadow-2xl hover:bg-[#22c55e] transition-all group">
-              <div className="flex items-center gap-4"><div className="w-14 h-14 bg-white/20 flex items-center justify-center"><MessageCircle className="h-7 w-7" /></div><div><h3 className="font-serif text-xl mb-1">{t.whatsappTitle}</h3><p className="text-white/80 text-sm">{t.whatsappText}</p></div></div>
-              <div className="hidden md:block text-white/60 group-hover:translate-x-1 transition-transform"><svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg></div>
+        <section className="relative z-10 -mt-8 pb-12">
+          <div className="container mx-auto px-4 text-center">
+            <a
+              href={buildWhatsAppUrl(t.whatsappMessage)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 border border-[#25D366]/35 bg-card/95 px-5 py-3 text-sm text-foreground shadow-lg backdrop-blur transition-all hover:-translate-y-0.5 hover:border-[#25D366]/60 hover:shadow-xl"
+            >
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#25D366]/12 text-[#128C4A]">
+                <MessageCircle className="h-5 w-5" />
+              </span>
+              <span className="text-left">
+                <span className="block font-medium">WhatsApp</span>
+                <span className="block text-xs text-muted-foreground">{t.whatsappText}</span>
+              </span>
             </a>
-          </div></div>
+          </div>
         </section>
 
         <section className="pb-16">

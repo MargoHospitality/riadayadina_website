@@ -40,6 +40,10 @@
       noAvailabilityKicker: "Official Ayadina availability",
       noAvailabilityTitle: "We no longer have online availability for these dates.",
       noAvailabilityText: "You can contact reservations directly: booking@riadayadinamarrakech.net.",
+      packageTitles: {
+        immersion: "Immersion",
+        escapade: "Getaway",
+      },
       packages: {
         immersion: ["Round-trip airport transfer", "Flexible cancellation", "No prepayment", "10% off Spa treatments", "Welcome cocktail", "Upgrade & early check-in subject to availability"],
         escapade: ["One-way airport transfer", "Flexible cancellation", "No prepayment", "10% off Spa treatments", "Welcome cocktail", "Upgrade & early check-in subject to availability"],
@@ -221,13 +225,17 @@
   }
 
   function restoreTopAfterCloudbedsAutoScroll() {
-    if (state.restoredTop || window.innerWidth > 768) return
+    if (state.restoredTop) return
     state.restoredTop = true
-    window.setTimeout(() => {
-      const mount = document.getElementById(mountId)
-      const top = mount ? Math.max(mount.getBoundingClientRect().top + window.scrollY - 8, 0) : 0
-      window.scrollTo({ top, behavior: "auto" })
-    }, 250)
+    ;[150, 650, 1200].forEach((delay) => {
+      window.setTimeout(() => {
+        const card = document.querySelector(".margo-direct-card")
+        const mount = document.getElementById(mountId)
+        const target = card || mount
+        const top = target ? Math.max(target.getBoundingClientRect().top + window.scrollY - 12, 0) : 0
+        window.scrollTo({ top, behavior: "auto" })
+      }, delay)
+    })
   }
 
   function hideNativeRateCheckButton() {
@@ -248,6 +256,7 @@
 
       const titleElement = plan.querySelector(".cb-rate-plan-title-text")
       if (titleElement) {
+        renameRatePlanTitle(titleElement)
         titleElement.insertAdjacentElement("afterend", createPackageBlock(benefits))
       } else {
         plan.insertBefore(createPackageBlock(benefits), plan.firstChild?.nextSibling || null)
@@ -259,10 +268,18 @@
 
   function getBenefitsForRatePlan(title) {
     const packages = getCopy().packages
-    if (/immersion/i.test(title)) return packages.immersion
-    if (/escapade/i.test(title)) return packages.escapade
+    if (/immersion|ayadina stay/i.test(title)) return packages.immersion
+    if (/escapade|patio stay|getaway/i.test(title)) return packages.escapade
     if (/offre spéciale directe|special direct offer/i.test(title)) return packages.direct
     return null
+  }
+
+  function renameRatePlanTitle(titleElement) {
+    const labels = getCopy().packageTitles
+    if (!labels) return
+    const title = titleElement.textContent || ""
+    if (/immersion|ayadina stay/i.test(title)) titleElement.textContent = labels.immersion
+    if (/escapade|patio stay|getaway/i.test(title)) titleElement.textContent = labels.escapade
   }
 
   function createPackageBlock(benefits) {
