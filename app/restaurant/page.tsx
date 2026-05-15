@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import Image from "next/image"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
@@ -19,36 +20,12 @@ import {
 
 const RESTAURANT_MENU_URL = "/docs/carte-menus-vins-cocktails-2025.pdf"
 
-export const metadata: Metadata = {
-  title: "Restaurant & bar à Marrakech | Riad Ayadina",
-  description:
-    "Restaurant franco-marocain au Riad Ayadina à Marrakech : terrasse sur le toit, patios, bar autorisé en médina, vins, cocktails et réservation de table.",
-  alternates: {
-    canonical: "/restaurant",
-  },
-  openGraph: {
-    title: "Restaurant & bar à Marrakech | Riad Ayadina",
-    description:
-      "Une table franco-marocaine au calme de la médina, avec terrasse, patios et bar autorisé.",
-    url: "/restaurant",
-    siteName: "Riad Ayadina & Spa",
-    type: "website",
-    locale: "fr_FR",
-    images: [
-      {
-        url: "/images/ayadina-home/patio-jour-04.jpg",
-        width: 1200,
-        height: 800,
-        alt: "Patio principal du Riad Ayadina à Marrakech",
-      },
-    ],
-  },
-}
+export const metadata: Metadata = createPageMetadata("restaurant", "fr")
 
 export default function RestaurantPage() {
   return (
     <>
-      <Header />
+      <Header locale="fr" />
       <main className="bg-background">
         {/* Hero Section */}
         <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
@@ -303,7 +280,7 @@ export default function RestaurantPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale="fr" />
     </>
   )
 }

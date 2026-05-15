@@ -1,3 +1,5 @@
+import type { Metadata } from "next"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Header } from "@/components/header"
@@ -14,29 +16,7 @@ import {
 
 const SPA_MENU_URL = "/docs/brochure-spa-2025.pdf"
 
-export const metadata = {
-  title: "Spa Marrakech | Hammam & massages au Riad Ayadina",
-  description: "Les Bains d’Ayadina, spa de 250 m² à Marrakech : hammam traditionnel, massages, soins du visage, rituels marocains et réservation de soins au cœur de la médina.",
-  alternates: {
-    canonical: "/spa",
-  },
-  openGraph: {
-    title: "Spa Marrakech | Hammam & massages au Riad Ayadina",
-    description: "Hammam traditionnel, massages, soins du visage et rituels marocains dans un spa de 250 m² au calme du riad.",
-    url: "/spa",
-    siteName: "Riad Ayadina & Spa",
-    type: "website",
-    locale: "fr_FR",
-    images: [
-      {
-        url: "/images/ayadina-home/patio-jour-04.jpg",
-        width: 1200,
-        height: 800,
-        alt: "Patio principal du Riad Ayadina à Marrakech",
-      },
-    ],
-  },
-}
+export const metadata: Metadata = createPageMetadata("spa", "fr")
 
 const spaHighlights = [
   {
@@ -85,7 +65,7 @@ const rituals = [
 export default function SpaPage() {
   return (
     <>
-      <Header />
+      <Header locale="fr" />
       <main>
         {/* Hero */}
         <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center">
@@ -365,7 +345,7 @@ export default function SpaPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale="fr" />
     </>
   )
 }

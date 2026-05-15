@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import { Suspense } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
@@ -7,16 +8,8 @@ import { CompareClient } from "./comparer-client"
 export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = {
-  title: "Comparer les tarifs | Réservation directe Riad Ayadina",
-  description:
-    "Comparez les tarifs publics et l’offre officielle du Riad Ayadina pour vos dates, puis réservez en direct avec les avantages Ayadina.",
-  alternates: {
-    canonical: "/comparer",
-  },
-  robots: {
-    index: false,
-    follow: true,
-  },
+  ...createPageMetadata("comparer", "fr"),
+  robots: { index: false, follow: true },
 }
 
 export default function ComparePage() {
@@ -31,7 +24,7 @@ function ComparePageFallback() {
   return (
     <>
       <main className="min-h-screen bg-background">
-        <Header />
+        <Header locale="fr" />
         <section className="pt-32 md:pt-40 pb-16">
           <div className="container mx-auto px-4 max-w-xl text-center">
             <p className="text-primary text-xs uppercase tracking-[0.2em] mb-6">Étape 1/2 · Vérification en cours</p>
@@ -44,7 +37,7 @@ function ComparePageFallback() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale="fr" />
     </>
   )
 }

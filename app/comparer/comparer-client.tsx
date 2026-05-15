@@ -37,6 +37,7 @@ export function CompareClient() {
   }
   const [submittedSearch, setSubmittedSearch] = useState<typeof urlSearch | null>(null)
   const search = submittedSearch ?? urlSearch
+  const locale = search.language === "en" ? "en" : "fr"
 
   useEffect(() => {
     setSubmittedSearch(null)
@@ -136,7 +137,7 @@ export function CompareClient() {
     return (
       <>
         <main className="min-h-screen bg-background">
-          <Header />
+          <Header locale={locale} />
           <section className="pt-32 pb-16">
             <div className="container mx-auto px-4 max-w-2xl text-center">
               <p className="text-accent text-sm uppercase tracking-[0.25em] mb-4">Réservation directe</p>
@@ -150,7 +151,7 @@ export function CompareClient() {
             </div>
           </section>
         </main>
-        <Footer />
+        <Footer locale={locale} />
       </>
     )
   }
@@ -163,7 +164,7 @@ export function CompareClient() {
     return (
       <>
         <main className="min-h-screen bg-background">
-          <Header />
+          <Header locale={locale} />
 
         <section className="pt-32 md:pt-40 pb-16">
           <div className="container mx-auto px-4">
@@ -183,7 +184,7 @@ export function CompareClient() {
                 <div className="flex items-center justify-center gap-6 md:gap-10">
                   <div className="text-center">
                     <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Arrivée</p>
-                    <p className="font-serif text-lg text-foreground">{formatLongDate(search.checkIn!)}</p>
+                    <p className="font-serif text-lg text-foreground">{formatLongDate(search.checkIn!, locale)}</p>
                   </div>
                   <div className="flex flex-col items-center gap-1">
                     <div className="w-8 h-px bg-accent" />
@@ -191,7 +192,7 @@ export function CompareClient() {
                   </div>
                   <div className="text-center">
                     <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Départ</p>
-                    <p className="font-serif text-lg text-foreground">{formatLongDate(search.checkOut!)}</p>
+                    <p className="font-serif text-lg text-foreground">{formatLongDate(search.checkOut!, locale)}</p>
                   </div>
                   <div className="h-8 w-px bg-border mx-2 hidden sm:block" />
                   <div className="text-center hidden sm:block">
@@ -256,7 +257,7 @@ export function CompareClient() {
           </div>
         </section>
         </main>
-        <Footer />
+        <Footer locale={locale} />
       </>
     )
   }
@@ -283,7 +284,7 @@ export function CompareClient() {
   return (
     <>
       <main className="min-h-screen bg-background">
-        <Header />
+        <Header locale={locale} />
 
       {/* Hero Banner */}
       <section className="relative pt-28 md:pt-32 pb-8 bg-primary overflow-hidden">
@@ -303,7 +304,7 @@ export function CompareClient() {
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
               <div className="flex items-center gap-4 flex-wrap">
                 <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-primary-foreground">
-                  Votre séjour du {formatLongDate(search.checkIn!)} au {formatLongDate(search.checkOut!)}
+                  Votre séjour du {formatLongDate(search.checkIn!, locale)} au {formatLongDate(search.checkOut!, locale)}
                 </h1>
                 <button 
                   onClick={() => setIsModalOpen(true)}
@@ -339,7 +340,7 @@ export function CompareClient() {
                   <p className="text-accent text-sm uppercase tracking-[0.2em] mb-3">Disponibilité en ligne</p>
                   <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Nous n&apos;avons plus de disponibilité en ligne pour ces dates.</h2>
                   <p className="text-muted-foreground mb-6">
-                    Pour votre séjour du {formatLongDate(search.checkIn!)} au {formatLongDate(search.checkOut!)}, aucune chambre n&apos;est disponible à la réservation en ligne actuellement. Vous pouvez écrire au service réservation si vous souhaitez une confirmation directe ou proposer d&apos;autres dates.
+                    Pour votre séjour du {formatLongDate(search.checkIn!, locale)} au {formatLongDate(search.checkOut!, locale)}, aucune chambre n&apos;est disponible à la réservation en ligne actuellement. Vous pouvez écrire au service réservation si vous souhaitez une confirmation directe ou proposer d&apos;autres dates.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button asChild size="lg" className="rounded-none px-8 py-6">
@@ -535,9 +536,10 @@ export function CompareClient() {
         defaultCheckOut={search.checkOut}
         defaultAdults={Number(search.adults)}
         onSearchSubmit={handleDateSearchSubmit}
+        locale={locale}
       />
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </>
   )
 }
@@ -658,12 +660,12 @@ function getEscapadePackagePerks() {
   ]
 }
 
-function formatLongDate(value: string) {
-  return new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "long" }).format(new Date(`${value}T00:00:00`))
+function formatLongDate(value: string, locale: "fr" | "en" = "fr") {
+  return new Intl.DateTimeFormat(locale === "en" ? "en-GB" : "fr-FR", { day: "numeric", month: "long" }).format(new Date(`${value}T00:00:00`))
 }
 
-function formatMoney(value: number, currency: string) {
-  return new Intl.NumberFormat("fr-FR", {
+function formatMoney(value: number, currency: string, locale: "fr" | "en" = "fr") {
+  return new Intl.NumberFormat(locale === "en" ? "en-GB" : "fr-FR", {
     style: "currency",
     currency,
     maximumFractionDigits: 0,

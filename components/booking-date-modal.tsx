@@ -3,10 +3,12 @@
 import { useState, useEffect, useRef } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import type { DateRange } from "react-day-picker"
-import { fr } from "date-fns/locale"
+import { enGB, fr } from "date-fns/locale"
 import { X, Calendar as CalendarIcon, Users, ShieldCheck, Sparkles, Gift, Star, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
+import { getDictionary } from "@/lib/i18n/dictionary"
+import { getBookingLanguage, getIntlLocale, type Locale } from "@/lib/i18n/routing"
 import { cn } from "@/lib/utils"
 
 interface BookingSearchSelection {
@@ -22,13 +24,16 @@ interface BookingDateModalProps {
   defaultCheckOut?: string
   defaultAdults?: number
   onSearchSubmit?: (search: BookingSearchSelection) => void
+  locale?: Locale
 }
 
-const displayDate = new Intl.DateTimeFormat("fr-FR", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-})
+function createDisplayDate(locale: Locale) {
+  return new Intl.DateTimeFormat(getIntlLocale(locale), {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  })
+}
 
 function parseIsoDate(value: string) {
   const [year, month, day] = value.split("-").map(Number)
@@ -43,9 +48,9 @@ function formatIsoDate(date: Date) {
   return `${year}-${month}-${day}`
 }
 
-function formatDisplayDate(value: string) {
+function formatDisplayDate(value: string, locale: Locale) {
   const date = parseIsoDate(value)
-  return date ? displayDate.format(date) : value
+  return date ? createDisplayDate(locale).format(date) : value
 }
 
 function getTodayDate() {
@@ -61,9 +66,12 @@ export function BookingDateModal({
   defaultCheckOut = "",
   defaultAdults = 2,
   onSearchSubmit,
+  locale = "fr",
 }: BookingDateModalProps) {
   const router = useRouter()
   const pathname = usePathname()
+  const dict = getDictionary(locale)
+  const calendarLocale = locale === "en" ? enGB : fr
   const [checkIn, setCheckIn] = useState(defaultCheckIn)
   const [checkOut, setCheckOut] = useState(defaultCheckOut)
   const [adults, setAdults] = useState(defaultAdults)
@@ -152,7 +160,7 @@ export function BookingDateModal({
     setError("")
 
     if (!checkIn || !checkOut) {
-      setError("Veuillez sélectionner vos dates d'arrivée et de départ.")
+      setError(dict.booking.missingDates)
       return
     }
 
@@ -160,12 +168,12 @@ export function BookingDateModal({
     const checkOutDate = parseIsoDate(checkOut)
 
     if (!checkInDate || !checkOutDate) {
-      setError("Format de date invalide.")
+      setError(dict.booking.invalidDate)
       return
     }
 
     if (checkOutDate <= checkInDate) {
-      setError("La date de départ doit être après la date d'arrivée.")
+      setError(dict.booking.checkoutAfter)
       return
     }
 
@@ -182,7 +190,7 @@ export function BookingDateModal({
       return
     }
 
-    router.push(`/comparer?checkIn=${target.checkIn}&checkOut=${target.checkOut}&adults=${target.adults}`)
+    router.push(`/comparer?checkIn=${target.checkIn}&checkOut=${target.checkOut}&adults=${target.adults}&language=${getBookingLanguage(locale)}`)
 
     if (pathname === "/comparer") {
       window.setTimeout(onClose, 250)
@@ -222,18 +230,18 @@ export function BookingDateModal({
     return (
       <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background px-6">
         <div className="max-w-xl text-center">
-          <p className="mb-4 text-accent text-sm uppercase tracking-[0.25em]">Réservation directe</p>
+          <p className="mb-4 text-accent text-sm uppercase tracking-[0.25em]">{dict.booking.loadingEyebrow}</p>
           <h1 className="font-serif text-2xl md:text-3xl text-foreground mb-4">
-            Nous vérifions les meilleurs prix pour vos dates.
+            {dict.booking.loadingTitle}
           </h1>
           <p className="text-sm text-muted-foreground mb-8">
-            Comparaison en temps réel entre l’offre officielle Ayadina et les agences en ligne.
+            {dict.booking.loadingText}
           </p>
           <div className="mx-auto mb-6 h-1.5 max-w-xs overflow-hidden rounded-full bg-primary/10">
             <div className="h-full w-1/2 animate-pulse rounded-full bg-primary" />
           </div>
           <p className="text-xs text-muted-foreground">
-            Arrivée {formatDisplayDate(checkIn)} · Départ {formatDisplayDate(checkOut)}
+            {dict.booking.arrival} {formatDisplayDate(checkIn, locale)} · {dict.booking.departure} {formatDisplayDate(checkOut, locale)}
           </p>
         </div>
       </div>
@@ -278,13 +286,13 @@ export function BookingDateModal({
             {/* Title */}
             <div>
               <h2 id="booking-modal-title" className="font-serif text-xl md:text-2xl">
-                Réservez en direct
+                {dict.booking.title}
               </h2>
               <div className="flex items-center gap-1 mt-1">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="h-3 w-3 fill-accent text-accent" />
                 ))}
-                <span className="text-xs text-primary-foreground/60 ml-1.5">Riad Ayadina & Spa</span>
+                <span className="text-xs text-primary-foreground/60 ml-1.5">{dict.booking.hotel}</span>
               </div>
             </div>
           </div>
@@ -296,23 +304,23 @@ export function BookingDateModal({
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-secondary/50 border border-border/50 p-4">
                   <span className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
-                    Arrivée
+                    {dict.booking.arrival}
                   </span>
                   <div className="flex items-center gap-2">
                     <CalendarIcon className="h-4 w-4 text-accent" />
                     <span className="text-sm text-foreground">
-                      {checkIn ? formatDisplayDate(checkIn) : "Choisir"}
+                      {checkIn ? formatDisplayDate(checkIn, locale) : dict.booking.choose}
                     </span>
                   </div>
                 </div>
                 <div className="bg-secondary/50 border border-border/50 p-4">
                   <span className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
-                    Départ
+                    {dict.booking.departure}
                   </span>
                   <div className="flex items-center gap-2">
                     <CalendarIcon className="h-4 w-4 text-accent" />
                     <span className="text-sm text-foreground">
-                      {checkOut ? formatDisplayDate(checkOut) : "Choisir"}
+                      {checkOut ? formatDisplayDate(checkOut, locale) : dict.booking.choose}
                     </span>
                   </div>
                 </div>
@@ -321,7 +329,7 @@ export function BookingDateModal({
               <div className="border border-border/50 bg-background p-2">
                 <div className="flex items-center justify-between px-2 pt-1">
                   <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                    Calendrier
+                    {dict.booking.calendar}
                   </span>
                   {(checkIn || checkOut) && (
                     <button
@@ -329,7 +337,7 @@ export function BookingDateModal({
                       onClick={resetDates}
                       className="border border-border/70 px-2 py-1 text-[10px] uppercase tracking-wider text-muted-foreground transition-colors hover:border-accent/60 hover:text-accent"
                     >
-                      Recommencer
+                      {dict.booking.restart}
                     </button>
                   )}
                 </div>
@@ -341,7 +349,7 @@ export function BookingDateModal({
                   onMonthChange={setCalendarMonth}
                   onSelect={handleDateRangeChange}
                   disabled={{ before: todayDate }}
-                  locale={fr}
+                  locale={calendarLocale}
                   className="mx-auto p-1 sm:p-3 [--cell-size:--spacing(9)] sm:[--cell-size:--spacing(10)]"
                   classNames={{
                     caption_label: "font-serif text-base text-foreground",
@@ -349,7 +357,7 @@ export function BookingDateModal({
                   }}
                 />
                 <p className="px-2 pb-1 text-center text-[11px] text-muted-foreground">
-                  Sélectionnez l’arrivée puis le départ.
+                  {dict.booking.selectDates}
                 </p>
               </div>
             </div>
@@ -358,7 +366,7 @@ export function BookingDateModal({
             <div className="grid grid-cols-2 gap-3 mb-3">
               <div className="bg-secondary/50 border border-border/50 p-4">
                 <label htmlFor="booking-adults" className="block text-[10px] text-muted-foreground uppercase tracking-wider mb-2">
-                  Voyageurs
+                  {dict.booking.travelers}
                 </label>
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-accent" />
@@ -368,16 +376,16 @@ export function BookingDateModal({
                     onChange={(e) => setAdults(Number(e.target.value))}
                     className="flex-1 bg-transparent text-foreground text-sm focus:outline-none cursor-pointer appearance-none"
                   >
-                    <option value={1}>1 personne</option>
-                    <option value={2}>2 personnes</option>
-                    <option value={3}>3 personnes</option>
+                    <option value={1}>{`1 ${dict.booking.person}`}</option>
+                    <option value={2}>{`2 ${dict.booking.people}`}</option>
+                    <option value={3}>{`3 ${dict.booking.people}`}</option>
                   </select>
                 </div>
               </div>
               {nights > 0 && (
                 <div className="bg-accent/10 border border-accent/30 p-4 flex items-center justify-center">
                   <span className="font-serif text-2xl text-accent">{nights}</span>
-                  <span className="text-sm text-muted-foreground ml-2">nuit{nights > 1 ? "s" : ""}</span>
+                  <span className="text-sm text-muted-foreground ml-2">{nights > 1 ? dict.booking.nights : dict.booking.night}</span>
                 </div>
               )}
             </div>
@@ -385,10 +393,10 @@ export function BookingDateModal({
             <div className="mb-6 border border-accent/25 bg-accent/5 px-4 py-3">
               <div className="flex items-start gap-3">
                 <span className="shrink-0 bg-accent text-accent-foreground px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider">
-                  1 chambre
+                  {dict.booking.oneRoom}
                 </span>
                 <p className="text-xs leading-relaxed text-muted-foreground">
-                  Prix comparés pour une chambre. Si vous voyagez à plusieurs, vous pourrez sélectionner plusieurs chambres sur notre moteur de réservation.
+                  {dict.booking.roomNote}
                 </p>
               </div>
             </div>
@@ -405,15 +413,15 @@ export function BookingDateModal({
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div className="flex flex-col items-center gap-1">
                   <ShieldCheck className="h-4 w-4 text-accent" />
-                  <span className="text-[10px] text-muted-foreground">Contact direct</span>
+                  <span className="text-[10px] text-muted-foreground">{dict.booking.directContact}</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
                   <Sparkles className="h-4 w-4 text-accent" />
-                  <span className="text-[10px] text-muted-foreground">Confirmation rapide</span>
+                  <span className="text-[10px] text-muted-foreground">{locale === "en" ? "Quick confirmation" : "Confirmation rapide"}</span>
                 </div>
                 <div className="flex flex-col items-center gap-1">
                   <Gift className="h-4 w-4 text-accent" />
-                  <span className="text-[10px] text-muted-foreground">Avantages 2+ nuits</span>
+                  <span className="text-[10px] text-muted-foreground">{locale === "en" ? "2+ night benefits" : "Avantages 2+ nuits"}</span>
                 </div>
               </div>
             </div>
@@ -424,13 +432,13 @@ export function BookingDateModal({
               size="lg"
               className="w-full rounded-none py-6 text-base tracking-wide group"
             >
-              Comparer les tarifs
+              {dict.booking.submit}
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
 
             {/* Trust text */}
             <p className="text-[10px] text-center text-muted-foreground mt-4">
-              Nous comparons le tarif direct avec Google Hotels, puis vous réservez sur le site officiel sécurisé.
+              {locale === "en" ? "We compare the direct rate with Google Hotels, then you book on the secure official website." : "Nous comparons le tarif direct avec Google Hotels, puis vous réservez sur le site officiel sécurisé."}
             </p>
           </form>
         </div>

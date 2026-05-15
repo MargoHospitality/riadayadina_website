@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, type ReactNode } from "react"
 import { BookingDateModal } from "./booking-date-modal"
+import type { Locale } from "@/lib/i18n/routing"
 
 interface BookingModalContextType {
   openBookingModal: (defaults?: {
@@ -21,7 +22,7 @@ export function useBookingModal() {
   return context
 }
 
-export function BookingModalProvider({ children }: { children: ReactNode }) {
+export function BookingModalProvider({ children, locale = "fr" }: { children: ReactNode; locale?: Locale }) {
   const [isOpen, setIsOpen] = useState(false)
   const [defaults, setDefaults] = useState<{
     checkIn?: string
@@ -38,6 +39,7 @@ export function BookingModalProvider({ children }: { children: ReactNode }) {
     <BookingModalContext.Provider value={{ openBookingModal }}>
       {children}
       <BookingDateModal
+        locale={locale}
         isOpen={isOpen}
         onClose={() => {
           setIsOpen(false)

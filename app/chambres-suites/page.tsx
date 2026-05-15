@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { RoomsHero } from "@/components/rooms/rooms-hero"
@@ -6,31 +7,7 @@ import { RoomCategory } from "@/components/rooms/room-category"
 import { BookingWidget } from "@/components/booking-widget"
 import { TestimonialsSection } from "@/components/testimonials-section"
 
-export const metadata: Metadata = {
-  title: "Chambres et suites | Riad Ayadina Marrakech",
-  description:
-    "Découvrez les chambres doubles supérieures et suites junior du Riad Ayadina à Marrakech : 9 hébergements singuliers, petit-déjeuner inclus, confort contemporain et artisanat marocain.",
-  alternates: {
-    canonical: "/chambres-suites",
-  },
-  openGraph: {
-    title: "Chambres et suites | Riad Ayadina Marrakech",
-    description:
-      "Neuf chambres et suites dans un riad à Marrakech, entre artisanat marocain, confort actuel et petit-déjeuner inclus.",
-    url: "/chambres-suites",
-    siteName: "Riad Ayadina & Spa",
-    type: "website",
-    locale: "fr_FR",
-    images: [
-      {
-        url: "/images/ayadina-home/patio-jour-04.jpg",
-        width: 1200,
-        height: 800,
-        alt: "Patio principal du Riad Ayadina à Marrakech",
-      },
-    ],
-  },
-}
+export const metadata: Metadata = createPageMetadata("rooms", "fr")
 
 const chambresDoubles = {
   title: "Chambres Doubles Supérieures",
@@ -103,7 +80,7 @@ const suitesJunior = {
 export default function ChambresEtSuitesPage() {
   return (
     <>
-      <Header />
+      <Header locale="fr" />
       <main>
         <RoomsHero />
         
@@ -118,9 +95,9 @@ export default function ChambresEtSuitesPage() {
         />
         
         <BookingWidget />
-        <TestimonialsSection />
+        <TestimonialsSection locale="fr" />
       </main>
-      <Footer />
+      <Footer locale="fr" />
     </>
   )
 }

@@ -1,8 +1,11 @@
 import { Star } from "lucide-react"
+import { getDictionary } from "@/lib/i18n/dictionary"
+import type { Locale } from "@/lib/i18n/routing"
 import { getGoogleReviews } from "@/lib/google-reviews"
 
 interface TestimonialsSectionProps {
   limit?: number
+  locale?: Locale
 }
 
 function StarRating({ rating, size = "h-4 w-4" }: { rating: number; size?: string }) {
@@ -20,8 +23,9 @@ function StarRating({ rating, size = "h-4 w-4" }: { rating: number; size?: strin
   )
 }
 
-export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProps) {
-  const { summary, reviews } = await getGoogleReviews(limit)
+export async function TestimonialsSection({ limit = 3, locale = "fr" }: TestimonialsSectionProps) {
+  const dict = getDictionary(locale)
+  const { summary, reviews } = await getGoogleReviews(limit, locale)
   const ratingParts = summary.ratingValue.toLocaleString("fr-FR", { maximumFractionDigits: 1 }).split(",")
 
   return (
@@ -30,10 +34,10 @@ export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProp
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">
-            {summary.eyebrow}
+            {dict.reviews.eyebrow}
           </p>
           <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-8">
-            {summary.title}
+            {dict.reviews.title}
           </h2>
 
           <a
@@ -51,7 +55,7 @@ export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProp
             <span className="h-12 w-px bg-border" aria-hidden="true" />
             <span>
               <span className="mb-1 block text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                Note moyenne Google
+                {dict.common.googleRating}
               </span>
               <StarRating rating={summary.ratingValue} size="h-4 w-4" />
               <span className="mt-1 block text-sm text-muted-foreground group-hover:text-foreground">
@@ -61,7 +65,7 @@ export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProp
           </a>
 
           <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground/80">
-            Source : {summary.sourcesLabel} · actualisation quotidienne
+            {dict.common.source} : {summary.sourcesLabel} · {dict.common.dailyRefresh}
           </p>
         </div>
 
@@ -108,7 +112,7 @@ export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProp
                     className="mt-3 inline-flex text-sm text-primary underline-offset-4 hover:underline"
                     aria-label={`Lire l’avis complet de ${review.authorLabel} sur Google`}
                   >
-                    Lire l’avis complet sur Google
+                    {dict.common.completeReview}
                   </a>
                 </div>
               </article>
@@ -117,7 +121,7 @@ export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProp
         ) : (
           <div className="mx-auto max-w-2xl border border-border bg-card p-8 text-center">
             <p className="text-muted-foreground">
-              Les avis Google seront affichés ici dès que la connexion à Google Places sera active.
+              {dict.common.reviewsLoadingFallback}
             </p>
           </div>
         )}
@@ -125,7 +129,7 @@ export async function TestimonialsSection({ limit = 3 }: TestimonialsSectionProp
         {/* Source link */}
         <div className="text-center mt-12">
           <p className="text-sm text-muted-foreground">
-            Retrouvez tous nos avis sur{" "}
+            {dict.common.reviewsIntro}{" "}
             <a
               href={summary.googleMapsUrl}
               target="_blank"

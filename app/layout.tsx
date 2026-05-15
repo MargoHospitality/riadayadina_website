@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ScrollToTop } from '@/components/scroll-to-top'
 import { BookingModalProvider } from '@/components/booking-modal-provider'
+import type { Locale } from '@/lib/i18n/routing'
 import { HotelJsonLd } from '@/components/hotel-json-ld'
 import './globals.css'
 
@@ -63,16 +65,18 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const locale = ((await headers()).get("x-ayadina-locale") === "en" ? "en" : "fr") as Locale
+
   return (
-    <html lang="fr" className={`${cormorant.variable} ${inter.variable}`}>
+    <html lang={locale} className={`${cormorant.variable} ${inter.variable}`}>
       <body className="font-sans antialiased">
         <HotelJsonLd />
-        <BookingModalProvider>
+        <BookingModalProvider locale={locale}>
           {children}
           <ScrollToTop />
         </BookingModalProvider>

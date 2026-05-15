@@ -1,4 +1,6 @@
 import { defaultGoogleReviewSummary, type GuestReview, type ReviewsData } from "@/data/reviews"
+import { getDictionary } from "@/lib/i18n/dictionary"
+import { getIntlLocale, type Locale } from "@/lib/i18n/routing"
 
 const GOOGLE_PLACE_DETAILS_ENDPOINT = "https://places.googleapis.com/v1/places"
 const REVIEWS_REVALIDATE_SECONDS = 60 * 60 * 24
@@ -31,17 +33,18 @@ interface GooglePlaceDetails {
   reviews?: GoogleReview[]
 }
 
-function formatRating(rating?: number) {
+function formatRating(rating: number | undefined, locale: Locale) {
   if (typeof rating !== "number") return defaultGoogleReviewSummary.ratingLabel
-  return `${rating.toLocaleString("fr-FR", { maximumFractionDigits: 1 })}/5`
+  return `${rating.toLocaleString(getIntlLocale(locale), { maximumFractionDigits: 1 })}/5`
 }
 
-function formatReviewCount(count?: number) {
+function formatReviewCount(count: number | undefined, locale: Locale) {
+  const dict = getDictionary(locale)
   if (typeof count !== "number") return defaultGoogleReviewSummary.reviewCountLabel
-  return `${count.toLocaleString("fr-FR")} avis Google`
+  return `${count.toLocaleString(getIntlLocale(locale))} ${dict.reviews.reviewCountSuffix}`
 }
 
-function normalizeReview(review: GoogleReview): GuestReview | null {
+function normalizeReview(review: GoogleReview, locale: Locale): GuestReview | null {
   const quote = review.text?.text || review.originalText?.text
   const rating = typeof review.rating === "number" ? review.rating : null
   if (!quote || rating === null || rating < 4) return null
@@ -49,14 +52,14 @@ function normalizeReview(review: GoogleReview): GuestReview | null {
   return {
     id: review.name || `${review.authorAttribution?.displayName ?? "google"}-${review.publishTime ?? quote}`,
     sourceUrl: review.authorAttribution?.uri || defaultGoogleReviewSummary.googleMapsUrl,
-    authorLabel: review.authorAttribution?.displayName || "Hôte Google",
-    dateLabel: review.relativePublishTimeDescription || "Avis Google",
+    authorLabel: review.authorAttribution?.displayName || getDictionary(locale).reviews.guest,
+    dateLabel: review.relativePublishTimeDescription || getDictionary(locale).reviews.reviewLabel,
     quote,
     rating,
   }
 }
 
-export async function getGoogleReviews(limit = 3): Promise<ReviewsData> {
+export async function getGoogleReviews(limit = 3, locale: Locale = "fr"): Promise<ReviewsData> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY
   const placeId = process.env.GOOGLE_PLACE_ID
 
@@ -66,7 +69,7 @@ export async function getGoogleReviews(limit = 3): Promise<ReviewsData> {
 
   try {
     const response = await fetch(
-      `${GOOGLE_PLACE_DETAILS_ENDPOINT}/${placeId}?languageCode=fr`,
+      `${GOOGLE_PLACE_DETAILS_ENDPOINT}/${placeId}?languageCode=${locale}`,
       {
         headers: {
           "X-Goog-Api-Key": apiKey,
@@ -97,16 +100,16 @@ export async function getGoogleReviews(limit = 3): Promise<ReviewsData> {
     const place = (await response.json()) as GooglePlaceDetails
     const googleMapsUrl = place.googleMapsUri || defaultGoogleReviewSummary.googleMapsUrl
     const reviews = (place.reviews ?? [])
-      .map(normalizeReview)
+      .map((review) => normalizeReview(review, locale))
       .filter((review): review is GuestReview => Boolean(review))
       .slice(0, limit)
 
     return {
       summary: {
         ...defaultGoogleReviewSummary,
-        ratingLabel: formatRating(place.rating),
+        ratingLabel: formatRating(place.rating, locale),
         ratingValue: typeof place.rating === "number" ? place.rating : defaultGoogleReviewSummary.ratingValue,
-        reviewCountLabel: formatReviewCount(place.userRatingCount),
+        reviewCountLabel: formatReviewCount(place.userRatingCount, locale),
         reviewCount: place.userRatingCount,
         googleMapsUrl,
         isLive: true,

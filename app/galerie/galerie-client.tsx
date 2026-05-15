@@ -9,6 +9,7 @@ import { ImageGalleryModal } from "@/components/image-gallery-modal"
 import { AnimateOnScroll } from "@/components/animate-on-scroll"
 import { useBookingModal } from "@/components/booking-modal-provider"
 import { cn } from "@/lib/utils"
+import type { Locale } from "@/lib/i18n/routing"
 
 // Gallery categories with images and descriptions for decision-making
 const galleryCategories = [
@@ -103,7 +104,7 @@ const getGridSpan = (index: number) => {
   return patterns[index % patterns.length]
 }
 
-export default function GaleriePage() {
+export default function GaleriePage({ locale = "fr" }: { locale?: Locale }) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [galleryIndex, setGalleryIndex] = useState(0)
@@ -120,7 +121,7 @@ export default function GaleriePage() {
 
   return (
     <>
-      <Header />
+      <Header locale={locale} />
       <main className="bg-background">
         {/* Hero */}
         <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
@@ -321,7 +322,7 @@ export default function GaleriePage() {
         onClose={() => setGalleryOpen(false)}
       />
 
-      <Footer />
+      <Footer locale={locale} />
     </>
   )
 }

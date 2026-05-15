@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function MentionsLegalesPage() {
   return (
     <>
-      <Header />
+      <Header locale="fr" />
       <main className="min-h-screen bg-background pt-32 pb-20">
         <section className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
@@ -54,7 +54,7 @@ export default function MentionsLegalesPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale="fr" />
     </>
   )
 }

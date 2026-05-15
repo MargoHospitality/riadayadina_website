@@ -9,6 +9,7 @@ import { BookingWidget } from "@/components/booking-widget"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { useBookingModal } from "@/components/booking-modal-provider"
 import { buildWhatsAppUrl } from "@/lib/whatsapp"
+import type { Locale } from "@/lib/i18n/routing"
 import { 
   Check, 
   Gift, 
@@ -78,12 +79,12 @@ const whyDirect = [
   },
 ]
 
-export default function OffresPage() {
+export default function OffresPage({ locale = "fr" }: { locale?: Locale }) {
   const { openBookingModal } = useBookingModal()
   
   return (
     <>
-      <Header />
+      <Header locale={locale} />
       <main className="bg-background">
         {/* Hero */}
         <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
@@ -260,7 +261,7 @@ export default function OffresPage() {
         </section>
 
         <BookingWidget />
-        <TestimonialsSection />
+        <TestimonialsSection locale={locale} />
 
         {/* Fine print */}
         <section className="py-12 border-t border-border">
@@ -276,7 +277,7 @@ export default function OffresPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </>
   )
 }

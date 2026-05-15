@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useBookingModal } from "@/components/booking-modal-provider"
 import { buildWhatsAppUrl } from "@/lib/whatsapp"
+import type { Locale } from "@/lib/i18n/routing"
 import { 
   MapPin, 
   Phone, 
@@ -24,7 +25,7 @@ import {
 
 const CONTACT_EMAIL = "booking@riadayadinamarrakech.net"
 
-export default function ContactPage() {
+export default function ContactPage({ locale = "fr" }: { locale?: Locale }) {
   const { openBookingModal } = useBookingModal()
   const [formState, setFormState] = useState<"idle" | "sent">("idle")
   const [formData, setFormData] = useState({
@@ -52,7 +53,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <Header />
+      <Header locale={locale} />
       <main>
         {/* Hero - Full width map with overlay */}
         <section className="relative h-[50vh] min-h-[400px]">
@@ -383,7 +384,7 @@ export default function ContactPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </>
   )
 }

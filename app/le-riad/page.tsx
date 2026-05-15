@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import Image from "next/image"
 import Link from "next/link"
 import { Header } from "@/components/header"
@@ -20,36 +21,12 @@ import {
   ThermometerSun
 } from "lucide-react"
 
-export const metadata: Metadata = {
-  title: "Le Riad Ayadina | Riad avec piscine à Marrakech",
-  description:
-    "Découvrez le Riad Ayadina, maison de 1 200 m² dans la médina de Marrakech avec trois patios, piscine chauffée sur le toit, accès voiture et vue sur l’Atlas.",
-  alternates: {
-    canonical: "/le-riad",
-  },
-  openGraph: {
-    title: "Le Riad Ayadina | Riad avec piscine à Marrakech",
-    description:
-      "Trois patios, une piscine chauffée sur le toit, un accès voiture rare en médina et le calme d’une maison marocaine.",
-    url: "/le-riad",
-    siteName: "Riad Ayadina & Spa",
-    type: "website",
-    locale: "fr_FR",
-    images: [
-      {
-        url: "/images/ayadina-home/patio-jour-04.jpg",
-        width: 1200,
-        height: 800,
-        alt: "Patio principal du Riad Ayadina à Marrakech",
-      },
-    ],
-  },
-}
+export const metadata: Metadata = createPageMetadata("riad", "fr")
 
 export default function LeRiadPage() {
   return (
     <>
-      <Header />
+      <Header locale="fr" />
       <main>
         {/* Hero - Pool focus */}
         <section className="relative h-[70vh] min-h-[500px] flex items-end">
@@ -344,9 +321,9 @@ export default function LeRiadPage() {
         </section>
 
         <BookingWidget />
-        <TestimonialsSection />
+        <TestimonialsSection locale="fr" />
       </main>
-      <Footer />
+      <Footer locale="fr" />
     </>
   )
 }

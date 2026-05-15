@@ -3,26 +3,39 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname, useSearchParams } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useBookingModal } from "@/components/booking-modal-provider"
+import { getDictionary } from "@/lib/i18n/dictionary"
+import { getLocalizedPath, switchLocalePath, type Locale, type RouteKey } from "@/lib/i18n/routing"
 import { cn } from "@/lib/utils"
 
-const navigation = [
-  { name: "Accueil", href: "/" },
-  { name: "Le Riad", href: "/le-riad" },
-  { name: "Chambres et suites", href: "/chambres-suites" },
-  { name: "Restaurant", href: "/restaurant" },
-  { name: "Spa", href: "/spa" },
-  { name: "Galerie", href: "/galerie" },
-  { name: "Offres en direct", href: "/offres" },
-  { name: "Contact", href: "/contact" },
+const navigation: { key: RouteKey; labelKey: keyof ReturnType<typeof getDictionary>["nav"] }[] = [
+  { key: "home", labelKey: "home" },
+  { key: "riad", labelKey: "riad" },
+  { key: "rooms", labelKey: "rooms" },
+  { key: "restaurant", labelKey: "restaurant" },
+  { key: "spa", labelKey: "spa" },
+  { key: "gallery", labelKey: "gallery" },
+  { key: "offers", labelKey: "offers" },
+  { key: "contact", labelKey: "contact" },
 ]
 
-export function Header() {
+interface HeaderProps {
+  locale?: Locale
+}
+
+export function Header({ locale = "fr" }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { openBookingModal } = useBookingModal()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const dict = getDictionary(locale)
+  const targetLocale: Locale = locale === "fr" ? "en" : "fr"
+  const switchedPath = switchLocalePath(pathname || getLocalizedPath("home", locale), targetLocale)
+  const languageSwitchHref = searchParams.size > 0 ? `${switchedPath}?${searchParams.toString()}` : switchedPath
   const mobileNavigationRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -77,7 +90,7 @@ export function Header() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href={getLocalizedPath("home", locale)} className="flex items-center">
             {/* B&W logo for hero (before scroll) */}
             <Image
               src="/images/logo-ayadina-nb.png"
@@ -111,17 +124,28 @@ export function Header() {
           <nav className="hidden xl:flex items-center gap-6">
             {navigation.map((item) => (
               <Link
-                key={item.name}
-                href={item.href}
+                key={item.key}
+                href={getLocalizedPath(item.key, locale)}
                 className={cn(
                   "text-sm tracking-wide transition-colors duration-300 hover:opacity-70",
                   isScrolled ? "text-foreground" : "text-white"
                 )}
               >
-                {item.name}
+                {dict.nav[item.labelKey]}
               </Link>
             ))}
           </nav>
+
+          <Link
+            href={languageSwitchHref}
+            className={cn(
+              "hidden xl:inline-flex text-xs uppercase tracking-[0.18em] transition-colors hover:opacity-70",
+              isScrolled ? "text-muted-foreground" : "text-white/80"
+            )}
+            aria-label={dict.nav.languageLabel}
+          >
+            {dict.nav.switchTo}
+          </Link>
 
           {/* CTA */}
           <div className="hidden xl:flex items-center">
@@ -134,7 +158,7 @@ export function Header() {
                   : "bg-white text-foreground hover:bg-white/90"
               )}
             >
-              Réserver
+              {dict.nav.book}
             </Button>
           </div>
 
@@ -145,7 +169,7 @@ export function Header() {
               "relative z-[62] xl:hidden p-2 transition-colors duration-300",
               isMobileMenuOpen || isScrolled ? "text-foreground" : "text-white"
             )}
-            aria-label={isMobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-label={isMobileMenuOpen ? dict.nav.closeMenu : dict.nav.openMenu}
             aria-expanded={isMobileMenuOpen}
             aria-controls="mobile-navigation"
           >
@@ -163,17 +187,25 @@ export function Header() {
           isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         )}
       >
-        <nav className="flex flex-col items-center justify-center h-full gap-8 pb-20">
+        <nav className="flex h-full flex-col items-center justify-center gap-6 overflow-y-auto pb-20">
           {navigation.map((item) => (
             <Link
-              key={item.name}
-              href={item.href}
+              key={item.key}
+              href={getLocalizedPath(item.key, locale)}
               onClick={() => setIsMobileMenuOpen(false)}
               className="font-serif text-2xl text-foreground hover:text-primary transition-colors"
             >
-              {item.name}
+              {dict.nav[item.labelKey]}
             </Link>
           ))}
+          <Link
+            href={languageSwitchHref}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-primary"
+            aria-label={dict.nav.languageLabel}
+          >
+            {dict.nav.switchTo}
+          </Link>
           <Button
             onClick={() => {
               setIsMobileMenuOpen(false)
@@ -181,7 +213,7 @@ export function Header() {
             }}
             className="rounded-none px-8 py-6 text-base mt-8"
           >
-            Réserver maintenant
+            {dict.nav.bookNow}
           </Button>
         </nav>
       </div>

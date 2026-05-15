@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { createPageMetadata } from "@/lib/i18n/metadata"
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/hero-section"
 import { StorytellingSection } from "@/components/storytelling-section"
@@ -9,44 +10,20 @@ import { BookingWidget } from "@/components/booking-widget"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { Footer } from "@/components/footer"
 
-export const metadata: Metadata = {
-  title: "Riad Ayadina & Spa | Riad boutique à Marrakech",
-  description:
-    "Séjournez au Riad Ayadina & Spa, riad boutique dans la médina de Marrakech avec spa de 250 m², piscine chauffée, restaurant, bar et réservation directe.",
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "Riad Ayadina & Spa | Riad boutique à Marrakech",
-    description:
-      "Un riad boutique au calme de la médina, avec spa, piscine chauffée sur le toit, restaurant et bar.",
-    url: "/",
-    siteName: "Riad Ayadina & Spa",
-    type: "website",
-    locale: "fr_FR",
-    images: [
-      {
-        url: "/images/ayadina-home/patio-jour-04.jpg",
-        width: 1200,
-        height: 800,
-        alt: "Patio principal du Riad Ayadina à Marrakech",
-      },
-    ],
-  },
-}
+export const metadata: Metadata = createPageMetadata("home", "fr")
 
 export default function HomePage() {
   return (
     <main className="min-h-screen">
-      <Header />
+      <Header locale="fr" />
       <HeroSection />
       <StorytellingSection />
       <DirectBookingBanner />
       <RoomsSection />
       <ExperiencesSection />
       <BookingWidget />
-      <TestimonialsSection />
-      <Footer />
+      <TestimonialsSection locale="fr" />
+      <Footer locale="fr" />
     </main>
   )
 }
