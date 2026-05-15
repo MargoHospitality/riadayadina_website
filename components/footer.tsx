@@ -130,10 +130,15 @@ export function Footer({ locale = "fr" }: { locale?: Locale }) {
       <div className="border-t border-white/5">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
+            <a
+              href="https://www.margo-hospitality.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 transition-opacity hover:opacity-80"
+            >
               <Image src="/images/margo-hospitality-white.png" alt="Margo Hospitality" width={100} height={25} className="h-5 w-auto opacity-60" />
               <span className="text-white/40 text-xs">{dict.footer.margo}</span>
-            </div>
+            </a>
             <div className="flex items-center gap-4 text-xs text-white/40">
               <Link href={getLocalizedPath("legal", locale)} className="hover:text-white/60 transition-colors">{dict.footer.legal}</Link>
               <Link href={getLocalizedPath("privacy", locale)} className="hover:text-white/60 transition-colors">{dict.footer.privacy}</Link>

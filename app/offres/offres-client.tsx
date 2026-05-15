@@ -152,7 +152,7 @@ export default function OffresPage({ locale = "fr", testimonials }: { locale?: L
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
               {t.whyDirect.map((item) => (
-                <div key={item.title} className="flex items-center gap-4 text-center md:text-left">
+                <div key={item.title} className="flex w-full max-w-sm items-center gap-4 text-left md:w-auto md:max-w-none">
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0"><item.icon className="h-6 w-6" /></div>
                   <div><p className="font-medium">{item.title}</p><p className="text-sm text-primary-foreground/70">{item.description}</p></div>
                 </div>
@@ -164,9 +164,9 @@ export default function OffresPage({ locale = "fr", testimonials }: { locale?: L
         <section className="py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">{t.introTitle}</h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-4">{t.intro1}</p>
-              <p className="text-muted-foreground text-lg leading-relaxed">{t.intro2}<span className="text-primary font-medium">{t.introHighlight}</span></p>
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-5">{t.introTitle}</h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">{t.intro1}</p>
+              <p className="text-muted-foreground leading-relaxed">{t.intro2}<span className="text-primary font-medium">{t.introHighlight}</span></p>
             </div>
           </div>
         </section>
