@@ -171,8 +171,8 @@ export function Header({ locale = "fr" }: HeaderProps) {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={cn(
-              "relative z-[102] xl:hidden p-2 transition-colors duration-300",
-              isMobileMenuOpen || isScrolled ? "text-foreground" : "text-white"
+              "relative z-[102] xl:hidden p-2 transition-all duration-300",
+              isMobileMenuOpen ? "pointer-events-none opacity-0" : isScrolled ? "text-foreground" : "text-white"
             )}
             aria-label={isMobileMenuOpen ? dict.nav.closeMenu : dict.nav.openMenu}
             aria-expanded={isMobileMenuOpen}
@@ -199,26 +199,36 @@ export function Header({ locale = "fr" }: HeaderProps) {
           aria-label={dict.nav.closeMenu}
           onClick={() => setIsMobileMenuOpen(false)}
         />
-        <nav className="absolute bottom-3 right-3 top-3 flex w-[min(88vw,390px)] flex-col overflow-hidden border border-border/70 bg-background shadow-2xl">
+        <nav className="absolute inset-y-3 right-3 flex w-[88vw] max-w-[390px] flex-col overflow-hidden border border-border/70 bg-background shadow-2xl">
           <div className="flex items-center justify-between border-b border-border/70 px-5 py-4">
             <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Menu</p>
-            <div className="flex items-center gap-2" aria-label={dict.nav.languageLabel}>
-              <span
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-accent/50 bg-accent/10 text-base"
-                title={currentLanguageLabel}
-                aria-label={currentLanguageLabel}
-              >
-                {currentFlag}
-              </span>
-              <Link
-                href={languageSwitchHref}
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2" aria-label={dict.nav.languageLabel}>
+                <span
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-accent/50 bg-accent/10 text-base"
+                  title={currentLanguageLabel}
+                  aria-label={currentLanguageLabel}
+                >
+                  {currentFlag}
+                </span>
+                <Link
+                  href={languageSwitchHref}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-base transition-all hover:border-accent hover:bg-accent/10"
+                  aria-label={`${dict.nav.languageLabel} · ${targetLanguageLabel}`}
+                  title={targetLanguageLabel}
+                >
+                  {targetFlag}
+                </Link>
+              </div>
+              <button
+                type="button"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-base transition-all hover:border-accent hover:bg-accent/10"
-                aria-label={`${dict.nav.languageLabel} · ${targetLanguageLabel}`}
-                title={targetLanguageLabel}
+                className="inline-flex h-8 w-8 items-center justify-center border border-border text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
+                aria-label={dict.nav.closeMenu}
               >
-                {targetFlag}
-              </Link>
+                <X className="h-4 w-4" />
+              </button>
             </div>
           </div>
 
