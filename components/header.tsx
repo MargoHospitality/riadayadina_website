@@ -199,7 +199,10 @@ export function Header({ locale = "fr" }: HeaderProps) {
           aria-label={dict.nav.closeMenu}
           onClick={() => setIsMobileMenuOpen(false)}
         />
-        <nav className="absolute inset-y-3 right-3 flex w-[88vw] max-w-[390px] flex-col overflow-hidden border border-border/70 bg-background shadow-2xl">
+        <nav
+          className="absolute right-3 top-3 flex w-[88vw] max-w-[390px] flex-col overflow-hidden border border-border/70 bg-background shadow-2xl"
+          style={{ height: "calc(100svh - 1.5rem)" }}
+        >
           <div className="flex items-center justify-between border-b border-border/70 px-5 py-4">
             <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Menu</p>
             <div className="flex items-center gap-2">
