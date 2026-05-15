@@ -94,7 +94,7 @@ export function DirectBookingBanner({ locale = "fr" }: { locale?: Locale }) {
       <div className="container mx-auto px-4">
         <AnimateOnScroll animation="fade-up" className="text-center mb-12 md:mb-16">
           <p className="text-accent text-sm uppercase tracking-[0.25em] mb-3">{t.eyebrow}</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">{t.title}</h2>
+          <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">{t.title}</h2>
           <p className="text-muted-foreground max-w-xl mx-auto">{t.intro}</p>
         </AnimateOnScroll>
 
@@ -114,7 +114,7 @@ export function DirectBookingBanner({ locale = "fr" }: { locale?: Locale }) {
                     <div className="flex items-baseline justify-between mb-6">
                       <div>
                         <p className={featured ? "text-xs uppercase tracking-wider text-primary-foreground/60 mb-1" : "text-xs uppercase tracking-wider text-muted-foreground mb-1"}>{card.subtitle}</p>
-                        <h3 className="font-serif text-2xl md:text-3xl">{card.title}</h3>
+                        <h3 className="font-serif text-xl md:text-2xl">{card.title}</h3>
                       </div>
                       <span className={featured ? "font-serif text-4xl text-accent" : "font-serif text-4xl text-accent/60"}>{card.nights}</span>
                     </div>

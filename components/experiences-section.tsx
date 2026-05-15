@@ -108,7 +108,7 @@ export function ExperiencesSection({ locale = "fr" }: { locale?: Locale }) {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">{t.eyebrow}</p>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-6">{t.title}</h2>
+          <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground mb-6">{t.title}</h2>
           <p className="text-muted-foreground text-lg">{t.intro}</p>
         </div>
 
@@ -131,7 +131,7 @@ export function ExperiencesSection({ locale = "fr" }: { locale?: Locale }) {
                   <span className="inline-block bg-accent/20 text-accent-foreground px-3 py-1 text-xs uppercase tracking-wider font-medium">{experience.highlight}</span>
                 </div>
                 <p className="text-sm text-primary font-medium mb-2">{experience.subtitle}</p>
-                <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-4">{experience.title}</h3>
+                <h3 className="font-serif text-xl md:text-2xl text-foreground mb-4">{experience.title}</h3>
                 <p className="text-muted-foreground mb-6 leading-relaxed">{experience.description}</p>
                 {experience.route && (
                   <Button asChild variant="outline" className="rounded-none px-6 py-4 border-foreground/20 hover:bg-foreground/5 hover:border-accent/40 transition-all">

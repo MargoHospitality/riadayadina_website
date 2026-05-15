@@ -66,7 +66,7 @@ export function RoomCategory({
 
               {/* Title */}
               <h2 className={cn(
-                "font-serif text-3xl md:text-4xl lg:text-5xl mb-4",
+                "font-serif text-2xl md:text-3xl lg:text-4xl mb-4",
                 isDark ? "text-primary-foreground" : "text-foreground"
               )}>
                 {title}

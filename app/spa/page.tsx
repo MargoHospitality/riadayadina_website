@@ -97,7 +97,7 @@ export default function SpaPage() {
         <section className="py-20 md:py-28 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
                 Les Bains d’Ayadina, au calme du riad
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed">
@@ -131,7 +131,7 @@ export default function SpaPage() {
                 <p className="text-primary-foreground/60 text-sm uppercase tracking-[0.2em] mb-4">
                   Tradition ancestrale
                 </p>
-                <h2 className="font-serif text-3xl md:text-4xl mb-6">
+                <h2 className="font-serif text-2xl md:text-3xl mb-6">
                   Le Hammam
                 </h2>
                 <div className="space-y-4 text-primary-foreground/80 mb-8">
@@ -192,7 +192,7 @@ export default function SpaPage() {
               <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">
                 Rituels de la maison
               </p>
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
                 Nos Rituels
               </h2>
               <p className="text-muted-foreground text-lg">
@@ -248,7 +248,7 @@ export default function SpaPage() {
                 <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">
                   Beauté et soins du visage
                 </p>
-                <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
                   Soins complémentaires
                 </h2>
                 <div className="space-y-4 text-muted-foreground mb-8">
@@ -299,7 +299,7 @@ export default function SpaPage() {
         <section className="py-20 md:py-28 bg-accent/10">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
                 Réservez votre moment de détente
               </h2>
               <p className="text-muted-foreground text-lg mb-8">

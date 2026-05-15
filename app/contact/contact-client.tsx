@@ -162,7 +162,7 @@ export default function ContactPage({ locale = "fr" }: { locale?: Locale }) {
         <section className="py-20 bg-secondary/30">
           <div className="container mx-auto px-4"><div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-6xl mx-auto">
             <div>
-              <h2 className="font-serif text-3xl text-foreground mb-4">{t.formTitle}</h2>
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">{t.formTitle}</h2>
               <p className="text-muted-foreground mb-8">{t.formIntro}</p>
               {formState === "sent" ? (
                 <div className="bg-card p-12 text-center">
@@ -188,7 +188,7 @@ export default function ContactPage({ locale = "fr" }: { locale?: Locale }) {
             </div>
 
             <div>
-              <h2 className="font-serif text-3xl text-foreground mb-4">{t.infoTitle}</h2>
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">{t.infoTitle}</h2>
               <p className="text-muted-foreground mb-8">{t.infoIntro}</p>
               <InfoCard icon={MapPin} title={t.addressTitle}>{t.address}</InfoCard>
               <InfoCard icon={Car} title={t.carTitle}>{t.carText}</InfoCard>
@@ -200,7 +200,7 @@ export default function ContactPage({ locale = "fr" }: { locale?: Locale }) {
 
         <section className="py-16 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="font-serif text-3xl md:text-4xl mb-4">{t.ctaTitle}</h2>
+            <h2 className="font-serif text-2xl md:text-3xl mb-4">{t.ctaTitle}</h2>
             <p className="text-primary-foreground/70 mb-8 max-w-xl mx-auto text-sm">{t.ctaText}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button onClick={() => openBookingModal()} size="lg" className="rounded-none px-10 py-6 bg-white text-primary hover:bg-white/90">{t.book}</Button>

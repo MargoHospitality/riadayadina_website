@@ -33,7 +33,7 @@ export default function EnglishRestaurantPage() {
           <div className="container mx-auto px-4"><div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <div className="flex items-center gap-3 mb-6"><div className="w-12 h-12 bg-primary/10 flex items-center justify-center"><UtensilsCrossed className="h-6 w-6 text-primary" /></div><span className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Dining</span></div>
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">French-Moroccan cuisine<br /><span className="text-primary italic">generous and carefully prepared</span></h2>
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">French-Moroccan cuisine<br /><span className="text-primary italic">generous and carefully prepared</span></h2>
               <div className="space-y-4 text-muted-foreground mb-8"><p>Our chef invites you on a culinary journey between France and Morocco. Slow-cooked tajines with ancestral flavours — chicken with olives and preserved lemon, lamb with prunes and almonds — sit alongside French classics such as pepper-sauce entrecôte and salmon with béarnaise.</p><p>Friday royal couscous, crisp saffron pastilla, grilled prawns with lemon... Every dish tells a story, prepared with fresh market produce and the know-how of our team.</p></div>
               <div className="flex flex-wrap gap-6 mb-8 pb-8 border-b border-border">
                 <div className="flex items-center gap-3"><Clock className="h-5 w-5 text-primary" /><div><p className="text-sm text-muted-foreground">Service</p><p className="font-medium text-foreground">12pm - 3pm / 7pm - 10:30pm</p></div></div>
@@ -53,7 +53,7 @@ export default function EnglishRestaurantPage() {
             </div>
             <div className="order-1 lg:order-2">
               <div className="flex items-center gap-3 mb-6"><div className="w-12 h-12 bg-primary-foreground/10 flex items-center justify-center"><Wine className="h-6 w-6 text-primary-foreground" /></div><span className="text-sm uppercase tracking-[0.2em] text-primary-foreground/70">Bar and lounge</span></div>
-              <h2 className="font-serif text-3xl md:text-4xl text-primary-foreground mb-6">A rare privilege<br /><span className="text-accent italic">in the Medina</span></h2>
+              <h2 className="font-serif text-2xl md:text-3xl text-primary-foreground mb-6">A rare privilege<br /><span className="text-accent italic">in the Medina</span></h2>
               <div className="space-y-4 text-primary-foreground/80 mb-8"><p>Ayadina is one of the few Medina addresses with a licensed bar. It means you can enjoy an aperitif at sunset on the terrace, with Marrakech rooftops and the Atlas as a backdrop.</p><p>Moroccan wines from Meknès and Boulaouane, Mumm and Veuve Clicquot champagnes, signature cocktails — from a classic Mojito to a refreshing Spritz — whisky, cognac and a selection of Cuban cigars for aficionados.</p></div>
               <div className="space-y-3 mb-8">
                 <Offer icon={Wine} title="Wine cellar" text="Whites, rosés and reds — Morocco & France" />
@@ -68,7 +68,7 @@ export default function EnglishRestaurantPage() {
         <section className="py-20 md:py-28 bg-secondary/30">
           <div className="container mx-auto px-4"><div className="max-w-3xl mx-auto text-center">
             <Sparkles className="h-8 w-8 text-primary mx-auto mb-6" />
-            <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">Book your table</h2>
+            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">Book your table</h2>
             <p className="text-muted-foreground mb-8 max-w-lg mx-auto">Our restaurant welcomes riad guests and outside visitors. Dinner and private events are best booked in advance.</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
               <div className="bg-card p-5 text-center"><Clock className="h-5 w-5 text-primary mx-auto mb-2" /><p className="text-sm text-muted-foreground">Lunch 12pm-3pm</p><p className="text-sm text-muted-foreground">Dinner 7pm-10:30pm</p></div>

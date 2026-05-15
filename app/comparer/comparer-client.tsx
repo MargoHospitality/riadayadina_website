@@ -296,7 +296,7 @@ export function CompareClient() {
           <section className="pt-32 pb-16">
             <div className="container mx-auto px-4 max-w-2xl text-center">
               <p className="text-accent text-sm uppercase tracking-[0.25em] mb-4">{t.invalidEyebrow}</p>
-              <h1 className="font-serif text-4xl md:text-5xl mb-6">{t.invalidTitle}</h1>
+              <h1 className="font-serif text-3xl md:text-4xl mb-6">{t.invalidTitle}</h1>
               <p className="text-muted-foreground mb-8">
                 {t.invalidText}
               </p>
@@ -450,7 +450,7 @@ export function CompareClient() {
             
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
               <div className="flex items-center gap-4 flex-wrap">
-                <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl text-primary-foreground">
+                <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl text-primary-foreground">
                   {t.stayFromTo(formatLongDate(search.checkIn!, locale), formatLongDate(search.checkOut!, locale))}
                 </h1>
                 <button 
@@ -462,12 +462,12 @@ export function CompareClient() {
               </div>
               <div className="flex items-center gap-6 text-primary-foreground">
                 <div className="text-center">
-                  <p className="font-serif text-4xl lg:text-5xl">{nights}</p>
+                  <p className="font-serif text-3xl lg:text-4xl">{nights}</p>
                   <p className="text-sm text-primary-foreground/60">{nights > 1 ? t.nights : t.night}</p>
                 </div>
                 <div className="w-px h-12 bg-primary-foreground/20" />
                 <div className="text-center">
-                  <p className="font-serif text-4xl lg:text-5xl">{search.adults}</p>
+                  <p className="font-serif text-3xl lg:text-4xl">{search.adults}</p>
                   <p className="text-sm text-primary-foreground/60">{Number(search.adults) > 1 ? t.people : t.person}</p>
                 </div>
               </div>
@@ -485,7 +485,7 @@ export function CompareClient() {
               <div className="bg-card border border-accent/40 shadow-sm p-6 md:p-8 mb-8">
                 <div className="max-w-3xl">
                   <p className="text-accent text-sm uppercase tracking-[0.2em] mb-3">{t.onlineAvailability}</p>
-                  <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">{t.noAvailabilityTitle}</h2>
+                  <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">{t.noAvailabilityTitle}</h2>
                   <p className="text-muted-foreground mb-6">
                     {t.noAvailabilityText(formatLongDate(search.checkIn!, locale), formatLongDate(search.checkOut!, locale))}
                   </p>
@@ -550,7 +550,7 @@ export function CompareClient() {
                       <div className="min-w-0">
                         <p className="text-sm text-muted-foreground mb-1">{t.nightlyPrice}</p>
                         <div className="flex items-baseline gap-2">
-                          <span className="font-serif text-4xl md:text-5xl text-foreground">
+                          <span className="font-serif text-3xl md:text-4xl text-foreground">
                             {directOffer ? formatMoney(directOffer.price, directOffer.currency, locale) : t.cloudbedsPrice}
                           </span>
                         </div>
@@ -571,7 +571,7 @@ export function CompareClient() {
                   ) : (
                     <div className="mb-6 pb-6 border-b border-border">
                       <p className="text-sm text-muted-foreground mb-2">{t.officialBooking}</p>
-                      <h3 className="font-serif text-2xl md:text-3xl text-foreground mb-3">
+                      <h3 className="font-serif text-xl md:text-2xl text-foreground mb-3">
                         {t.benefitsTitle}
                       </h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">

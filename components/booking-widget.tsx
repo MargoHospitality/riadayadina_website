@@ -36,7 +36,7 @@ export function BookingWidget({ locale = "fr" }: { locale?: Locale }) {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">{t.eyebrow}</p>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-6">{t.title}</h2>
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground mb-6">{t.title}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t.intro}</p>
           </div>
 

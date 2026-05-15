@@ -70,7 +70,7 @@ export default function RestaurantPage() {
                   </span>
                 </div>
 
-                <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
                   Cuisine franco-marocaine
                   <br />
                   <span className="text-primary italic">généreuse et soignée</span>
@@ -163,7 +163,7 @@ export default function RestaurantPage() {
                   </span>
                 </div>
 
-                <h2 className="font-serif text-3xl md:text-4xl text-primary-foreground mb-6">
+                <h2 className="font-serif text-2xl md:text-3xl text-primary-foreground mb-6">
                   Un privilège rare
                   <br />
                   <span className="text-accent italic">en médina</span>
@@ -226,7 +226,7 @@ export default function RestaurantPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <Sparkles className="h-8 w-8 text-primary mx-auto mb-6" />
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">
                 Réservez votre table
               </h2>
               <p className="text-muted-foreground mb-8 max-w-lg mx-auto">

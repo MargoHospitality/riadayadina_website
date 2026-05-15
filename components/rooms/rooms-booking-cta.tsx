@@ -58,7 +58,7 @@ export function RoomsBookingCta() {
                 Meilleures conditions en direct
               </span>
             </div>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-4">
+            <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground mb-4">
               Réservez votre séjour
             </h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto">

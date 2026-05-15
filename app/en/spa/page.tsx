@@ -44,7 +44,7 @@ export default function EnglishSpaPage() {
         <section className="py-20 md:py-28 bg-background">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">Les Bains d’Ayadina, in the calm of the riad</h2>
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">Les Bains d’Ayadina, in the calm of the riad</h2>
               <p className="text-muted-foreground text-lg leading-relaxed">At the heart of Riad Ayadina, discover a space entirely dedicated to rest and renewal. Our 250 m² spa continues the ancestral rituals of the Moroccan hammam, elevated by contemporary treatments with natural products.</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
@@ -57,7 +57,7 @@ export default function EnglishSpaPage() {
           <div className="container mx-auto px-4"><div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
               <p className="text-primary-foreground/60 text-sm uppercase tracking-[0.2em] mb-4">Ancestral tradition</p>
-              <h2 className="font-serif text-3xl md:text-4xl mb-6">The Hammam</h2>
+              <h2 className="font-serif text-2xl md:text-3xl mb-6">The Hammam</h2>
               <div className="space-y-4 text-primary-foreground/80 mb-8"><p>Experience the authentic Moroccan hammam ritual in our dedicated space. Black soap enriched with essential oils prepares the skin, the kessa glove exfoliates gently, and ghassoul wraps purify deeply.</p><p>Our therapists preserve gestures passed down through generations, creating an experience that goes beyond a treatment: a sensory journey scented with rose, rosemary and lavender.</p></div>
               <div className="space-y-4">
                 <div className="flex items-start gap-4 p-4 bg-white/10"><Clock className="h-5 w-5 mt-0.5 flex-shrink-0" /><div><p className="font-medium">Traditional exfoliation</p><p className="text-sm text-primary-foreground/70">Black soap, kessa glove, rose-water ghassoul and egg shampoo</p></div></div>
@@ -72,7 +72,7 @@ export default function EnglishSpaPage() {
           <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">House rituals</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">Our Rituals</h2>
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">Our Rituals</h2>
               <p className="text-muted-foreground text-lg">Complete treatment journeys designed for total immersion. Each ritual can be enjoyed alone or as a duo.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -91,7 +91,7 @@ export default function EnglishSpaPage() {
             <div className="aspect-[4/3] relative order-2 lg:order-1"><Image src="/images/ayadina/spa-soins-complementaires.jpg" alt="Spa Ayadina treatment room" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" /></div>
             <div className="order-1 lg:order-2">
               <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">Beauty and facials</p>
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">Additional treatments</h2>
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">Additional treatments</h2>
               <div className="space-y-4 text-muted-foreground mb-8"><p>Complete your wellbeing experience with oriental manicures and pedicures, waxing, and Natus Marrakech facials made with 100% natural local products.</p><p>Our facials use Moroccan natural treasures — argan oil, rose water, honey — to leave skin soft, luminous and soothed.</p></div>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 {["Oriental manicure", "Oriental pedicure", "Natus facials", "Waxing", "Relaxing massage", "Candle massage"].map((service) => <div key={service} className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-primary rounded-full" /><span>{service}</span></div>)}
@@ -102,7 +102,7 @@ export default function EnglishSpaPage() {
 
         <section className="py-20 md:py-28 bg-accent/10">
           <div className="container mx-auto px-4"><div className="max-w-3xl mx-auto text-center">
-            <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">Book your moment of relaxation</h2>
+            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">Book your moment of relaxation</h2>
             <p className="text-muted-foreground text-lg mb-8">We recommend booking treatments 24 hours in advance with reception to secure your preferred time.</p>
             <div className="bg-card p-8 shadow-sm mb-8"><h3 className="font-serif text-xl text-foreground mb-2">Treatment menu</h3><p className="text-muted-foreground text-sm mb-6">Reception will confirm available treatments, durations and rates for your chosen time.</p><Button asChild variant="outline" className="rounded-none px-8 py-5"><a href={SPA_MENU_URL} target="_blank" rel="noopener noreferrer" type="application/pdf">View treatment menu PDF, 2.7 MB, new tab</a></Button></div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4"><Button asChild className="rounded-none px-8 py-6 text-base"><a href={buildWhatsAppUrl("Hello, I would like to book a spa treatment.")} target="_blank" rel="noopener noreferrer">Book a treatment</a></Button></div>

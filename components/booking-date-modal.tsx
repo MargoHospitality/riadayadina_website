@@ -231,7 +231,7 @@ export function BookingDateModal({
       <div className="fixed inset-0 z-[4000] flex items-center justify-center bg-background px-6">
         <div className="max-w-xl text-center">
           <p className="mb-4 text-accent text-sm uppercase tracking-[0.25em]">{dict.booking.loadingEyebrow}</p>
-          <h1 className="font-serif text-2xl md:text-3xl text-foreground mb-4">
+          <h1 className="font-serif text-xl md:text-2xl text-foreground mb-4">
             {dict.booking.loadingTitle}
           </h1>
           <p className="text-sm text-muted-foreground mb-8">

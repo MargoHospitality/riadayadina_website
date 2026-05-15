@@ -37,7 +37,7 @@ export async function TestimonialsSection({ limit = 3, locale = "fr" }: Testimon
           <p className="text-muted-foreground text-sm uppercase tracking-[0.2em] mb-4">
             {dict.reviews.eyebrow}
           </p>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-8">
+          <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground mb-8">
             {dict.reviews.title}
           </h2>
 

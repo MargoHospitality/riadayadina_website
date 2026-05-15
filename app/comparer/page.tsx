@@ -45,7 +45,7 @@ export function ComparePageFallback({ locale = "fr" }: { locale?: Locale }) {
         <section className="pt-32 md:pt-40 pb-16">
           <div className="container mx-auto px-4 max-w-xl text-center">
             <p className="text-primary text-xs uppercase tracking-[0.2em] mb-6">{copy.eyebrow}</p>
-            <h1 className="font-serif text-2xl md:text-4xl text-foreground mb-4">
+            <h1 className="font-serif text-2xl md:text-3xl text-foreground mb-4">
               {copy.title}
             </h1>
             <p className="text-muted-foreground text-sm md:text-base">

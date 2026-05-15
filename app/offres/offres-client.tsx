@@ -181,7 +181,7 @@ export default function OffresPage({ locale = "fr", testimonials }: { locale?: L
                     {featured && <div className="absolute top-4 right-4 bg-accent text-accent-foreground px-3 py-1 text-xs uppercase tracking-wider">{t.recommended}</div>}
                     <div className="p-6 md:p-8">
                       <div className="flex items-baseline justify-between mb-6">
-                        <div><p className={`text-xs uppercase tracking-wider mb-1 ${featured ? "text-white/60" : "text-muted-foreground"}`}>{offer.subtitle}</p><h3 className="font-serif text-2xl md:text-3xl">{offer.title}</h3></div>
+                        <div><p className={`text-xs uppercase tracking-wider mb-1 ${featured ? "text-white/60" : "text-muted-foreground"}`}>{offer.subtitle}</p><h3 className="font-serif text-xl md:text-2xl">{offer.title}</h3></div>
                         <span className={`font-serif text-4xl ${featured ? "text-accent" : "text-accent/60"}`}>{offer.nights}</span>
                       </div>
                       <p className={`text-sm mb-6 ${featured ? "text-white/80" : "text-muted-foreground"}`}>{offer.description}</p>

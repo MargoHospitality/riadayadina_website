@@ -60,19 +60,19 @@ export default function LeRiadPage() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div>
-                <span className="block font-serif text-4xl md:text-5xl mb-2">1200</span>
+                <span className="block font-serif text-3xl md:text-4xl mb-2">1200</span>
                 <span className="text-sm uppercase tracking-wider text-primary-foreground/70">m² de propriété</span>
               </div>
               <div>
-                <span className="block font-serif text-4xl md:text-5xl mb-2">3</span>
+                <span className="block font-serif text-3xl md:text-4xl mb-2">3</span>
                 <span className="text-sm uppercase tracking-wider text-primary-foreground/70">patios arborés</span>
               </div>
               <div>
-                <span className="block font-serif text-4xl md:text-5xl mb-2">9</span>
+                <span className="block font-serif text-3xl md:text-4xl mb-2">9</span>
                 <span className="text-sm uppercase tracking-wider text-primary-foreground/70">chambres singulières</span>
               </div>
               <div>
-                <span className="block font-serif text-4xl md:text-5xl mb-2">250</span>
+                <span className="block font-serif text-3xl md:text-4xl mb-2">250</span>
                 <span className="text-sm uppercase tracking-wider text-primary-foreground/70">m² de spa</span>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default function LeRiadPage() {
                     Terrasse Solarium
                   </p>
                 </div>
-                <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
                   Une piscine chauffée avec vue sur l&apos;Atlas
                 </h2>
                 <div className="space-y-4 text-muted-foreground mb-8">
@@ -144,7 +144,7 @@ export default function LeRiadPage() {
                 </div>
                 {/* Floating badge */}
                 <div className="absolute -bottom-6 -right-6 bg-accent text-accent-foreground p-6 shadow-xl hidden md:block">
-                  <span className="block font-serif text-3xl">7 x 3 m</span>
+                  <span className="block font-serif text-2xl">7 x 3 m</span>
                   <span className="text-sm">Piscine chauffée</span>
                 </div>
               </div>
@@ -180,7 +180,7 @@ export default function LeRiadPage() {
                     Architecture
                   </p>
                 </div>
-                <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
                   Trois patios, trois atmosphères
                 </h2>
                 <div className="space-y-4 text-muted-foreground mb-8">
@@ -222,7 +222,7 @@ export default function LeRiadPage() {
                     Accès privilégié
                   </p>
                 </div>
-                <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
                   Arrivez en voiture jusqu&apos;à notre porte
                 </h2>
                 <div className="space-y-4 text-muted-foreground mb-8">
@@ -279,7 +279,7 @@ export default function LeRiadPage() {
                   <Users className="h-6 w-6" />
                 </div>
               </div>
-              <h2 className="font-serif text-3xl md:text-4xl mb-6">
+              <h2 className="font-serif text-2xl md:text-3xl mb-6">
                 Privatisez le riad pour votre événement
               </h2>
               <p className="text-primary-foreground/80 text-lg mb-8">

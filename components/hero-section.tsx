@@ -59,7 +59,7 @@ export function HeroSection({ locale = "fr" }: { locale?: Locale }) {
           <p className="text-white/70 text-sm uppercase tracking-[0.4em] mb-8">
             {t.eyebrow}
           </p>
-          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white mb-6 leading-[1.05]">
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white mb-6 leading-[1.05]">
             Riad Ayadina
           </h1>
           <p className="text-white/80 text-lg md:text-xl font-light tracking-wide mb-12 max-w-xl mx-auto">

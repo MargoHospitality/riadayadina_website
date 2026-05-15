@@ -63,7 +63,7 @@ export default function NotFound() {
           {/* 404 */}
           <h1 className="font-serif text-8xl md:text-9xl text-primary mb-4">404</h1>
           
-          <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">
+          <h2 className="font-serif text-xl md:text-2xl text-foreground mb-4">
             {t.title}
           </h2>
           

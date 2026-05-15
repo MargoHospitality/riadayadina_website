@@ -90,7 +90,7 @@ export function RoomsSection({ locale = "fr" }: { locale?: Locale }) {
       <div className="container mx-auto px-4">
         <AnimateOnScroll animation="fade-up" className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <p className="text-accent text-sm uppercase tracking-[0.25em] mb-3">{t.eyebrow}</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">{t.title}</h2>
+          <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">{t.title}</h2>
           <p className="text-muted-foreground">{t.intro}</p>
         </AnimateOnScroll>
 

@@ -221,7 +221,7 @@ export default function GaleriePage({ locale = "fr" }: { locale?: Locale }) {
         <section className="py-16 bg-primary text-primary-foreground">
           <div className="container mx-auto px-4 text-center">
             <AnimateOnScroll animation="fade-up">
-              <h2 className="font-serif text-3xl md:text-4xl mb-4">{t.ctaTitle}</h2>
+              <h2 className="font-serif text-2xl md:text-3xl mb-4">{t.ctaTitle}</h2>
               <p className="text-primary-foreground/80 mb-8 max-w-xl mx-auto">{t.ctaText}</p>
               <button onClick={() => openBookingModal()} className="inline-flex items-center justify-center px-8 py-4 bg-white text-primary font-medium hover:bg-white/90 transition-colors">
                 {t.cta}
