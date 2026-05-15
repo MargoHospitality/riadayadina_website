@@ -2,8 +2,6 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
 import { BookingWidget } from "@/components/booking-widget"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { useBookingModal } from "@/components/booking-modal-provider"
@@ -137,9 +135,7 @@ export default function OffresPage({ locale = "fr" }: { locale?: Locale }) {
   const t = copy[locale]
   
   return (
-    <>
-      <Header locale={locale} />
-      <main className="bg-background">
+    <main className="bg-background">
         <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <Image src="/images/ayadina/piscine-jour-01.jpg" alt={t.heroAlt} fill className="object-cover" priority sizes="100vw" style={{ objectPosition: "45% 50%" }} />
@@ -233,8 +229,6 @@ export default function OffresPage({ locale = "fr" }: { locale?: Locale }) {
         <section className="py-12 border-t border-border">
           <div className="container mx-auto px-4"><div className="max-w-3xl mx-auto"><p className="text-xs text-muted-foreground text-center">{t.finePrint}</p></div></div>
         </section>
-      </main>
-      <Footer locale={locale} />
-    </>
+    </main>
   )
 }

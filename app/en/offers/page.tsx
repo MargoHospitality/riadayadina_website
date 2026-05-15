@@ -1,9 +1,17 @@
 import type { Metadata } from "next"
 import { createPageMetadata } from "@/lib/i18n/metadata"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
 import OffresClient from "@/app/offres/offres-client"
 
 export const metadata: Metadata = createPageMetadata("offers", "en")
 
 export default function EnglishOffersPage() {
-  return <OffresClient locale="en" />
+  return (
+    <>
+      <Header locale="en" />
+      <OffresClient locale="en" />
+      <Footer locale="en" />
+    </>
+  )
 }
