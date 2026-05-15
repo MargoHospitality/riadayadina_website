@@ -1,7 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import Link from "next/link"
+import { useState, useEffect, useRef, type MouseEvent } from "react"
 import Image from "next/image"
 import { usePathname, useSearchParams } from "next/navigation"
 import { Menu, X } from "lucide-react"
@@ -41,6 +40,24 @@ export function Header({ locale = "fr" }: HeaderProps) {
   const currentLanguageLabel = locale === "fr" ? "Français" : "English"
   const targetLanguageLabel = targetLocale === "fr" ? "Français" : "English"
   const mobileNavigationRef = useRef<HTMLDivElement>(null)
+  const isComparePath = pathname === "/comparer" || pathname === "/en/compare" || pathname === "/compare"
+
+  const handleHeaderNavigation = (event: MouseEvent<HTMLElement>) => {
+    if (!isComparePath) return
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+
+    const target = event.target instanceof HTMLElement ? event.target.closest<HTMLAnchorElement>("a[href]") : null
+    if (!target || !event.currentTarget.contains(target)) return
+    if (target.target && target.target !== "_self") return
+
+    const href = target.getAttribute("href")
+    if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:")) return
+
+    // The compare page can keep long-running client work active; use a browser navigation
+    // there so header links cannot be swallowed by client-side routing state.
+    event.preventDefault()
+    window.location.assign(href)
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,6 +101,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
 
   return (
     <header
+      onClickCapture={handleHeaderNavigation}
       className={cn(
         "fixed top-0 left-0 right-0 z-[1000] pointer-events-auto transition-all duration-500",
         isScrolled
@@ -94,7 +112,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href={getLocalizedPath("home", locale)} className="flex items-center">
+          <a href={getLocalizedPath("home", locale)} className="flex items-center">
             {/* B&W logo for hero (before scroll) */}
             <Image
               src="/images/logo-ayadina-nb.png"
@@ -122,12 +140,12 @@ export function Header({ locale = "fr" }: HeaderProps) {
                   : "hidden"
               )}
             />
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
           <nav className="relative z-10 hidden xl:flex items-center gap-6">
             {navigation.map((item) => (
-              <Link
+              <a
                 key={item.key}
                 href={getLocalizedPath(item.key, locale)}
                 className={cn(
@@ -136,11 +154,11 @@ export function Header({ locale = "fr" }: HeaderProps) {
                 )}
               >
                 {dict.nav[item.labelKey]}
-              </Link>
+              </a>
             ))}
           </nav>
 
-          <Link
+          <a
             href={languageSwitchHref}
             className={cn(
               "relative z-10",
@@ -151,7 +169,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
             title={targetLanguageLabel}
           >
             <span aria-hidden="true">{targetFlag}</span>
-          </Link>
+          </a>
 
           {/* CTA */}
           <div className="relative z-10 hidden xl:flex items-center">
@@ -213,7 +231,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
                 >
                   {currentFlag}
                 </span>
-                <Link
+                <a
                   href={languageSwitchHref}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-base transition-all hover:border-accent hover:bg-accent/10"
@@ -221,7 +239,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
                   title={targetLanguageLabel}
                 >
                   {targetFlag}
-                </Link>
+                </a>
               </div>
               <button
                 type="button"
@@ -237,7 +255,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
           <div className="flex-1 overflow-y-auto px-5 py-5">
             <div className="divide-y divide-border/60">
               {navigation.map((item) => (
-                <Link
+                <a
                   key={item.key}
                   href={getLocalizedPath(item.key, locale)}
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -245,7 +263,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
                 >
                   <span>{dict.nav[item.labelKey]}</span>
                   <span className="text-xs text-muted-foreground transition-transform group-hover:translate-x-1">→</span>
-                </Link>
+                </a>
               ))}
             </div>
           </div>
