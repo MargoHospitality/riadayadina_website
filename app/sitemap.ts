@@ -5,9 +5,9 @@ const siteUrl = "https://www.riadayadinamarrakech.net"
 
 const routes: RouteKey[] = ["home", "riad", "rooms", "offers", "spa", "restaurant", "gallery", "contact"]
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date()
+export const revalidate = 86400
 
+export default function sitemap(): MetadataRoute.Sitemap {
   return routes.flatMap((route) => {
     const frPath = localizedPaths[route].fr
     const enPath = localizedPaths[route].en
@@ -22,14 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return [
       {
         url: `${siteUrl}${frPath}`,
-        lastModified,
         changeFrequency: route === "home" ? "weekly" : "monthly",
         priority: route === "home" ? 1 : 0.8,
         alternates,
       },
       {
         url: `${siteUrl}${enPath}`,
-        lastModified,
         changeFrequency: route === "home" ? "weekly" : "monthly",
         priority: route === "home" ? 0.9 : 0.7,
         alternates,

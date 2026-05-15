@@ -443,15 +443,7 @@ export function CompareClient() {
 
       {/* Hero Banner */}
       <section className="relative pt-28 md:pt-32 pb-8 bg-primary overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 opacity-10">
-          <Image
-            src="/images/ayadina/patio-fontaine-nuit-01.jpg"
-            alt=""
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div>
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.12),transparent_32%),radial-gradient(circle_at_80%_0%,rgba(195,164,108,0.16),transparent_28%)]" />
         <div className="relative container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <p className="text-accent text-sm uppercase tracking-[0.2em] mb-2">{t.heroEyebrow}</p>

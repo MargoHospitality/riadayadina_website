@@ -125,7 +125,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
                   ? "hidden"
                   : "block h-20 md:h-24 lg:h-24 xl:h-28"
               )}
-              priority
+              sizes="(max-width: 768px) 160px, 220px"
             />
             {/* Color logo for scrolled header */}
             <Image
@@ -139,6 +139,7 @@ export function Header({ locale = "fr" }: HeaderProps) {
                   ? "block h-20 md:h-24 lg:h-24 xl:h-28"
                   : "hidden"
               )}
+              sizes="(max-width: 768px) 160px, 220px"
             />
           </a>
 

@@ -238,8 +238,12 @@
     })
   }
 
-  function hideNativeRateCheckButton() {
-    document.querySelectorAll("button,a,div,span").forEach((element) => {
+  function getCloudbedsRoot() {
+    return document.querySelector("#cb-bookingengine-main-layout") || document.body
+  }
+
+  function hideNativeRateCheckButton(root = getCloudbedsRoot()) {
+    root.querySelectorAll("button,a,div,span").forEach((element) => {
       if (element.closest(".margo-direct-card,.margo-direct-package")) return
       if ((element.textContent || "").trim().toLowerCase() !== "rate check") return
       const target = element.closest("button,a") || element
@@ -247,8 +251,8 @@
     })
   }
 
-  function renderPackageBlocks() {
-    document.querySelectorAll(".cb-rate-plan").forEach((plan) => {
+  function renderPackageBlocks(root = getCloudbedsRoot()) {
+    root.querySelectorAll(".cb-rate-plan").forEach((plan) => {
       if (state.renderedPackages.has(plan)) return
       const title = plan.querySelector(".cb-rate-plan-title-text")?.textContent || ""
       const benefits = getBenefitsForRatePlan(title)
@@ -313,11 +317,12 @@
     renderPackageBlocks()
     hideNativeRateCheckButton()
     const observer = new MutationObserver(throttleRender(() => {
+      const root = getCloudbedsRoot()
       renderComparisonCard()
-      renderPackageBlocks()
-      hideNativeRateCheckButton()
+      renderPackageBlocks(root)
+      hideNativeRateCheckButton(root)
     }))
-    observer.observe(document.body, { childList: true, subtree: true })
+    observer.observe(getCloudbedsRoot(), { childList: true, subtree: true })
   }
 
   function throttleRender(callback) {

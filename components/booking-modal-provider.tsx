@@ -1,7 +1,7 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { createContext, useContext, useState, type ReactNode } from "react"
-import { BookingDateModal } from "./booking-date-modal"
 import type { Locale } from "@/lib/i18n/routing"
 
 interface BookingModalContextType {
@@ -13,6 +13,11 @@ interface BookingModalContextType {
 }
 
 const BookingModalContext = createContext<BookingModalContextType | null>(null)
+
+const BookingDateModal = dynamic(
+  () => import("./booking-date-modal").then((module) => module.BookingDateModal),
+  { ssr: false }
+)
 
 export function useBookingModal() {
   const context = useContext(BookingModalContext)
@@ -38,17 +43,19 @@ export function BookingModalProvider({ children, locale = "fr" }: { children: Re
   return (
     <BookingModalContext.Provider value={{ openBookingModal }}>
       {children}
-      <BookingDateModal
-        locale={locale}
-        isOpen={isOpen}
-        onClose={() => {
-          setIsOpen(false)
-          setDefaults({})
-        }}
-        defaultCheckIn={defaults.checkIn}
-        defaultCheckOut={defaults.checkOut}
-        defaultAdults={defaults.adults}
-      />
+      {isOpen && (
+        <BookingDateModal
+          locale={locale}
+          isOpen={isOpen}
+          onClose={() => {
+            setIsOpen(false)
+            setDefaults({})
+          }}
+          defaultCheckIn={defaults.checkIn}
+          defaultCheckOut={defaults.checkOut}
+          defaultAdults={defaults.adults}
+        />
+      )}
     </BookingModalContext.Provider>
   )
 }

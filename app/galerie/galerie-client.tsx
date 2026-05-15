@@ -206,7 +206,7 @@ export default function GaleriePage({ locale = "fr" }: { locale?: Locale }) {
                 {allImages.map((image, index) => (
                   <AnimateOnScroll key={`${image.src}-${index}`} animation="fade-up" delay={index * 30} className={getGridSpan(index)}>
                     <button onClick={() => openGallery(index)} className="group relative w-full h-full overflow-hidden cursor-pointer">
-                      <Image src={image.src} alt={image.alt} fill className="object-cover transition-transform duration-500 group-hover:scale-110" sizes="(max-width: 768px) 50vw, 50vw" />
+                      <Image src={image.src} alt={image.alt} fill className="object-cover transition-transform duration-500 group-hover:scale-110" sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 25vw" />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center"><svg className="w-5 h-5 text-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" /></svg></div></div>
                       <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"><p className="text-white text-sm font-medium">{image.alt}</p></div>
