@@ -148,37 +148,35 @@ export function Header({ locale = "fr" }: HeaderProps) {
             />
           </a>
 
-          {/* Desktop Navigation */}
-          <nav className="relative z-10 hidden xl:flex items-center gap-6">
-            {navigation.map((item) => (
-              <a
-                key={item.key}
-                href={getLocalizedPath(item.key, locale)}
-                className={cn(
-                  "text-sm tracking-wide transition-colors duration-300 hover:opacity-70",
-                  isScrolled ? "text-foreground" : "text-white"
-                )}
-              >
-                {dict.nav[item.labelKey]}
-              </a>
-            ))}
-          </nav>
+          {/* Desktop Navigation + language + CTA: right aligned */}
+          <div className="relative z-10 ml-auto hidden xl:flex items-center justify-end gap-6">
+            <nav className="flex items-center gap-6">
+              {navigation.map((item) => (
+                <a
+                  key={item.key}
+                  href={getLocalizedPath(item.key, locale)}
+                  className={cn(
+                    "text-sm tracking-wide transition-colors duration-300 hover:opacity-70 whitespace-nowrap",
+                    isScrolled ? "text-foreground" : "text-white"
+                  )}
+                >
+                  {dict.nav[item.labelKey]}
+                </a>
+              ))}
+            </nav>
 
-          <a
-            href={languageSwitchHref}
-            className={cn(
-              "relative z-10",
-              "hidden xl:inline-flex h-8 w-8 items-center justify-center rounded-full border text-base leading-none shadow-sm transition-all hover:scale-105",
-              isScrolled ? "border-border bg-background/80 text-foreground" : "border-white/30 bg-white/10 text-white"
-            )}
-            aria-label={`${dict.nav.languageLabel} · ${targetLanguageLabel}`}
-            title={targetLanguageLabel}
-          >
-            <span aria-hidden="true">{targetFlag}</span>
-          </a>
+            <a
+              href={languageSwitchHref}
+              className={cn(
+                "inline-flex h-8 w-8 items-center justify-center rounded-full border text-base leading-none shadow-sm transition-all hover:scale-105",
+                isScrolled ? "border-border bg-background/80 text-foreground" : "border-white/30 bg-white/10 text-white"
+              )}
+              aria-label={`${dict.nav.languageLabel} · ${targetLanguageLabel}`}
+              title={targetLanguageLabel}
+            >
+              <span aria-hidden="true">{targetFlag}</span>
+            </a>
 
-          {/* CTA */}
-          <div className="relative z-10 hidden xl:flex items-center">
             <Button
               type="button"
               onClick={handleBookingClick}
